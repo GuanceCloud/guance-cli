@@ -1,0 +1,42 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.txt
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Output file
+# Docs
+.build/
+# VS Code extension
+*.vsix
+
+# Temprory files
+.DS_Store
+
+# Generated files
+pkg/parser/y.output
+*.pdf
+rl.sh
+dist/
+test.output
+tmp/
+internal/testing/specs/*.spec
+
+# Local Netlify folder
+.netlify
+
+# IDE
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,13 @@
+{{ range $_, $index := . }}
+resource "guance_monitor" "main_{{ . }}" {
+  manifest = file("${path.module}/manifest-{{ . }}.json")
+
+  alert_policy = var.alert_policy_id == null ? null : {
+    id = var.alert_policy_id
+  }
+
+  dashboard = var.dashboard_id == null ? null : {
+    id =  var.dashboard_id
+  }
+}
+{{ end }}

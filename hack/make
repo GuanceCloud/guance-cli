@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e -u
+
+SOURCE_ROOT="$(cd $(dirname "${BASH_SOURCE[0]}")/.. && pwd)"
+HACK_ROOT="$SOURCE_ROOT/hack"
+MAGE_ROOT="$SOURCE_ROOT/internal/magefiles"
+
+exec go run "$HACK_ROOT" -d "$MAGE_ROOT" -w "$SOURCE_ROOT" "$@"
