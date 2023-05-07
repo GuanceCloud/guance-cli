@@ -2,6 +2,10 @@
 
 A command-line tool helper user interact with Guance Cloud.
 
+## Features
+
+1. [Import external resource as Guance Cloud IaC resource (Terraform)](specs/iac/import.spec.md)
+
 ## Installation
 
 ### Linux

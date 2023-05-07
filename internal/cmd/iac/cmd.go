@@ -153,7 +153,7 @@ func writeFile(dst string, content []byte) error {
 	if err := os.MkdirAll(filepath.Dir(dst), 0755); err != nil {
 		return fmt.Errorf("mkdir %s error: %w", dst, err)
 	}
-	if err := os.WriteFile(dst, content, 0644); err != nil {
+	if err := os.WriteFile(dst, content, 0600); err != nil {
 		return fmt.Errorf("write file %s error: %w", dst, err)
 	}
 	return nil
