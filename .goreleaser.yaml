@@ -69,7 +69,7 @@ dockers:
     - --label=org.opencontainers.image.title={{ .ProjectName }}
     - --label=org.opencontainers.image.description={{ .ProjectName }}
     - --label=org.opencontainers.image.url=https://guance.io
-    - --label=org.opencontainers.image.source=https://github.com/GuanceCloud/guance
+    - --label=org.opencontainers.image.source=https://github.com/GuanceCloud/guance-cli
     - --label=org.opencontainers.image.version={{ .Version }}
     - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
     - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -86,7 +86,7 @@ dockers:
     - --label=org.opencontainers.image.title={{ .ProjectName }}
     - --label=org.opencontainers.image.description={{ .ProjectName }}
     - --label=org.opencontainers.image.url=https://guance.io
-    - --label=org.opencontainers.image.source=https://github.com/GuanceCloud/guance
+    - --label=org.opencontainers.image.source=https://github.com/GuanceCloud/guance-cli
     - --label=org.opencontainers.image.version={{ .Version }}
     - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
     - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -108,8 +108,8 @@ nfpms:
 - id: guance
   maintainer: Guance Cloud <developer@guance.com>
   vendor: Guance Cloud Inc.
-  description: guance is a programming language for Observability Data Pipeline.
-  homepage: https://guance.guance.io
+  description: Command-Line Toolkit for Guance Cloud
+  homepage: https://guance.io
   license: MIT
   formats:
   - deb
@@ -211,7 +211,7 @@ brews:
     # gitlab or gitea)
     #
     # Default depends on the client.
-    url_template: "https://github.com/GuanceCloud/guance/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    url_template: "https://github.com/GuanceCloud/guance-cli/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
 
     # Allows you to set a custom download strategy. Note that you'll need
     # to implement the strategy and add it to your tap repository.
@@ -234,7 +234,7 @@ brews:
 
     # Your app's homepage.
     # Default is empty.
-    homepage: "https://guance.guance.io/"
+    homepage: "https://guance.io/"
 
     # Template of your app's description.
     # Default is empty.

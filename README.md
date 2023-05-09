@@ -15,28 +15,38 @@ A command-line tool to help users interact with Guance Cloud.
 
 ## Installation
 
-### Quickstart
-
-**Linux**
-
-```shell
-curl -sL https://raw.githubusercontent.com/GuanceCloud/guance-cli/master/install.sh | bash
-```
-
-See the [Release page](https://github.com/GuanceCloud/guance-cli/releases) to download the latest release for Linux.
-
-**Mac OSX**
+### Mac OSX
 
 ```shell
 brew tap GuanceCloud/homebrew-tap
 brew install GuanceCloud/tap/guance
 ```
 
-**Windows**
+### Ubuntu or Debian
 
-We are working in progress.
+```shell
+echo "deb [trusted=yes] https://releases.guance.io/apt/ /" | sudo tee /etc/apt/sources.list.d/guance.list
+sudo apt update
+sudo apt install guance
+```
 
-**Verify Installation**
+### CentOS or RHEL
+
+```shell
+cat <<EOF | sudo tee /etc/yum.repos.d/guance.repo
+[guance]
+name=Guance Cloud Repo
+baseurl=https://releases.guance.io/yum/
+enabled=1
+gpgcheck=0
+EOF
+sudo yum install -y guance
+```
+
+### Binary
+See the [release page](https://github.com/GuanceCloud/guance-cli/releases) to download the latest release.
+
+### Verify Installation
 
 ```shell
 guance version
