@@ -1,5 +1,9 @@
 # Guance Cloud CLI
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat&logo=github&color=2370ff&labelColor=454545)](http://makeapullrequest.com)
+[![Go Report Card](https://goreportcard.com/badge/github.com/GuanceCloud/guance-cli)](https://goreportcard.com/report/github.com/GuanceCloud/guance-cli)
+[![Downloads](https://img.shields.io/github/downloads/GuanceCloud/guance-cli/total.svg)](https://github.com/GuanceCloud/guance-cli/releases)
+
 A command-line tool to help users interact with Guance Cloud.
 
 ![cover](./artwork/cover.png)
@@ -65,4 +69,3 @@ This [Contribution Guidelines](https://guance.io/contribution-guide/) document c
 ## License
 
 This repository is licensed under the [Apache 2.0 License](./LICENSE).
-
