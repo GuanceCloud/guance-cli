@@ -3,6 +3,7 @@ package iac
 import (
 	"bytes"
 	_ "embed"
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
+	"github.com/tidwall/sjson"
 )
 
 var (
@@ -108,8 +110,16 @@ func newCmdImport() *cobra.Command {
 					files = append(files, &genFile{path: "outputs.tf", content: templateTerraformDashboardOutput})
 				case ResourceTypeMonitor:
 					var indices []string
+					jsonModifiers := []jsonModifier{fixNoDataPeriodCount, formatJSON}
 					for i, value := range gjson.GetBytes(content, "checkers").Array() {
-						files = append(files, &genFile{path: fmt.Sprintf("manifest-%03d.json", i+1), content: []byte(value.String())})
+						valueContent := []byte(value.String())
+						for _, modifier := range jsonModifiers {
+							valueContent, err = modifier(valueContent)
+							if err != nil {
+								return fmt.Errorf("fix data error: %w", err)
+							}
+						}
+						files = append(files, &genFile{path: fmt.Sprintf("manifest-%03d.json", i+1), content: valueContent})
 						indices = append(indices, fmt.Sprintf("%03d", i+1))
 					}
 					outputFile, err := renderFile(templateTerraformMonitorOutput, indices)
@@ -117,8 +127,6 @@ func newCmdImport() *cobra.Command {
 						return fmt.Errorf("render outputs file error: %w", err)
 					}
 					files = append(files, &genFile{path: "outputs.tf", content: outputFile})
-
-					// Write the main.tf
 					mainFile, err := renderFile(templateTerraformMonitor, indices)
 					if err != nil {
 						return fmt.Errorf("render main file error: %w", err)
@@ -169,4 +177,35 @@ func renderFile(templateContent []byte, data interface{}) ([]byte, error) {
 		return nil, fmt.Errorf("execute template error: %w", err)
 	}
 	return buf.Bytes(), nil
+}
+
+type jsonModifier func([]byte) ([]byte, error)
+
+func fixNoDataPeriodCount(src []byte) ([]byte, error) {
+	var err error
+	if gjson.GetBytes(src, "jsonScript.noDataPeriodCount").Int() == 0 {
+		src, err = sjson.DeleteBytes(src, "jsonScript.noDataPeriodCount")
+		if err != nil {
+			return nil, fmt.Errorf("delete noDataPeriodCount error: %w", err)
+		}
+	}
+	if gjson.GetBytes(src, "extend.noDataPeriodCount").Int() == 0 {
+		src, err = sjson.DeleteBytes(src, "extend.noDataPeriodCount")
+		if err != nil {
+			return nil, fmt.Errorf("delete noDataPeriodCount error: %w", err)
+		}
+	}
+	return src, nil
+}
+
+func formatJSON(src []byte) ([]byte, error) {
+	var m interface{}
+	if err := json.Unmarshal(src, &m); err != nil {
+		return nil, fmt.Errorf("unmarshal json error when formatting: %w", err)
+	}
+	b, err := json.MarshalIndent(m, "", "  ")
+	if err != nil {
+		return nil, fmt.Errorf("marshal json error when formatting: %w", err)
+	}
+	return b, nil
 }
