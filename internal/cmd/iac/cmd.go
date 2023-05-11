@@ -110,7 +110,7 @@ func newCmdImport() *cobra.Command {
 					files = append(files, &genFile{path: "outputs.tf", content: templateTerraformDashboardOutput})
 				case ResourceTypeMonitor:
 					var indices []string
-					jsonModifiers := []jsonModifier{fixNoDataPeriodCount, formatJSON}
+					jsonModifiers := []jsonModifier{fixNoData, formatJSON}
 					for i, value := range gjson.GetBytes(content, "checkers").Array() {
 						valueContent := []byte(value.String())
 						for _, modifier := range jsonModifiers {
@@ -181,7 +181,7 @@ func renderFile(templateContent []byte, data interface{}) ([]byte, error) {
 
 type jsonModifier func([]byte) ([]byte, error)
 
-func fixNoDataPeriodCount(src []byte) ([]byte, error) {
+func fixNoData(src []byte) ([]byte, error) {
 	var err error
 	if gjson.GetBytes(src, "jsonScript.noDataPeriodCount").Int() == 0 {
 		src, err = sjson.DeleteBytes(src, "jsonScript.noDataPeriodCount")
@@ -193,6 +193,24 @@ func fixNoDataPeriodCount(src []byte) ([]byte, error) {
 		src, err = sjson.DeleteBytes(src, "extend.noDataPeriodCount")
 		if err != nil {
 			return nil, fmt.Errorf("delete noDataPeriodCount error: %w", err)
+		}
+	}
+	if gjson.GetBytes(src, "jsonScript.noDataMessage").String() == "" {
+		src, err = sjson.DeleteBytes(src, "jsonScript.noDataMessage")
+		if err != nil {
+			return nil, fmt.Errorf("delete noDataMessage error: %w", err)
+		}
+	}
+	if gjson.GetBytes(src, "jsonScript.noDataTitle").String() == "" {
+		src, err = sjson.DeleteBytes(src, "jsonScript.noDataTitle")
+		if err != nil {
+			return nil, fmt.Errorf("delete noDataTitle error: %w", err)
+		}
+	}
+	if !gjson.GetBytes(src, "jsonScript.checkerOpt.infoEvent").Bool() {
+		src, err = sjson.DeleteBytes(src, "jsonScript.checkerOpt.infoEvent")
+		if err != nil {
+			return nil, fmt.Errorf("delete infoEvent error: %w", err)
 		}
 	}
 	return src, nil
