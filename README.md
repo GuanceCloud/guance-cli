@@ -10,13 +10,19 @@ A command-line tool to help users interact with Guance Cloud.
 
 ## Features
 
-1. Import external resource as Guance Cloud IaC resource (Terraform)
-    * **Console**, see [these specs](specs/iac/import.spec.md) for more details.
-    * **Grafana**, working in progress, is coming soon.
-2. Continuation Integration/Testing Observability for GitHub
-    * **JMeter**, working in progress, coming soon.
-    * **JUnit**, working in progress, coming soon.
+| Topic                              | Feature       | Proposals | User Specification               |
+| ---------------------------------- | ------------- | --------- | -------------------------------- |
+| Command-line Interface             | Core          | WIP       |                                  |
+| Import External Resource           | Console       | WIP       | [View](specs/iac/import.spec.md) |
+|                                    | Grafana       | WIP       |                                  |
+| Continuation Integration / Testing | JMeter        | WIP       |                                  |
+|                                    | JUnit         | WIP       |                                  |
+| Ecosystem Integration              | GitHub Action | -         |                                  |
+|                                    | DevContainer  | -         |                                  |
 
+References:
+
+1. More details about proposal governance mechanism, see [Guance CLI Proposals](./proposals/README.md).
 ## Installation
 
 ### Mac OSX
@@ -48,6 +54,7 @@ sudo yum install -y guance
 ```
 
 ### Binary
+
 See the [release page](https://github.com/GuanceCloud/guance-cli/releases) to download the latest release.
 
 ### Verify Installation

@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/hashicorp/go-multierror"
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 )
@@ -67,4 +68,35 @@ func (ns Run) Test() error {
 		return fmt.Errorf("run gauge failed: %w", err)
 	}
 	return nil
+}
+
+// Lint run the linter
+func (ns Run) Lint() error {
+	argList := [][]string{
+		{"golangci-lint", "run", "./..."},
+		{"markdownlint", "-i", "docs/references", "-f", "."},
+		{"gofumpt", "-l", "-e", "."},
+	}
+	return batchRunV(argList)
+}
+
+// Fmt run the formatter
+func (ns Run) Fmt() error {
+	argList := [][]string{
+		{"golangci-lint", "run", "--fix", "./..."},
+		{"gofumpt", "-l", "-w", "."},
+		{"prettier", "-w", "**/*.md"},
+	}
+	return batchRunV(argList)
+}
+
+func batchRunV(argList [][]string) error {
+	var mErr error
+	for _, args := range argList {
+		if err := sh.RunV(args[0], args[1:]...); err != nil {
+			mErr = multierror.Append(mErr, err)
+			continue
+		}
+	}
+	return mErr
 }

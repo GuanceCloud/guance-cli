@@ -16,5 +16,5 @@ Targets:
 
 ## References
 
-* [Kubernetes hack GuideLines](https://github.com/kubernetes/kubernetes/tree/v1.26.1/hack)
-* [Dagger hack Overview](https://github.com/dagger/dagger/tree/main/hack)
+- [Kubernetes hack GuideLines](https://github.com/kubernetes/kubernetes/tree/v1.26.1/hack)
+- [Dagger hack Overview](https://github.com/dagger/dagger/tree/main/hack)
