@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/hashicorp/go-multierror v1.1.1
-	github.com/magefile/mage v1.14.0
+	github.com/magefile/mage v1.15.0
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.2
 	github.com/tidwall/gjson v1.14.4
