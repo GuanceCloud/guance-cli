@@ -10,19 +10,21 @@ A command-line tool to help users interact with Guance Cloud.
 
 ## Features
 
-| Topic                              | Feature       | Proposals | User Specification               |
-| ---------------------------------- | ------------- | --------- | -------------------------------- |
-| Command-line Interface             | Core          | WIP       |                                  |
-| Import External Resource           | Console       | WIP       | [View](specs/iac/import.spec.md) |
-|                                    | Grafana       | WIP       |                                  |
-| Continuation Integration / Testing | JMeter        | WIP       |                                  |
-|                                    | JUnit         | WIP       |                                  |
-| Ecosystem Integration              | GitHub Action | -         |                                  |
-|                                    | DevContainer  | -         |                                  |
+| Topic                                   | Feature           | Proposals | User Specification               |
+| --------------------------------------- | ----------------- | --------- | -------------------------------- |
+| 🔧 _Command-line Interface_             | **Core**          | WIP       |                                  |
+| 🚅 _Resource Exporter_                  | **Console**       | WIP       | [View](specs/iac/import.spec.md) |
+|                                         | **Grafana**       | WIP       |                                  |
+| 🚀 _Continuation Integration / Testing_ | **JMeter**        | WIP       |                                  |
+|                                         | **JUnit**         | WIP       |                                  |
+| 🔭 _Ecosystem Integration_              | **GitHub** Action | -         |                                  |
+|                                         | **DevContainer**  | -         |                                  |
 
 References:
 
 1. More details about proposal governance mechanism, see [Guance CLI Proposals](./proposals/README.md).
+2. More details about user specification, see [Guance CLI User Specification](./specs/README.md).
+
 ## Installation
 
 ### Mac OSX
