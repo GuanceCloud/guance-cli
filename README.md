@@ -12,12 +12,12 @@ A command-line tool to help users interact with Guance Cloud.
 
 | Topic                                   | Feature           | Proposals | User Specification               |
 | --------------------------------------- | ----------------- | --------- | -------------------------------- |
-| 🔧 _Command-line Interface_             | **Core**          | WIP       |                                  |
-| 🚅 _Resource Exporter_                  | **Console**       | WIP       | [View](specs/iac/import.spec.md) |
+| 🔧 _Command-line Interface_             | **Core**          | [A001](./proposals/A001-guance-cli-overview.md)       | [View](specs/guance.spec.md)                                |
+| 🚅 _Resource Exporter_                  | **Console**       | WIP       | [View](specs/iac/console/import.spec.md) |
 |                                         | **Grafana**       | WIP       |                                  |
 | 🚀 _Continuation Integration / Testing_ | **JMeter**        | WIP       |                                  |
 |                                         | **JUnit**         | WIP       |                                  |
-| 🔭 _Ecosystem Integration_              | **GitHub** Action | -         |                                  |
+| 🔭 _Ecosystem Integration_              | **GitHub Action** | -         |                                  |
 |                                         | **DevContainer**  | -         |                                  |
 
 References:

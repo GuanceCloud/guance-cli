@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac"
 	"github.com/spf13/cobra"
+
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac"
 )
 
 func NewRootCmd() *cobra.Command {
