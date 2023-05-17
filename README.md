@@ -15,7 +15,7 @@ A command-line tool to help users interact with Guance Cloud.
 | 🔧 _Command-line Interface_             | **Core**          | [A001](./proposals/A001-guance-cli-overview.md)       | [View](specs/guance.spec.md)                                |
 | 🚅 _Resource Exporter_                  | **Console**       | WIP       | [View](specs/iac/console/import.spec.md) |
 |                                         | **Grafana**       | WIP       |                                  |
-| 🚀 _Continuation Integration / Testing_ | **JMeter**        | WIP       |                                  |
+| 🚀 _Continuation Integration / Testing_ | **JMeter**        | [C001](./proposals/C001-continuous-integration-jmeter.md)       |                                  |
 |                                         | **JUnit**         | WIP       |                                  |
 | 🔭 _Ecosystem Integration_              | **GitHub Action** | -         |                                  |
 |                                         | **DevContainer**  | -         |                                  |
