@@ -7,10 +7,10 @@ import (
 	"os"
 	"path"
 
-	"github.com/GuanceCloud/guance-cli/internal/cmd"
-
 	"github.com/magefile/mage/mg"
 	"github.com/spf13/cobra/doc"
+
+	"github.com/GuanceCloud/guance-cli/internal/cmd"
 )
 
 const (
