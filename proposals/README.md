@@ -11,7 +11,7 @@ If you want to draft a proposal, please follow the steps below:
 
 ## Categories
 
-| Index | Category     | Description                                 |
-| ----- | ------------ | ------------------------------------------- |
-| A     | Architecture | The architecture of Guance CLI              |
-| C     | Component    | The component to implement concret features |
+| Index | Category     | Description                                  |
+| ----- | ------------ | -------------------------------------------- |
+| A     | Architecture | The architecture of Guance CLI               |
+| C     | Component    | The component to implement concrete features |
