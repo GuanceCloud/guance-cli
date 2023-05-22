@@ -6,7 +6,7 @@ require (
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/magefile/mage v1.15.0
 	github.com/spf13/cobra v1.7.0
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	github.com/tidwall/gjson v1.14.4
 	github.com/tidwall/sjson v1.2.5
 )
