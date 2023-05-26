@@ -10,20 +10,22 @@ A command-line tool to help users interact with Guance Cloud.
 
 ## Features
 
-| Topic                                   | Feature           | Proposals | User Specification               |
-| --------------------------------------- | ----------------- | --------- | -------------------------------- |
-| 🔧 _Command-line Interface_             | **Core**          | [A001](./proposals/A001-guance-cli-overview.md)       | [View](specs/guance.spec.md)                                |
-| 🚅 _Resource Exporter_                  | **Console**       | WIP       | [View](specs/iac/console/import.spec.md) |
-|                                         | **Grafana**       | WIP       |                                  |
-| 🚀 _Continuation Integration / Testing_ | **JMeter**        | WIP       |                                  |
-|                                         | **JUnit**         | WIP       |                                  |
-| 🔭 _Ecosystem Integration_              | **GitHub Action** | -         |                                  |
-|                                         | **DevContainer**  | -         |                                  |
+| Topic                                  | Feature           | Proposals                                       | User Specification                       | Related Projects                                             |
+| -------------------------------------- | ----------------- | ----------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------ |
+| 🔧 _Command-line Interface_             | **Core**          | [A001](./proposals/A001-guance-cli-overview.md) | [View](specs/guance.spec.md)             |                                                              |
+| 🚅 _Resource Exporter_                  | **Console**       | WIP                                             | [View](specs/iac/import/console.spec.md) | [![terraform-guance-dashboard](https://img.shields.io/badge/guance-terraform--guance--dashboard-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/terraform-guance-dashboard)<br/>[![terraform-guance-monitor](https://img.shields.io/badge/guance-terraform--guance--monitor-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/terraform-guance-monitor) |
+|                                        | **Grafana**       | WIP                                             | [View](specs/iac/import/grafana.spec.md) | [![json-model](https://img.shields.io/badge/guance-json--model-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/json-model) |
+| 🚀 _Continuation Integration / Testing_ | **JMeter**        | WIP                                             |                                          | [![jmeter](https://img.shields.io/badge/apache-jmeter-brightgreen?style=flat-square&logo=github)](https://github.com/apache/jmeter) |
+|                                        | **JUnit**         | WIP                                             |                                          | [![junit](https://img.shields.io/badge/junit--team-junit5-brightgreen?style=flat-square&logo=github)](https://github.com/junit-team/junit5) |
+| 📦 *Components Installer*               | **DataKit**       | WIP                                             |                                          | [![DataKit](https://img.shields.io/badge/guance-DataKit-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/DataKit) |
+|                                        | **SCheck**        | WIP                                             |                                          | [![SCheck](https://img.shields.io/badge/guance-SCheck-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/SCheck) |
+| 🔭 _Ecosystem Integration_              | **GitHub Action** | -                                               |                                          | [![setup-guance](https://img.shields.io/badge/guance-setup--guance-brightgreen?style=flat-square&logo=github)](https://github.com/GuanceCloud/setup-guance) |
+|                                        | **DevContainer**  | -                                               |                                          |                                                              |
 
 References:
 
-1. More details about proposal governance mechanism, see [Guance CLI Proposals](./proposals/README.md).
-2. More details about user specification, see [Guance CLI User Specification](./specs/README.md).
+1. For more details about the proposal governance mechanism, see [Guance CLI Proposals](./proposals/README.md).
+2. For more details about user specification, see [Guance CLI User Specification](./specs/README.md).
 
 ## Installation
 
@@ -67,7 +69,7 @@ guance version
 
 ## Feedback
 
-If you have any feedback, please create an issue or a pull request.
+Please create an issue or pull request if you have any feedback.
 
 ## Contributing
 
