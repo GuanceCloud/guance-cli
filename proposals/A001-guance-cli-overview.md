@@ -26,7 +26,7 @@ When using Cloud in the real world, there are three ways to interact with it:
 * **Declarative** APIs and tools only describe the resource that is needed. The specific actions are automatically carried out by the platform or tool. For instance, Kubernetes Operator and Terraform compare the current resource state with the expected state to make decisions and execute orchestration logic.
 * **Interactive** tools are designed to move users step by step toward their goals. The API debugger allows users to keep adjusting parameters and initiating requests until they achieve the desired outcome.
 
-Guance CLI is focused on imperative** commands. It is a tool to help users interact with Guance Cloud.
+Guance CLI is focused on **imperative** commands. It is a tool to help users interact with Guance Cloud.
 
 ## Proposal
 
@@ -125,7 +125,7 @@ In the developing stage, the developer can use the `DevContainer` to develop the
 
 In the testing stage, the developer can use the `./hack/make -v test` command to run the unit test and integration test. The unit test is based on the Go testing framework. The integration test is based on the Gauge testing framework.
 
-In the reviewing stage, the developer can run the ./hack/make -v fmt and ./hack/make -v lint commands before the code review. It is based on the [GoFmt](https://golang.org/cmd/gofmt/) and [GolangCI-Lint](https://golangci-lint.run/).
+In the reviewing stage, the developer can run the `./hack/make -v fmt` and `./hack/make -v lint` commands before the code review. It is based on the [GoFmt](https://golang.org/cmd/gofmt/) and [GolangCI-Lint](https://golangci-lint.run/).
 
 In releasing stage, the developer can create a tag, and GitHub Actions will automatically invoke the GoReleaser. It will release all the artifacts to the GitHub release page and related repositories.
 
