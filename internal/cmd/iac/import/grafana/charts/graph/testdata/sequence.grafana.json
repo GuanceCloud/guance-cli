@@ -1,0 +1,141 @@
+{
+  "datasource": {
+    "uid": "$datasource"
+  },
+  "aliasColors": {
+    "mem_used": "rgb(214, 141, 89)",
+    "net_bytes_recv": "dark-yellow",
+    "net_bytes_sent": "semi-dark-red",
+    "net_conn_accepted": "light-blue"
+  },
+  "bars": false,
+  "dashLength": 10,
+  "dashes": false,
+  "decimals": 2,
+  "fieldConfig": {
+    "defaults": {
+      "links": []
+    },
+    "overrides": []
+  },
+  "fill": 2,
+  "fillGradient": 0,
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+  },
+  "hiddenSeries": false,
+  "id": 26,
+  "legend": {
+    "alignAsTable": true,
+    "avg": true,
+    "current": true,
+    "hideEmpty": false,
+    "hideZero": false,
+    "max": true,
+    "min": false,
+    "rightSide": false,
+    "show": true,
+    "sideWidth": null,
+    "total": false,
+    "values": true
+  },
+  "lines": true,
+  "linewidth": 3,
+  "nullPointMode": "null",
+  "options": {
+    "alertThreshold": true
+  },
+  "percentage": false,
+  "pointradius": 2,
+  "points": false,
+  "renderer": "flot",
+  "seriesOverrides": [
+    {
+      "$$hashKey": "object:491",
+      "alias": "net_bytes_recv"
+    },
+    {
+      "$$hashKey": "object:539",
+      "alias": "net_bytes_sent"
+    },
+    {
+      "$$hashKey": "object:605",
+      "alias": "net_conn_accepted"
+    }
+  ],
+  "spaceLength": 10,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+    {
+      "datasource": {
+        "uid": "grafanacloud-prom",
+        "type": "prometheus"
+      },
+      "expr": "rate(net_bytes_recv[5m])",
+      "format": "time_series",
+      "instant": false,
+      "interval": "",
+      "intervalFactor": 3,
+      "legendFormat": "net_bytes_recv",
+      "refId": "A"
+    },
+    {
+      "datasource": {
+        "uid": "grafanacloud-prom",
+        "type": "prometheus"
+      },
+      "expr": "rate(net_conntrack_listener_conn_accepted_total[5m])",
+      "hide": false,
+      "interval": "30s",
+      "legendFormat": "net_conn_accepted",
+      "refId": "C"
+    }
+  ],
+  "thresholds": [],
+  "timeFrom": null,
+  "timeRegions": [],
+  "timeShift": null,
+  "title": "Network Input",
+  "tooltip": {
+    "shared": true,
+    "sort": 0,
+    "value_type": "individual"
+  },
+  "type": "graph",
+  "xaxis": {
+    "buckets": null,
+    "mode": "time",
+    "name": null,
+    "show": true,
+    "values": []
+  },
+  "yaxes": [
+    {
+      "$$hashKey": "object:167",
+      "format": "percent",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    },
+    {
+      "$$hashKey": "object:168",
+      "format": "percent",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+  ],
+  "yaxis": {
+    "align": false,
+    "alignLevel": null
+  },
+  "pluginVersion": "10.0.0-cloud.3.b04cc88b"
+}
