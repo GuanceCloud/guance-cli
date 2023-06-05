@@ -23,14 +23,19 @@ func BuildTargets(targets []grafanaspec.Target, chartType string) ([]interface{}
 	for _, item := range targets {
 		target := Target{}
 		if err := types.Decode(item, &target); err != nil {
-			mErr = multierror.Append(mErr, err)
+			mErr = multierror.Append(mErr, fmt.Errorf("failed to decode target: %w", err))
+			continue
+		}
+		promql, err := (&Rewriter{Measurement: "prom"}).Rewrite(target.Expr)
+		if err != nil {
+			mErr = multierror.Append(mErr, fmt.Errorf("failed to rewrite promql: %w", err))
 			continue
 		}
 		queries = append(queries, map[string]interface{}{
 			"qtype": "promql",
 			"query": map[string]interface{}{
 				"code":     target.RefId,
-				"q":        target.Expr,
+				"q":        promql,
 				"type":     "promql",
 				"funcList": []string{},
 			},

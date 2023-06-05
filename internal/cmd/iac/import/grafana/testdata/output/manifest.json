@@ -20,6 +20,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "CPU Busy",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 0,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -30,7 +36,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "(sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode!=\"idle\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))) * 100",
+              "q": "  (\n      sum by (instance) (\n        irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode!=\"idle\"})\n      )\n    / on (instance) group_left ()\n      sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))\n  )\n*\n  100",
               "type": "promql"
             },
             "type": "gauge"
@@ -51,6 +57,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "Sys Load (5m avg)",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 3,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -61,7 +73,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "avg(node_load5{instance=\"$node\",job=\"$job\"}) /  count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)) * 100",
+              "q": "    avg(node:load5{instance=\"#{node}\",job=\"#{job}\"})\n  /\n    count(count by (cpu) (node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"}))\n*\n  100",
               "type": "promql"
             },
             "type": "gauge"
@@ -82,6 +94,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "Sys Load (15m avg)",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 6,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -92,7 +110,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "avg(node_load15{instance=\"$node\",job=\"$job\"}) /  count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu)) * 100",
+              "q": "    avg(node:load15{instance=\"#{node}\",job=\"#{job}\"})\n  /\n    count(count by (cpu) (node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"}))\n*\n  100",
               "type": "promql"
             },
             "type": "gauge"
@@ -113,6 +131,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "RAM Used",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 9,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -123,7 +147,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "((node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}) / (node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} )) * 100",
+              "q": "  (\n      (\n          node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n        -\n          node:memory_MemFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n      )\n    /\n      (node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"})\n  )\n*\n  100",
               "type": "promql"
             },
             "type": "gauge"
@@ -137,7 +161,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "100 - ((node_memory_MemAvailable_bytes{instance=\"$node\",job=\"$job\"} * 100) / node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"})",
+              "q": "  100\n-\n  (\n      (node:memory_MemAvailable_bytes{instance=\"#{node}\",job=\"#{job}\"} * 100)\n    /\n      node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  )",
               "type": "promql"
             },
             "type": "gauge"
@@ -158,6 +182,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "SWAP Used",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 12,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -168,7 +198,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "((node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"}) / (node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} )) * 100",
+              "q": "  (\n      (\n          node:memory_SwapTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n        -\n          node:memory_SwapFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n      )\n    /\n      (node:memory_SwapTotal_bytes{instance=\"#{node}\",job=\"#{job}\"})\n  )\n*\n  100",
               "type": "promql"
             },
             "type": "gauge"
@@ -189,6 +219,12 @@
           "name": "Quick CPU / Mem / Disk"
         },
         "name": "Root FS Used",
+        "pos": {
+          "h": 4,
+          "w": 3,
+          "x": 15,
+          "y": 1
+        },
         "queries": [
           {
             "color": "",
@@ -199,7 +235,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",mountpoint=\"/\",fstype!=\"rootfs\"} * 100) / node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",mountpoint=\"/\",fstype!=\"rootfs\"})",
+              "q": "  100\n-\n  (\n      (node:filesystem_avail_bytes{fstype!=\"rootfs\",instance=\"#{node}\",job=\"#{job}\",mountpoint=\"/\"} * 100)\n    /\n      node:filesystem_size_bytes{fstype!=\"rootfs\",instance=\"#{node}\",job=\"#{job}\",mountpoint=\"/\"}\n  )",
               "type": "promql"
             },
             "type": "gauge"
@@ -247,7 +283,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "count(count(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}) by (cpu))",
+              "q": "count(count by (cpu) (node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"}))",
               "type": "promql"
             },
             "type": "singlestat"
@@ -294,7 +330,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_time_seconds{instance=\"$node\",job=\"$job\"} - node_boot_time_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "  node:time_seconds{instance=\"#{node}\",job=\"#{job}\"}\n-\n  node:boot_time_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "singlestat"
@@ -341,7 +377,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",mountpoint=\"/\",fstype!=\"rootfs\"}",
+              "q": "node:filesystem_size_bytes{fstype!=\"rootfs\",instance=\"#{node}\",job=\"#{job}\",mountpoint=\"/\"}",
               "type": "promql"
             },
             "type": "singlestat"
@@ -388,7 +424,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "singlestat"
@@ -435,7 +471,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_SwapTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "singlestat"
@@ -471,7 +507,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"system\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"system\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -485,7 +521,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"user\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -499,7 +535,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"iowait\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -513,7 +549,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=~\".*irq\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=~\".*irq\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -527,7 +563,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(\n      node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode!=\"idle\",mode!=\"iowait\",mode!=\"irq\",mode!=\"softirq\",mode!=\"system\",mode!=\"user\"}\n    )\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -541,7 +577,7 @@
             "query": {
               "code": "F",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"idle\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -578,7 +614,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -592,7 +628,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"} - (node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"})",
+              "q": "    node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  -\n    node:memory_MemFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n-\n  (\n        node:memory_Cached_bytes{instance=\"#{node}\",job=\"#{job}\"}\n      +\n        node:memory_Buffers_bytes{instance=\"#{node}\",job=\"#{job}\"}\n    +\n      node:memory_SReclaimable_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  )",
               "type": "promql"
             },
             "type": "sequence"
@@ -606,7 +642,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} + node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} + node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "    node:memory_Cached_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  +\n    node:memory_Buffers_bytes{instance=\"#{node}\",job=\"#{job}\"}\n+\n  node:memory_SReclaimable_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -620,7 +656,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_MemFree_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -634,7 +670,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "(node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"})",
+              "q": "(\n    node:memory_SwapTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  -\n    node:memory_SwapFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n)",
               "type": "promql"
             },
             "type": "sequence"
@@ -671,7 +707,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
+              "q": "irate(node:network_receive_bytes_total{instance=\"#{node}\",job=\"#{job}\"}) * 8",
               "type": "promql"
             },
             "type": "sequence"
@@ -685,7 +721,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
+              "q": "irate(node:network_transmit_bytes_total{instance=\"#{node}\",job=\"#{job}\"}) * 8",
               "type": "promql"
             },
             "type": "sequence"
@@ -722,7 +758,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "100 - ((node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'} * 100) / node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'})",
+              "q": "  100\n-\n  (\n      (node:filesystem_avail_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"} * 100)\n    /\n      node:filesystem_size_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}\n  )",
               "type": "promql"
             },
             "type": "sequence"
@@ -759,7 +795,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"system\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"system\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -773,7 +809,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"user\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -787,7 +823,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"nice\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"nice\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -801,7 +837,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"iowait\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -815,7 +851,7 @@
             "query": {
               "code": "F",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"irq\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"irq\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -829,7 +865,7 @@
             "query": {
               "code": "G",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"softirq\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"softirq\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -843,7 +879,7 @@
             "query": {
               "code": "H",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"steal\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"steal\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -857,7 +893,7 @@
             "query": {
               "code": "J",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+              "q": "  sum by (instance) (irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"idle\"}))\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
               "type": "promql"
             },
             "type": "sequence"
@@ -894,7 +930,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_MemTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"} - node_memory_Slab_bytes{instance=\"$node\",job=\"$job\"} - node_memory_PageTables_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapCached_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "            node:memory_MemTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n          -\n            node:memory_MemFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n        -\n          node:memory_Buffers_bytes{instance=\"#{node}\",job=\"#{job}\"}\n      -\n        node:memory_Cached_bytes{instance=\"#{node}\",job=\"#{job}\"}\n    -\n      node:memory_Slab_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  -\n    node:memory_PageTables_bytes{instance=\"#{node}\",job=\"#{job}\"}\n-\n  node:memory_SwapCached_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -908,7 +944,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_PageTables_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_PageTables_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -922,7 +958,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_SwapCached_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_SwapCached_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -936,7 +972,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_memory_Slab_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Slab_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -950,7 +986,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "node_memory_Cached_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Cached_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -964,7 +1000,7 @@
             "query": {
               "code": "F",
               "funcList": [],
-              "q": "node_memory_Buffers_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Buffers_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -978,7 +1014,7 @@
             "query": {
               "code": "G",
               "funcList": [],
-              "q": "node_memory_MemFree_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_MemFree_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -992,7 +1028,7 @@
             "query": {
               "code": "H",
               "funcList": [],
-              "q": "(node_memory_SwapTotal_bytes{instance=\"$node\",job=\"$job\"} - node_memory_SwapFree_bytes{instance=\"$node\",job=\"$job\"})",
+              "q": "(\n    node:memory_SwapTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}\n  -\n    node:memory_SwapFree_bytes{instance=\"#{node}\",job=\"#{job}\"}\n)",
               "type": "promql"
             },
             "type": "sequence"
@@ -1006,7 +1042,7 @@
             "query": {
               "code": "I",
               "funcList": [],
-              "q": "node_memory_HardwareCorrupted_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_HardwareCorrupted_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1043,7 +1079,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
+              "q": "irate(node:network_receive_bytes_total{instance=\"#{node}\",job=\"#{job}\"}) * 8",
               "type": "promql"
             },
             "type": "sequence"
@@ -1057,7 +1093,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])*8",
+              "q": "irate(node:network_transmit_bytes_total{instance=\"#{node}\",job=\"#{job}\"}) * 8",
               "type": "promql"
             },
             "type": "sequence"
@@ -1094,7 +1130,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'} - node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "  node:filesystem_size_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}\n-\n  node:filesystem_avail_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1131,7 +1167,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
+              "q": "irate(\n  node:disk_reads_completed_total{device=~\"#{diskdevices}\",instance=\"#{node}\",job=\"#{job}\"}\n)",
               "type": "promql"
             },
             "type": "sequence"
@@ -1145,7 +1181,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
+              "q": "irate(\n  node:disk_writes_completed_total{device=~\"#{diskdevices}\",instance=\"#{node}\",job=\"#{job}\"}\n)",
               "type": "promql"
             },
             "type": "sequence"
@@ -1182,7 +1218,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
+              "q": "irate(node:disk_read_bytes_total{device=~\"#{diskdevices}\",instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -1196,7 +1232,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"}[$__rate_interval])",
+              "q": "irate(node:disk_written_bytes_total{device=~\"#{diskdevices}\",instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -1233,7 +1269,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\",device=~\"$diskdevices\"} [$__rate_interval])",
+              "q": "irate(\n  node:disk_io_time_seconds_total{device=~\"#{diskdevices}\",instance=\"#{node}\",job=\"#{job}\"}\n)",
               "type": "promql"
             },
             "type": "sequence"
@@ -1270,7 +1306,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[1m])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_guest_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"user\"}[1m])\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"}[1m])))",
               "type": "promql"
             },
             "type": "sequence"
@@ -1284,7 +1320,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "sum by(instance) (irate(node_cpu_guest_seconds_total{instance=\"$node\",job=\"$job\", mode=\"nice\"}[1m])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[1m])))",
+              "q": "  sum by (instance) (\n    irate(node:cpu_guest_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"nice\"}[1m])\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(node:cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"}[1m])))",
               "type": "promql"
             },
             "type": "sequence"
@@ -1321,7 +1357,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Inactive_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Inactive_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1335,7 +1371,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Active_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Active_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1372,7 +1408,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Committed_AS_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Committed_AS_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1386,7 +1422,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_CommitLimit_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_CommitLimit_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1423,7 +1459,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Inactive_file_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Inactive_file_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1437,7 +1473,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Inactive_anon_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Inactive_anon_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1451,7 +1487,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_Active_file_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Active_file_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1465,7 +1501,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_memory_Active_anon_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Active_anon_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1502,7 +1538,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Writeback_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Writeback_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1516,7 +1552,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_WritebackTmp_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_WritebackTmp_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1530,7 +1566,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_Dirty_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Dirty_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1567,7 +1603,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Mapped_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Mapped_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1581,7 +1617,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Shmem_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Shmem_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1595,7 +1631,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_ShmemHugePages_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_ShmemHugePages_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1609,7 +1645,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_memory_ShmemPmdMapped_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_ShmemPmdMapped_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1646,7 +1682,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_SUnreclaim_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_SUnreclaim_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1660,7 +1696,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_SReclaimable_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_SReclaimable_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1697,7 +1733,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_VmallocChunk_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_VmallocChunk_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1711,7 +1747,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_VmallocTotal_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_VmallocTotal_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1725,7 +1761,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_VmallocUsed_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_VmallocUsed_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1762,7 +1798,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Bounce_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Bounce_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1799,7 +1835,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_AnonHugePages_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_AnonHugePages_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1813,7 +1849,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_AnonPages_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_AnonPages_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1850,7 +1886,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_KernelStack_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_KernelStack_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1864,7 +1900,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Percpu_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Percpu_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1901,7 +1937,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_HugePages_Free{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_HugePages_Free{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1915,7 +1951,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_HugePages_Rsvd{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_HugePages_Rsvd{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1929,7 +1965,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_HugePages_Surp{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_HugePages_Surp{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1966,7 +2002,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_HugePages_Total{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_HugePages_Total{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -1980,7 +2016,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Hugepagesize_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Hugepagesize_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2017,7 +2053,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_DirectMap1G_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_DirectMap1G_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2031,7 +2067,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_DirectMap2M_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_DirectMap2M_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2045,7 +2081,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_memory_DirectMap4k_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_DirectMap4k_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2082,7 +2118,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_Unevictable_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Unevictable_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2096,7 +2132,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_memory_Mlocked_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_Mlocked_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2133,7 +2169,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_memory_NFS_Unstable_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:memory_NFS_Unstable_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2170,7 +2206,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_vmstat_pgpgin{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pgpgin{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2184,7 +2220,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_vmstat_pgpgout{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pgpgout{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2221,7 +2257,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_vmstat_pswpin{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pswpin{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2235,7 +2271,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_vmstat_pswpout{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pswpout{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2272,7 +2308,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_vmstat_pgfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pgfault{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2286,7 +2322,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_vmstat_pgmajfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_pgmajfault{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2300,7 +2336,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "irate(node_vmstat_pgfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])  - irate(node_vmstat_pgmajfault{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "  irate(node:vmstat_pgfault{instance=\"#{node}\",job=\"#{job}\"})\n-\n  irate(node:vmstat_pgmajfault{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2337,7 +2373,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_vmstat_oom_kill{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:vmstat_oom_kill{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2374,7 +2410,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_timex_estimated_error_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_estimated_error_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2388,7 +2424,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_timex_offset_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_offset_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2402,7 +2438,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_timex_maxerror_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_maxerror_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2439,7 +2475,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_timex_loop_time_constant{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_loop_time_constant{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2476,7 +2512,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_timex_sync_status{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_sync_status{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2490,7 +2526,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_timex_frequency_adjustment_ratio{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_frequency_adjustment_ratio{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2527,7 +2563,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_timex_tick_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_tick_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2541,7 +2577,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_timex_tai_offset_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:timex_tai_offset_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2578,7 +2614,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_procs_blocked{instance=\"$node\",job=\"$job\"}",
+              "q": "node:procs_blocked{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2592,7 +2628,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_procs_running{instance=\"$node\",job=\"$job\"}",
+              "q": "node:procs_running{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2629,7 +2665,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_processes_state{instance=\"$node\",job=\"$job\"}",
+              "q": "node:processes_state{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2666,7 +2702,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_forks_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:forks_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2703,7 +2739,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(process_virtual_memory_bytes{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:process_virtual_memory_bytes{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2717,7 +2753,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "process_resident_memory_max_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:process_resident_memory_max_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2731,7 +2767,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "irate(process_virtual_memory_bytes{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:process_virtual_memory_bytes{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2745,7 +2781,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "irate(process_virtual_memory_max_bytes{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:process_virtual_memory_max_bytes{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2782,7 +2818,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_processes_pids{instance=\"$node\",job=\"$job\"}",
+              "q": "node:processes_pids{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2796,7 +2832,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_processes_max_processes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:processes_max_processes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2833,7 +2869,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_schedstat_running_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:schedstat_running_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2847,7 +2883,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_schedstat_waiting_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:schedstat_waiting_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2884,7 +2920,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_processes_threads{instance=\"$node\",job=\"$job\"}",
+              "q": "node:processes_threads{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2898,7 +2934,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_processes_max_threads{instance=\"$node\",job=\"$job\"}",
+              "q": "node:processes_max_threads{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -2935,7 +2971,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_context_switches_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:context_switches_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2949,7 +2985,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_intr_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:intr_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -2986,7 +3022,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_load1{instance=\"$node\",job=\"$job\"}",
+              "q": "node:load1{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3000,7 +3036,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_load5{instance=\"$node\",job=\"$job\"}",
+              "q": "node:load5{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3014,7 +3050,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_load15{instance=\"$node\",job=\"$job\"}",
+              "q": "node:load15{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3051,7 +3087,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_interrupts_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:interrupts_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3088,7 +3124,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_schedstat_timeslices_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:schedstat_timeslices_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3125,7 +3161,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_entropy_available_bits{instance=\"$node\",job=\"$job\"}",
+              "q": "node:entropy_available_bits{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3162,7 +3198,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(process_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:process_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3199,7 +3235,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "process_max_fds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:process_max_fds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3213,7 +3249,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "process_open_fds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:process_open_fds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3250,7 +3286,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_hwmon_temp_celsius{instance=\"$node\",job=\"$job\"}",
+              "q": "node:hwmon_temp_celsius{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3264,7 +3300,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_hwmon_temp_crit_alarm_celsius{instance=\"$node\",job=\"$job\"}",
+              "q": "node:hwmon_temp_crit_alarm_celsius{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3278,7 +3314,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_hwmon_temp_crit_celsius{instance=\"$node\",job=\"$job\"}",
+              "q": "node:hwmon_temp_crit_celsius{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3292,7 +3328,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_hwmon_temp_crit_hyst_celsius{instance=\"$node\",job=\"$job\"}",
+              "q": "node:hwmon_temp_crit_hyst_celsius{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3306,7 +3342,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "node_hwmon_temp_max_celsius{instance=\"$node\",job=\"$job\"}",
+              "q": "node:hwmon_temp_max_celsius{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3343,7 +3379,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_cooling_device_cur_state{instance=\"$node\",job=\"$job\"}",
+              "q": "node:cooling_device_cur_state{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3357,7 +3393,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_cooling_device_max_state{instance=\"$node\",job=\"$job\"}",
+              "q": "node:cooling_device_max_state{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3394,7 +3430,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_power_supply_online{instance=\"$node\",job=\"$job\"}",
+              "q": "node:power_supply_online{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3431,7 +3467,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_systemd_socket_accepted_connections_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:systemd_socket_accepted_connections_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3468,7 +3504,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"activating\"}",
+              "q": "node:systemd_units{instance=\"#{node}\",job=\"#{job}\",state=\"activating\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3482,7 +3518,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"active\"}",
+              "q": "node:systemd_units{instance=\"#{node}\",job=\"#{job}\",state=\"active\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3496,7 +3532,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"deactivating\"}",
+              "q": "node:systemd_units{instance=\"#{node}\",job=\"#{job}\",state=\"deactivating\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3510,7 +3546,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"failed\"}",
+              "q": "node:systemd_units{instance=\"#{node}\",job=\"#{job}\",state=\"failed\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3524,7 +3560,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "node_systemd_units{instance=\"$node\",job=\"$job\",state=\"inactive\"}",
+              "q": "node:systemd_units{instance=\"#{node}\",job=\"#{job}\",state=\"inactive\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3561,7 +3597,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_reads_completed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3575,7 +3611,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_writes_completed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3612,7 +3648,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_read_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_read_bytes_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3626,7 +3662,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_written_bytes_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_written_bytes_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3663,7 +3699,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_read_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_reads_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "  irate(node:disk_read_time_seconds_total{instance=\"#{node}\",job=\"#{job}\"})\n/\n  irate(node:disk_reads_completed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3677,7 +3713,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_write_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval]) / irate(node_disk_writes_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "  irate(node:disk_write_time_seconds_total{instance=\"#{node}\",job=\"#{job}\"})\n/\n  irate(node:disk_writes_completed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3714,7 +3750,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_io_time_weighted_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_io_time_weighted_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3751,7 +3787,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_reads_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_reads_merged_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3765,7 +3801,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_writes_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_writes_merged_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3802,7 +3838,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_io_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_io_time_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3816,7 +3852,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_discard_time_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_discard_time_seconds_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3853,7 +3889,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_disk_io_now{instance=\"$node\",job=\"$job\"}",
+              "q": "node:disk_io_now{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3890,7 +3926,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_disk_discards_completed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_discards_completed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3904,7 +3940,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_disk_discards_merged_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:disk_discards_merged_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -3941,7 +3977,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_avail_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_avail_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3955,7 +3991,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_filesystem_free_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_free_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -3969,7 +4005,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_filesystem_size_bytes{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_size_bytes{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4006,7 +4042,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_files_free{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_files_free{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4043,7 +4079,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filefd_maximum{instance=\"$node\",job=\"$job\"}",
+              "q": "node:filefd_maximum{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4057,7 +4093,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_filefd_allocated{instance=\"$node\",job=\"$job\"}",
+              "q": "node:filefd_allocated{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4094,7 +4130,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_files{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_files{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4131,7 +4167,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_filesystem_readonly{instance=\"$node\",job=\"$job\",device!~'rootfs'}",
+              "q": "node:filesystem_readonly{device!~\"rootfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4145,7 +4181,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_filesystem_device_error{instance=\"$node\",job=\"$job\",device!~'rootfs',fstype!~'tmpfs'}",
+              "q": "node:filesystem_device_error{device!~\"rootfs\",fstype!~\"tmpfs\",instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4182,7 +4218,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_packets_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_packets_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4196,7 +4232,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_packets_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_packets_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4233,7 +4269,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_errs_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_errs_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4247,7 +4283,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_errs_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_errs_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4284,7 +4320,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_drop_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_drop_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4298,7 +4334,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_drop_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_drop_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4335,7 +4371,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_compressed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_compressed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4349,7 +4385,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_compressed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_compressed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4386,7 +4422,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_multicast_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_multicast_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4423,7 +4459,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_fifo_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_fifo_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4437,7 +4473,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_network_transmit_fifo_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_fifo_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4474,7 +4510,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_receive_frame_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_receive_frame_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4511,7 +4547,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_transmit_carrier_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_carrier_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4548,7 +4584,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_network_transmit_colls_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:network_transmit_colls_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4585,7 +4621,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_nf_conntrack_entries{instance=\"$node\",job=\"$job\"}",
+              "q": "node:nf_conntrack_entries{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4599,7 +4635,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_nf_conntrack_entries_limit{instance=\"$node\",job=\"$job\"}",
+              "q": "node:nf_conntrack_entries_limit{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4636,7 +4672,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_arp_entries{instance=\"$node\",job=\"$job\"}",
+              "q": "node:arp_entries{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4673,7 +4709,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_network_mtu_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:network_mtu_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4710,7 +4746,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_network_speed_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:network_speed_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4747,7 +4783,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_network_transmit_queue_length{instance=\"$node\",job=\"$job\"}",
+              "q": "node:network_transmit_queue_length{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4784,7 +4820,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_softnet_processed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:softnet_processed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4798,7 +4834,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_softnet_dropped_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:softnet_dropped_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4835,7 +4871,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_softnet_times_squeezed_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:softnet_times_squeezed_total{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -4872,7 +4908,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_network_up{operstate=\"up\",instance=\"$node\",job=\"$job\"}",
+              "q": "node:network_up{instance=\"#{node}\",job=\"#{job}\",operstate=\"up\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4886,7 +4922,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_network_carrier{instance=\"$node\",job=\"$job\"}",
+              "q": "node:network_carrier{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4923,7 +4959,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_sockstat_TCP_alloc{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_alloc{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4937,7 +4973,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_sockstat_TCP_inuse{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_inuse{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4951,7 +4987,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_sockstat_TCP_mem{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_mem{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4965,7 +5001,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_sockstat_TCP_orphan{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_orphan{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -4979,7 +5015,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "node_sockstat_TCP_tw{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_tw{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5016,7 +5052,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_sockstat_UDPLITE_inuse{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_UDPLITE_inuse{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5030,7 +5066,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_sockstat_UDP_inuse{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_UDP_inuse{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5044,7 +5080,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_sockstat_UDP_mem{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_UDP_mem{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5081,7 +5117,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_sockstat_FRAG_inuse{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_FRAG_inuse{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5095,7 +5131,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_sockstat_RAW_inuse{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_RAW_inuse{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5132,7 +5168,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_sockstat_TCP_mem_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_TCP_mem_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5146,7 +5182,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_sockstat_UDP_mem_bytes{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_UDP_mem_bytes{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5160,7 +5196,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_sockstat_FRAG_memory{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_FRAG_memory{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5197,7 +5233,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_sockstat_sockets_used{instance=\"$node\",job=\"$job\"}",
+              "q": "node:sockstat_sockets_used{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5234,7 +5270,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_IpExt_InOctets{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_IpExt_InOctets{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5248,7 +5284,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_IpExt_OutOctets{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_IpExt_OutOctets{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5285,7 +5321,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Ip_Forwarding{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Ip_Forwarding{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5322,7 +5358,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Icmp_InMsgs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Icmp_InMsgs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5336,7 +5372,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_Icmp_OutMsgs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Icmp_OutMsgs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5373,7 +5409,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Icmp_InErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Icmp_InErrors{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5410,7 +5446,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_InDatagrams{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_InDatagrams{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5424,7 +5460,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_OutDatagrams{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_OutDatagrams{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5461,7 +5497,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_InErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_InErrors{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5475,7 +5511,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_NoPorts{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_NoPorts{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5489,7 +5525,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "irate(node_netstat_UdpLite_InErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_UdpLite_InErrors{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5503,7 +5539,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_RcvbufErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_RcvbufErrors{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5517,7 +5553,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "irate(node_netstat_Udp_SndbufErrors{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Udp_SndbufErrors{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5554,7 +5590,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_InSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_InSegs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5568,7 +5604,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_OutSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_OutSegs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5605,7 +5641,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_ListenOverflows{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_ListenOverflows{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5619,7 +5655,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_ListenDrops{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_ListenDrops{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5633,7 +5669,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_TCPSynRetrans{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_TCPSynRetrans{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5647,7 +5683,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_RetransSegs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_RetransSegs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5661,7 +5697,7 @@
             "query": {
               "code": "E",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_InErrs{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_InErrs{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5675,7 +5711,7 @@
             "query": {
               "code": "F",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_OutRsts{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_OutRsts{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5712,7 +5748,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_netstat_Tcp_CurrEstab{instance=\"$node\",job=\"$job\"}",
+              "q": "node:netstat_Tcp_CurrEstab{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5726,7 +5762,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_netstat_Tcp_MaxConn{instance=\"$node\",job=\"$job\"}",
+              "q": "node:netstat_Tcp_MaxConn{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5763,7 +5799,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_SyncookiesFailed{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_SyncookiesFailed{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5777,7 +5813,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_SyncookiesRecv{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_SyncookiesRecv{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5791,7 +5827,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "irate(node_netstat_TcpExt_SyncookiesSent{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_TcpExt_SyncookiesSent{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5828,7 +5864,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_ActiveOpens{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_ActiveOpens{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5842,7 +5878,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "irate(node_netstat_Tcp_PassiveOpens{instance=\"$node\",job=\"$job\"}[$__rate_interval])",
+              "q": "irate(node:netstat_Tcp_PassiveOpens{instance=\"#{node}\",job=\"#{job}\"})",
               "type": "promql"
             },
             "type": "sequence"
@@ -5879,7 +5915,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_tcp_connection_states{state=\"established\",instance=\"$node\",job=\"$job\"}",
+              "q": "node:tcp_connection_states{instance=\"#{node}\",job=\"#{job}\",state=\"established\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5893,7 +5929,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_tcp_connection_states{state=\"fin_wait2\",instance=\"$node\",job=\"$job\"}",
+              "q": "node:tcp_connection_states{instance=\"#{node}\",job=\"#{job}\",state=\"fin_wait2\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5907,7 +5943,7 @@
             "query": {
               "code": "C",
               "funcList": [],
-              "q": "node_tcp_connection_states{state=\"listen\",instance=\"$node\",job=\"$job\"}",
+              "q": "node:tcp_connection_states{instance=\"#{node}\",job=\"#{job}\",state=\"listen\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5921,7 +5957,7 @@
             "query": {
               "code": "D",
               "funcList": [],
-              "q": "node_tcp_connection_states{state=\"time_wait\",instance=\"$node\",job=\"$job\"}",
+              "q": "node:tcp_connection_states{instance=\"#{node}\",job=\"#{job}\",state=\"time_wait\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5958,7 +5994,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_scrape_collector_duration_seconds{instance=\"$node\",job=\"$job\"}",
+              "q": "node:scrape_collector_duration_seconds{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -5995,7 +6031,7 @@
             "query": {
               "code": "A",
               "funcList": [],
-              "q": "node_scrape_collector_success{instance=\"$node\",job=\"$job\"}",
+              "q": "node:scrape_collector_success{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"
@@ -6009,7 +6045,7 @@
             "query": {
               "code": "B",
               "funcList": [],
-              "q": "node_textfile_scrape_error{instance=\"$node\",job=\"$job\"}",
+              "q": "node:textfile_scrape_error{instance=\"#{node}\",job=\"#{job}\"}",
               "type": "promql"
             },
             "type": "sequence"

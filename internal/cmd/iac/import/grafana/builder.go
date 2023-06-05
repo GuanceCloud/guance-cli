@@ -26,9 +26,10 @@ func NewBuilder() *Builder {
 }
 
 func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
+	var mErr error
 	b.reset()
 
-	var mErr error
+	// Build panels
 	for _, panel := range src.Panels {
 		if err := b.acceptPanel(panel); err != nil {
 			mErr = multierror.Append(mErr, err)
@@ -36,6 +37,32 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 	}
 	if mErr != nil {
 		return nil, fmt.Errorf("failed to build dashboard: %w", mErr)
+	}
+
+	// Build Variables
+	variables := make([]map[string]interface{}, 0)
+	for _, variable := range src.Templating.List {
+		variables = append(variables, map[string]interface{}{
+			"code":       variable.Name,
+			"datasource": "ftinfluxdb",
+			"definition": map[string]interface{}{
+				"defaultVal": map[string]interface{}{
+					"label": "",
+					"value": "",
+				},
+				"field":  "",
+				"metric": "node",
+				"object": "",
+				"tag":    variable.Name,
+				"value":  "",
+			},
+			"hide":             0,
+			"isHiddenAsterisk": 0,
+			"name":             variable.Name,
+			"seq":              0,
+			"type":             "TAG",
+			"valueSort":        "asc",
+		})
 	}
 
 	return map[string]interface{}{
@@ -49,11 +76,34 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 			"charts": b.charts,
 			"groups": b.groups,
 			"type":   "template",
+			"vars": []map[string]any{
+				{
+					"code":       "job",
+					"datasource": "ftinfluxdb",
+					"definition": map[string]any{
+						"defaultVal": map[string]any{
+							"label": "",
+							"value": "",
+						},
+						"field":  "",
+						"metric": "node",
+						"object": "",
+						"tag":    "job",
+						"value":  "",
+					},
+					"hide":             0,
+					"isHiddenAsterisk": 0,
+					"name":             "job",
+					"seq":              0,
+					"type":             "TAG",
+					"valueSort":        "asc",
+				},
+			},
 		},
 		"summary":   types.StringValue(src.Description),
 		"title":     types.StringValue(src.Title),
 		"thumbnail": "",
-		"tags":      []string{},
+		"tags":      src.Tags,
 		"tagInfo":   []any{},
 	}, nil
 }
