@@ -8,25 +8,31 @@ import (
 	"github.com/hashicorp/go-multierror"
 )
 
+// Target is the query target of prometheus
 type Target struct {
 	Datasource   any    `json:"datasource"`
 	Expr         string `json:"expr"`
 	Hide         bool   `json:"hide"`
 	Interval     string `json:"interval"`
 	LegendFormat string `json:"legendFormat"`
-	RefId        string `json:"refId"`
+	RefID        string `json:"refId"`
 }
 
-func BuildTargets(targets []grafanaspec.Target, chartType string) ([]interface{}, error) {
+type Builder struct {
+	Measurement string
+	ChartType   string
+}
+
+func (builder *Builder) BuildTargets(targets []grafanaspec.Target) ([]interface{}, error) {
 	var mErr error
-	var queries []interface{}
+	queries := make([]interface{}, 0, len(targets))
 	for _, item := range targets {
 		target := Target{}
 		if err := types.Decode(item, &target); err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to decode target: %w", err))
 			continue
 		}
-		promql, err := (&Rewriter{Measurement: "prom"}).Rewrite(target.Expr)
+		promql, err := (&Rewriter{Measurement: builder.Measurement}).Rewrite(target.Expr)
 		if err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to rewrite promql: %w", err))
 			continue
@@ -34,12 +40,12 @@ func BuildTargets(targets []grafanaspec.Target, chartType string) ([]interface{}
 		queries = append(queries, map[string]interface{}{
 			"qtype": "promql",
 			"query": map[string]interface{}{
-				"code":     target.RefId,
+				"code":     target.RefID,
 				"q":        promql,
 				"type":     "promql",
 				"funcList": []string{},
 			},
-			"type":       chartType,
+			"type":       builder.ChartType,
 			"datasource": "dataflux",
 			"color":      "",
 			"name":       "",

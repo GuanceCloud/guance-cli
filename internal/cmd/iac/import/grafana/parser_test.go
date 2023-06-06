@@ -2,9 +2,10 @@ package grafana
 
 import (
 	_ "embed"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestParse(t *testing.T) {
@@ -40,5 +41,4 @@ func TestParse(t *testing.T) {
 			//assert.Equal(t, string(want), string(got))
 		})
 	}
-
 }

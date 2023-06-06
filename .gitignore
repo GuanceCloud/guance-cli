@@ -40,3 +40,6 @@ internal/testing/specs/*.spec
 .vscode/
 .idea/
 *.swp
+
+# Config with credentials
+specs/iac/import/grafana/node/datakit.conf

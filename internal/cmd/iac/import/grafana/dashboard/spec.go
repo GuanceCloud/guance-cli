@@ -812,4 +812,3 @@ type VariableModel struct {
 // TODO docs
 // TODO this implies some wider pattern/discriminated union, probably?
 type VariableType string
-

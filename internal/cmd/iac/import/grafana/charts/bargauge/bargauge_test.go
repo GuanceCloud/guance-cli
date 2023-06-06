@@ -26,11 +26,11 @@ func TestChartBuilder_Build(t *testing.T) {
 	} {
 		t.Run(tt.name, func(t *testing.T) {
 			input := make(map[string]interface{})
-			inputJson, err := os.ReadFile(tt.grafana)
+			inputJSON, err := os.ReadFile(tt.grafana)
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
-			if err := json.Unmarshal(inputJson, &input); !assert.NoError(t, err) {
+			if err := json.Unmarshal(inputJSON, &input); !assert.NoError(t, err) {
 				t.FailNow()
 			}
 
@@ -39,18 +39,18 @@ func TestChartBuilder_Build(t *testing.T) {
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
-			actualJson, err := json.Marshal(actual)
+			actualJSON, err := json.Marshal(actual)
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
 
-			fmt.Println(string(actualJson))
+			fmt.Println(string(actualJSON))
 
-			expectedJson, err := os.ReadFile(tt.guance)
+			expectedJSON, err := os.ReadFile(tt.guance)
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
-			assert.JSONEq(t, string(expectedJson), string(actualJson))
+			assert.JSONEq(t, string(expectedJSON), string(actualJSON))
 		})
 	}
 }

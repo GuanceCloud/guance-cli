@@ -2,6 +2,7 @@ package table
 
 import (
 	"fmt"
+
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
 	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/datasources/prometheus"
@@ -18,7 +19,10 @@ func (builder *ChartBuilder) Build(m map[string]interface{}, opts chart.BuildOpt
 		return chart, fmt.Errorf("failed to decode panel: %w", err)
 	}
 
-	queries, err := prometheus.BuildTargets(panel.Targets, "table")
+	queries, err := (&prometheus.Builder{
+		Measurement: opts.Measurement,
+		ChartType:   "table",
+	}).BuildTargets(panel.Targets)
 	if err != nil {
 		return chart, fmt.Errorf("failed to build targets: %w", err)
 	}

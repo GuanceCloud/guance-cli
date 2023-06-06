@@ -21,10 +21,12 @@ func (w *Rewriter) Rewrite(query string) (string, error) {
 	// See also: https://docs.guance.com/dql/metricsql/
 	query = strings.ReplaceAll(query, "[$__interval]", magicInterval)
 	query = strings.ReplaceAll(query, "[$__rate_interval]", magicInterval)
+
 	expr, err := parser.ParseExpr(query)
 	if err != nil {
 		return "", fmt.Errorf("failed to parse query %q: %w", query, err)
 	}
+
 	return strings.ReplaceAll(parser.Prettify(w.rewriteVars(expr)), magicInterval, ""), nil
 }
 

@@ -4,9 +4,10 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"os"
+
 	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/monitor"
-	"os"
 
 	"github.com/GuanceCloud/guance-cli/internal/helpers/osfs"
 	"github.com/spf13/cobra"

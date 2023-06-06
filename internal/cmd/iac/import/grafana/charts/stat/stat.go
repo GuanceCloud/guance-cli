@@ -19,7 +19,10 @@ func (builder *ChartBuilder) Build(m map[string]interface{}, opts chart.BuildOpt
 		return chart, fmt.Errorf("failed to decode panel: %w", err)
 	}
 
-	queries, err := prometheus.BuildTargets(panel.Targets, "singlestat")
+	queries, err := (&prometheus.Builder{
+		Measurement: opts.Measurement,
+		ChartType:   "singlestat",
+	}).BuildTargets(panel.Targets)
 	if err != nil {
 		return chart, fmt.Errorf("failed to build targets: %w", err)
 	}

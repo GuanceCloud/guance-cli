@@ -2,6 +2,7 @@ package timeseries
 
 import (
 	"fmt"
+
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
 	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/datasources/prometheus"
@@ -20,7 +21,10 @@ func (builder *ChartBuilder) Build(m map[string]interface{}, opts chart.BuildOpt
 		return nil, fmt.Errorf("failed to decode panel: %w", err)
 	}
 
-	queries, err := prometheus.BuildTargets(panel.Targets, "sequence")
+	queries, err := (&prometheus.Builder{
+		Measurement: opts.Measurement,
+		ChartType:   "sequence",
+	}).BuildTargets(panel.Targets)
 	if err != nil {
 		return nil, fmt.Errorf("failed to build targets: %w", err)
 	}

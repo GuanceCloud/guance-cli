@@ -13,4 +13,4 @@ The details of CLI usage can be found in [reference documentations](../../docs/r
 
 ## Install completion
 
-- Run "guance completion zsh > "${HOME}/.zsh_completions/_guance""
+- Run "guance completion zsh > "${HOME}/.zsh_completions/\_guance""

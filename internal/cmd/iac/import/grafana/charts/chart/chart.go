@@ -1,7 +1,8 @@
 package chart
 
 type BuildOptions struct {
-	Group string
+	Group       string
+	Measurement string
 }
 
 type Builder interface {

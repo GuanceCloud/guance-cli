@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+
 	"github.com/GuanceCloud/guance-cli/internal/helpers/osfs"
 	"github.com/GuanceCloud/guance-cli/internal/helpers/prettier"
 )

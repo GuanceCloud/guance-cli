@@ -2,13 +2,14 @@ package grafana
 
 import (
 	"fmt"
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts"
-	chart2 "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
 	"sync"
 
+	"github.com/hashicorp/go-multierror"
+
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/helpers/types"
-	"github.com/hashicorp/go-multierror"
 )
 
 type Builder struct {
@@ -26,10 +27,10 @@ func NewBuilder() *Builder {
 }
 
 func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
-	var mErr error
 	b.reset()
 
 	// Build panels
+	var mErr error
 	for _, panel := range src.Panels {
 		if err := b.acceptPanel(panel); err != nil {
 			mErr = multierror.Append(mErr, err)
@@ -44,23 +45,24 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 	for _, variable := range src.Templating.List {
 		variables = append(variables, map[string]interface{}{
 			"code":       variable.Name,
-			"datasource": "ftinfluxdb",
-			"definition": map[string]interface{}{
-				"defaultVal": map[string]interface{}{
+			"datasource": "dataflux",
+			"definition": map[string]any{
+				"defaultVal": map[string]any{
 					"label": "",
 					"value": "",
 				},
 				"field":  "",
-				"metric": "node",
+				"metric": "",
 				"object": "",
-				"tag":    variable.Name,
-				"value":  "",
+				"tag":    "",
+				// TODO: implement syntax-directed translation
+				"value": "SHOW_TAG_VALUE(from=['prom'], keyin=['instance']) LIMIT 50",
 			},
 			"hide":             0,
 			"isHiddenAsterisk": 0,
-			"name":             variable.Name,
-			"seq":              0,
-			"type":             "TAG",
+			"name":             variable.Label,
+			"seq":              2,
+			"type":             "QUERY",
 			"valueSort":        "asc",
 		})
 	}
@@ -76,29 +78,7 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 			"charts": b.charts,
 			"groups": b.groups,
 			"type":   "template",
-			"vars": []map[string]any{
-				{
-					"code":       "job",
-					"datasource": "ftinfluxdb",
-					"definition": map[string]any{
-						"defaultVal": map[string]any{
-							"label": "",
-							"value": "",
-						},
-						"field":  "",
-						"metric": "node",
-						"object": "",
-						"tag":    "job",
-						"value":  "",
-					},
-					"hide":             0,
-					"isHiddenAsterisk": 0,
-					"name":             "job",
-					"seq":              0,
-					"type":             "TAG",
-					"valueSort":        "asc",
-				},
-			},
+			"vars":   variables,
 		},
 		"summary":   types.StringValue(src.Description),
 		"title":     types.StringValue(src.Title),
@@ -136,11 +116,14 @@ func (b *Builder) acceptPanel(v interface{}) error {
 
 	// Convert Grafana panel to Guance Cloud chart
 	builder := charts.NewChartBuilder(chartType)
-	chart, err := builder.Build(m, chart2.BuildOptions{Group: b.currentGroup()})
+	chartManifest, err := builder.Build(m, chart.BuildOptions{
+		Group:       b.currentGroup(),
+		Measurement: "prom",
+	})
 	if err != nil {
 		return fmt.Errorf("failed to build chart: %w", err)
 	}
-	b.charts = append(b.charts, chart)
+	b.charts = append(b.charts, chartManifest)
 	return nil
 }
 
