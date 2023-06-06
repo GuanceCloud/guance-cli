@@ -20,17 +20,26 @@ const (
 	ChartTypeTable      = "table"
 )
 
+const (
+	GuanceChartTypeSequence   = "sequence"
+	GuanceChartTypeSingleStat = "singlestat"
+	GuanceChartTypeTable      = "table"
+	GuanceChartTypeGauge      = "gauge"
+	GuanceChartTypeHeatmap    = "heatmap"
+	GuanceChartTypeBar        = "bar"
+)
+
 var charts map[string]chart.Builder
 
 func init() {
 	charts = make(map[string]chart.Builder)
-	charts[ChartTypeTimeSeries] = &timeseries.ChartBuilder{}
-	charts[ChartTypeBarGauge] = &bargauge.ChartBuilder{}
-	charts[ChartTypeGauge] = &gauge.ChartBuilder{}
-	charts[ChartTypeGraph] = &graph.ChartBuilder{}
-	charts[ChartTypeHeatmap] = &dummyChartBuilder{Type: ChartTypeHeatmap}
-	charts[ChartTypeStat] = &stat.ChartBuilder{}
-	charts[ChartTypeTable] = &table.ChartBuilder{}
+	charts[ChartTypeTimeSeries] = &timeseries.ChartBuilder{Type: GuanceChartTypeSequence}
+	charts[ChartTypeBarGauge] = &bargauge.ChartBuilder{Type: GuanceChartTypeBar}
+	charts[ChartTypeGauge] = &gauge.ChartBuilder{Type: GuanceChartTypeGauge}
+	charts[ChartTypeGraph] = &graph.ChartBuilder{Type: GuanceChartTypeSequence}
+	charts[ChartTypeHeatmap] = &dummyChartBuilder{Type: GuanceChartTypeHeatmap}
+	charts[ChartTypeStat] = &stat.ChartBuilder{Type: GuanceChartTypeSingleStat}
+	charts[ChartTypeTable] = &table.ChartBuilder{Type: GuanceChartTypeTable}
 }
 
 func NewChartBuilder(chartType string) chart.Builder {

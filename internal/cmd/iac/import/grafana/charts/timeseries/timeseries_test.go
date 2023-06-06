@@ -25,7 +25,7 @@ func TestChartBuilder_Build(t *testing.T) {
 		},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
-			input := make(map[string]interface{})
+			input := make(map[string]any)
 			inputJSON, err := os.ReadFile(tt.grafana)
 			if !assert.NoError(t, err) {
 				t.FailNow()

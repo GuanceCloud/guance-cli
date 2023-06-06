@@ -263,13 +263,13 @@ type DataTransformerConfig struct {
 
 	// Options to be passed to the transformer
 	// Valid options depend on the transformer id
-	Options interface{} `json:"options"`
+	Options any `json:"options"`
 }
 
 // DynamicConfigValue defines model for DynamicConfigValue.
 type DynamicConfigValue struct {
-	Id    string       `json:"id"`
-	Value *interface{} `json:"value,omitempty"`
+	Id    string `json:"id"`
+	Value *any   `json:"value,omitempty"`
 }
 
 // TODO docs
@@ -294,7 +294,7 @@ type FieldConfig struct {
 
 	// custom is specified by the FieldConfig field
 	// in panel plugin schemas.
-	Custom map[string]interface{} `json:"custom,omitempty"`
+	Custom map[string]any `json:"custom,omitempty"`
 
 	// Significant digits (for display)
 	Decimals *float32 `json:"decimals,omitempty"`
@@ -313,12 +313,12 @@ type FieldConfig struct {
 	Filterable *bool `json:"filterable,omitempty"`
 
 	// The behavior when clicking on a result
-	Links []interface{} `json:"links,omitempty"`
+	Links []any `json:"links,omitempty"`
 
 	// Convert input values into a display string
-	Mappings []interface{} `json:"mappings,omitempty"`
-	Max      *float32      `json:"max,omitempty"`
-	Min      *float32      `json:"min,omitempty"`
+	Mappings []any    `json:"mappings,omitempty"`
+	Max      *float32 `json:"max,omitempty"`
+	Min      *float32 `json:"min,omitempty"`
 
 	// Alternative to empty string
 	NoValue *string `json:"noValue,omitempty"`
@@ -401,8 +401,8 @@ type MappingType string
 
 // MatcherConfig defines model for MatcherConfig.
 type MatcherConfig struct {
-	Id      string       `json:"id"`
-	Options *interface{} `json:"options,omitempty"`
+	Id      string `json:"id"`
+	Options *any   `json:"options,omitempty"`
 }
 
 // Dashboard panels. Panels are canonically defined inline
@@ -439,7 +439,7 @@ type Panel struct {
 
 	// options is specified by the Options field in panel
 	// plugin schemas.
-	Options map[string]interface{} `json:"options"`
+	Options map[string]any `json:"options"`
 
 	// FIXME this almost certainly has to be changed in favor of scuemata versions
 	PluginVersion *string `json:"pluginVersion,omitempty"`
@@ -462,7 +462,7 @@ type Panel struct {
 	Targets []Target `json:"targets,omitempty"`
 
 	// TODO docs - seems to be an old field from old dashboard alerts?
-	Thresholds []interface{} `json:"thresholds,omitempty"`
+	Thresholds []any `json:"thresholds,omitempty"`
 
 	// Overrides the relative time range for individual panels,
 	// which causes them to be different than what is selected in
@@ -475,7 +475,7 @@ type Panel struct {
 	TimeFrom *string `json:"timeFrom,omitempty"`
 
 	// TODO docs
-	TimeRegions []interface{} `json:"timeRegions,omitempty"`
+	TimeRegions []any `json:"timeRegions,omitempty"`
 
 	// Overrides the time range for individual panels by shifting its start and end relative to the time picker.
 	// For example, you can shift the time range for the panel to be two hours earlier than the dashboard time picker setting `2h`.
@@ -538,9 +538,9 @@ type RowPanel struct {
 		Type *string `json:"type,omitempty"`
 		Uid  *string `json:"uid,omitempty"`
 	} `json:"datasource,omitempty"`
-	GridPos *GridPos      `json:"gridPos,omitempty"`
-	Id      int           `json:"id"`
-	Panels  []interface{} `json:"panels"`
+	GridPos *GridPos `json:"gridPos,omitempty"`
+	Id      int      `json:"id"`
+	Panels  []any    `json:"panels"`
 
 	// Name of template variable to repeat for.
 	Repeat *string      `json:"repeat,omitempty"`
@@ -623,11 +623,11 @@ type Spec struct {
 	// When set to true, the dashboard will redraw panels at an interval matching the pixel width.
 	// This will keep data "moving left" regardless of the query refresh rate.  This setting helps
 	// avoid dashboards presenting stale live data
-	LiveNow *bool         `json:"liveNow,omitempty"`
-	Panels  []interface{} `json:"panels,omitempty"`
+	LiveNow *bool `json:"liveNow,omitempty"`
+	Panels  []any `json:"panels,omitempty"`
 
 	// Refresh rate of dashboard. Represented via interval string, e.g. "5s", "1m", "1h", "1d".
-	Refresh *interface{} `json:"refresh,omitempty"`
+	Refresh *any `json:"refresh,omitempty"`
 
 	// This property should only be used in dashboards defined by plugins.  It is a quick check
 	// to see if the version has changed since the last time.  Unclear why using the version property
@@ -727,7 +727,7 @@ type SpecialValueMapType string
 // with types derived from plugins in the Instance variant.
 // When working directly from CUE, importers can extend this
 // type directly to achieve the same effect.
-type Target = map[string]interface{}
+type Target = map[string]any
 
 // User-defined value for a metric that triggers visual changes in a panel when this value is met or exceeded
 // They are used to conditionally style and color visualizations based on query results , and can be applied to most visualizations.
@@ -786,18 +786,18 @@ type VariableHide int
 // TODO there appear to be a lot of different kinds of [template] vars here? if so need a disjunction
 type VariableModel struct {
 	// Ref to a DataSource instance
-	Datasource  *DataSourceRef         `json:"datasource,omitempty"`
-	Description *string                `json:"description,omitempty"`
-	Error       map[string]interface{} `json:"error,omitempty"`
-	Global      bool                   `json:"global"`
-	Hide        VariableHide           `json:"hide"`
-	Id          string                 `json:"id"`
-	Index       int                    `json:"index"`
-	Label       *string                `json:"label,omitempty"`
-	Name        string                 `json:"name"`
+	Datasource  *DataSourceRef `json:"datasource,omitempty"`
+	Description *string        `json:"description,omitempty"`
+	Error       map[string]any `json:"error,omitempty"`
+	Global      bool           `json:"global"`
+	Hide        VariableHide   `json:"hide"`
+	Id          string         `json:"id"`
+	Index       int            `json:"index"`
+	Label       *string        `json:"label,omitempty"`
+	Name        string         `json:"name"`
 
 	// TODO: Move this into a separated QueryVariableModel type
-	Query        *interface{} `json:"query,omitempty"`
+	Query        *any         `json:"query,omitempty"`
 	RootStateKey *string      `json:"rootStateKey,omitempty"`
 	SkipUrlSync  bool         `json:"skipUrlSync"`
 	State        LoadingState `json:"state"`

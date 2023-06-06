@@ -16,6 +16,7 @@ type Rewriter struct {
 
 const magicInterval = "[999d]"
 
+// Rewrite will rewrite a query from Grafana-specific PromQL to MetricsQL on Guance Cloud
 func (w *Rewriter) Rewrite(query string) (string, error) {
 	// Fix for Grafana-specific interval interpolation syntax
 	// See also: https://docs.guance.com/dql/metricsql/

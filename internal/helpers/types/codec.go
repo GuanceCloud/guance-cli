@@ -6,7 +6,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-func Decode(in map[string]interface{}, out interface{}) error {
+func Decode(in map[string]any, out any) error {
 	decoder, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
 		Result:           out,
 		TagName:          "json",

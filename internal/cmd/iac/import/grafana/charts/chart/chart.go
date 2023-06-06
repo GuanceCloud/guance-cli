@@ -6,5 +6,5 @@ type BuildOptions struct {
 }
 
 type Builder interface {
-	Build(m map[string]interface{}, opts BuildOptions) (map[string]interface{}, error)
+	Build(m map[string]any, opts BuildOptions) (map[string]any, error)
 }

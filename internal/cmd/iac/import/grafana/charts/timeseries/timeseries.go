@@ -13,7 +13,7 @@ type ChartBuilder struct {
 	Type string
 }
 
-func (builder *ChartBuilder) Build(m map[string]interface{}, opts chart.BuildOptions) (chart map[string]interface{}, err error) {
+func (builder *ChartBuilder) Build(m map[string]any, opts chart.BuildOptions) (chart map[string]any, err error) {
 	delete(m, "datasource")
 
 	panel := grafanaspec.Panel{}
@@ -23,31 +23,32 @@ func (builder *ChartBuilder) Build(m map[string]interface{}, opts chart.BuildOpt
 
 	queries, err := (&prometheus.Builder{
 		Measurement: opts.Measurement,
-		ChartType:   "sequence",
+		ChartType:   builder.Type,
 	}).BuildTargets(panel.Targets)
 	if err != nil {
 		return nil, fmt.Errorf("failed to build targets: %w", err)
 	}
 
-	return map[string]interface{}{
-		"type": "sequence",
+	return map[string]any{
+		"type": builder.Type,
 		"name": types.StringValue(panel.Title),
-		"pos": map[string]interface{}{
+		"pos": map[string]any{
 			"h": panel.GridPos.H,
 			"w": panel.GridPos.W,
 			"x": panel.GridPos.X,
 			"y": panel.GridPos.Y,
 		},
 		"queries": queries,
-		"group": map[string]interface{}{
+		"group": map[string]any{
 			"name": types.String(opts.Group),
 		},
-		"extend": map[string]interface{}{
-			"settings": map[string]interface{}{
+		"extend": map[string]any{
+			"settings": map[string]any{
 				"showTitle":        true,
 				"titleDesc":        types.StringValue(panel.Description),
 				"showFieldMapping": false,
 				"timeInterval":     "auto",
+				"chartType":        "areaLine",
 			},
 		},
 	}, nil

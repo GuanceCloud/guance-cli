@@ -21,7 +21,7 @@ func NewCmd() *cobra.Command {
 	opts := importOptions{}
 	cmd := &cobra.Command{
 		Use:   "grafana",
-		Short: "(Alpha) Import grafana resources",
+		Short: "(Alpha) Import Grafana Dashboard resources",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			content, err := os.ReadFile(opts.File)
 			if err != nil {
@@ -43,8 +43,6 @@ func NewCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("marshal dashboard error: %w", err)
 			}
-
-			fmt.Println(string(manifest))
 
 			files, err := dashboardtfmod.Generate(dashboardtfmod.Options{Manifest: manifest})
 			if err != nil {

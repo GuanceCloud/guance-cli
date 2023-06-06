@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/datasources/prometheus"
+
 	"github.com/hashicorp/go-multierror"
 
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts"
@@ -12,22 +14,34 @@ import (
 	"github.com/GuanceCloud/guance-cli/internal/helpers/types"
 )
 
+const DefaultMeasurement = "prom"
+
+// Builder is the builder of Grafana dashboard
 type Builder struct {
-	groups []string
-	charts []map[string]interface{}
-	mu     sync.Mutex
+	Measurement string
+	groups      []string
+	charts      []map[string]any
+	mu          sync.Mutex
 }
 
+// NewBuilder creates a new builder
 func NewBuilder() *Builder {
 	return &Builder{
-		groups: make([]string, 0),
-		charts: make([]map[string]interface{}, 0),
-		mu:     sync.Mutex{},
+		Measurement: DefaultMeasurement,
+		groups:      make([]string, 0),
+		charts:      make([]map[string]any, 0),
+		mu:          sync.Mutex{},
 	}
 }
 
-func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
+// Build will build Guance Cloud dashboard from Grafana dashboard
+func (b *Builder) Build(src *dashboard.Spec) (map[string]any, error) {
 	b.reset()
+
+	// Build prometheus builder
+	promBuilder := &prometheus.Builder{
+		Measurement: b.Measurement,
+	}
 
 	// Build panels
 	var mErr error
@@ -41,40 +55,19 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 	}
 
 	// Build Variables
-	variables := make([]map[string]interface{}, 0)
-	for _, variable := range src.Templating.List {
-		variables = append(variables, map[string]interface{}{
-			"code":       variable.Name,
-			"datasource": "dataflux",
-			"definition": map[string]any{
-				"defaultVal": map[string]any{
-					"label": "",
-					"value": "",
-				},
-				"field":  "",
-				"metric": "",
-				"object": "",
-				"tag":    "",
-				// TODO: implement syntax-directed translation
-				"value": "SHOW_TAG_VALUE(from=['prom'], keyin=['instance']) LIMIT 50",
-			},
-			"hide":             0,
-			"isHiddenAsterisk": 0,
-			"name":             variable.Label,
-			"seq":              2,
-			"type":             "QUERY",
-			"valueSort":        "asc",
-		})
+	variables, err := promBuilder.BuildVariables(src.Templating.List)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build variables: %w", err)
 	}
 
-	return map[string]interface{}{
+	return map[string]any{
 		"dashboardBindSet":   []string{},
-		"dashboardExtend":    map[string]interface{}{},
+		"dashboardExtend":    map[string]any{},
 		"dashboardMapping":   []string{},
 		"dashboardOwnerType": "node",
 		"dashboardType":      "CUSTOM",
-		"iconSet":            map[string]interface{}{},
-		"main": map[string]interface{}{
+		"iconSet":            map[string]any{},
+		"main": map[string]any{
 			"charts": b.charts,
 			"groups": b.groups,
 			"type":   "template",
@@ -88,8 +81,8 @@ func (b *Builder) Build(src *dashboard.Spec) (map[string]interface{}, error) {
 	}, nil
 }
 
-func (b *Builder) acceptPanel(v interface{}) error {
-	m := v.(map[string]interface{})
+func (b *Builder) acceptPanel(v any) error {
+	m := v.(map[string]any)
 	chartType, ok := m["type"].(string)
 	if !ok {
 		return fmt.Errorf("failed to get chart type")

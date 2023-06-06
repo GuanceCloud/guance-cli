@@ -6,7 +6,7 @@ import (
 	"html/template"
 )
 
-func RenderTemplate(templateContent []byte, data interface{}) ([]byte, error) {
+func RenderTemplate(templateContent []byte, data any) ([]byte, error) {
 	tpl, err := template.New("guance").Parse(string(templateContent))
 	if err != nil {
 		return nil, fmt.Errorf("parse template error: %w", err)

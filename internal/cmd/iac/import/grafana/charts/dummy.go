@@ -10,6 +10,6 @@ type dummyChartBuilder struct {
 	Type string
 }
 
-func (builder *dummyChartBuilder) Build(m map[string]interface{}, opts chart.BuildOptions) (chart map[string]interface{}, err error) {
+func (builder *dummyChartBuilder) Build(m map[string]any, opts chart.BuildOptions) (chart map[string]any, err error) {
 	return chart, fmt.Errorf("chart type %s not implemented", builder.Type)
 }
