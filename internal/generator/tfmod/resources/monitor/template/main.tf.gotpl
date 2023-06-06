@@ -1,6 +1,6 @@
-{{ range $_, $index := . }}
-resource "guance_monitor" "main_{{ . }}" {
-  manifest = file("${path.module}/manifest-{{ . }}.json")
+{{- range $i, $_ := .Manifests }}
+resource "guance_monitor" "main_{{ $i | printf "%02d" }}" {
+  manifest = file("${path.module}/manifest-{{ $i | printf "%02d" }}.json")
 
   alert_policy = var.alert_policy_id == null ? null : {
     id = var.alert_policy_id
