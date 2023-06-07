@@ -1,4 +1,3 @@
-// BEGIN: x9c3f8a5b7d5
 package prettier
 
 import (

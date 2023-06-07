@@ -1,4 +1,3 @@
-// BEGIN: 8f7e6d5c3b2a
 package prettier
 
 import "testing"
