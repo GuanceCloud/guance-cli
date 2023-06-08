@@ -49,40 +49,6 @@ func (w *Rewriter) Visit(node parser.Node, path []parser.Node) (v parser.Visitor
 	return w, nil
 }
 
-func (w *Rewriter) rewriteVars(expr parser.Expr) parser.Expr {
-	switch e := expr.(type) {
-	case *parser.VectorSelector:
-		e.Name = w.rewriteName(e.Name)
-		labelMatchers := make([]*labels.Matcher, 0)
-		for i := 0; i < len(e.LabelMatchers); i++ {
-			if e.LabelMatchers[i].Name == "__name__" {
-				continue
-			}
-			e.LabelMatchers[i].Value = w.rewriteVar(e.LabelMatchers[i].Value)
-			labelMatchers = append(labelMatchers, e.LabelMatchers[i])
-		}
-		e.LabelMatchers = labelMatchers
-	case *parser.MatrixSelector:
-		e.VectorSelector = w.rewriteVars(e.VectorSelector)
-	case *parser.SubqueryExpr:
-		e.Expr = w.rewriteVars(e.Expr)
-	case *parser.BinaryExpr:
-		e.LHS = w.rewriteVars(e.LHS)
-		e.RHS = w.rewriteVars(e.RHS)
-	case *parser.AggregateExpr:
-		e.Expr = w.rewriteVars(e.Expr)
-	case *parser.Call:
-		for i, arg := range e.Args {
-			e.Args[i] = w.rewriteVars(arg)
-		}
-	case *parser.ParenExpr:
-		e.Expr = w.rewriteVars(e.Expr)
-	case *parser.UnaryExpr:
-		e.Expr = w.rewriteVars(e.Expr)
-	}
-	return expr
-}
-
 var varPattern = regexp.MustCompile(`\$\w+`)
 
 func (w *Rewriter) rewriteVar(name string) string {

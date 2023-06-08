@@ -1,9 +1,9 @@
-C002: Grafana Importer
-----
-* Author(s): @yufeiminds
-* Approver: @coanor
-* Status: Draft
-* Last updated: 2023-06-07
+# C002: Grafana Importer
+
+- Author(s): @yufeiminds
+- Approver: @coanor
+- Status: Draft
+- Last updated: 2023-06-07
 
 ## Abstract
 
@@ -31,7 +31,7 @@ The demo is like this:
 
 Most of the work in this proposal is: **How to build the data model for Grafana and Guance Cloud**.
 Because in software engineering, the static type is also a contract of system edge.
-A determined type can make the Grafana importer's behavior exactly. 
+A determined type can make the Grafana importer's behavior exactly.
 
 1. The Guance Cloud model is described in the [json-model repository](https://github.com/GuanceCloud/json-model).
 2. The Grafana model is described in the [grafana repository](https://github.com/grafana/grafana/blob/main/kinds/dashboard/dashboard_kind.cue).
@@ -41,12 +41,12 @@ A determined type can make the Grafana importer's behavior exactly.
 All features of Grafana importer are listed here:
 
 | Grafana Panel Type | Guance Chart Type | Implemented? | All Features Supported? |
-| ------------------ |-------------------|--------------| ----------------------- |
-| bar gauge          | bar               | YES          | [Partial](#BarGauge)    |
-| gauge              | gauge             | YES          | [Partial](#Gauge)       |
-| stat               | singlestat        | YES          | [Partial](#Stat)        |
-| time series        | sequence          | YES          | [Partial](#TimeSeries)  |
-| table              | table             | YES          | [Partial](#Table)       |
+| ------------------ | ----------------- | ------------ | ----------------------- |
+| bar gauge          | bar               | YES          | [Partial](#bargauge)    |
+| gauge              | gauge             | YES          | [Partial](#gauge)       |
+| stat               | singlestat        | YES          | [Partial](#stat)        |
+| time series        | sequence          | YES          | [Partial](#timeseries)  |
+| table              | table             | YES          | [Partial](#table)       |
 | pie                | pie               | NO           |                         |
 | barchart           | bar               | NO           |                         |
 | text               | text              | NO           |                         |
@@ -89,7 +89,7 @@ According to [Guance Cloud PromQL] documentation (in chinese), Guance has a spec
 
 For example:
 
-* The `node_network_receive_bytes_total` should be renamed as `node:network_receive_bytes_total`.
+- The `node_network_receive_bytes_total` should be renamed as `node:network_receive_bytes_total`.
 
 So Guance CLI will auto do this convert by PromQL AST when importing. You can also add customized measurement by CLI flag.
 

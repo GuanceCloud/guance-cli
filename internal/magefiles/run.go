@@ -31,6 +31,7 @@ func (ns Run) Fmt() error {
 	argList := [][]string{
 		{"golangci-lint", "run", "--fix", "./..."},
 		{"gofumpt", "-l", "-w", "."},
+		{"goimports", "-w", "."},
 		{"prettier", "-w", "**/*.md"},
 	}
 	return batchRunV(argList)

@@ -1,4 +1,4 @@
-## C001: Continuous Integration JMeter
+# C001: Continuous Integration JMeter
 
 - Author(s): @yufeiminds
 - Approver: @coanor

@@ -1,4 +1,4 @@
-## A001: Guance CLI Overview
+# A001: Guance CLI Overview
 
 - Author(s): yufeiminds
 - Approver: yufeiminds

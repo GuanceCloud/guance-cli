@@ -2,9 +2,10 @@ package bargauge_test
 
 import (
 	"encoding/json"
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 	"os"
 	"testing"
+
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 
 	"github.com/stretchr/testify/assert"
 
