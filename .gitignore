@@ -32,7 +32,7 @@ rl.sh
 dist/
 test.output
 tmp/
-internal/testing/specs/*.spec
+internal/testing/specs/
 
 # Local Netlify folder
 .netlify
