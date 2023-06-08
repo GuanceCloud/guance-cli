@@ -11,10 +11,11 @@ import (
 )
 
 type importOptions struct {
-	Resource string
-	Target   string
-	File     string
-	Out      string
+	Resource    string
+	Target      string
+	File        string
+	Out         string
+	Measurement string
 }
 
 func NewCmd() *cobra.Command {
@@ -34,6 +35,7 @@ func NewCmd() *cobra.Command {
 			}
 
 			builder := NewBuilder()
+			builder.Measurement = opts.Measurement
 			adt, err := builder.Build(grafanaDashboard)
 			if err != nil {
 				return fmt.Errorf("generate dashboard error: %w", err)
@@ -54,6 +56,7 @@ func NewCmd() *cobra.Command {
 	cmd.Flags().StringVarP(&opts.File, "file", "f", "", "File path to import.")
 	cmd.Flags().StringVarP(&opts.Target, "target", "t", "", "Target type, supports terraform-module now.")
 	cmd.Flags().StringVarP(&opts.Out, "out", "o", "", "Output file path.")
+	cmd.Flags().StringVarP(&opts.Measurement, "measurement", "m", "prom", "Measurement (default is prom).")
 	_ = cmd.MarkFlagRequired("target")
 	_ = cmd.MarkFlagRequired("out")
 	cmd.MarkFlagsRequiredTogether("file")

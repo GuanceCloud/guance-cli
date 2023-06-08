@@ -2,7 +2,7 @@
 
 The details of CLI usage can be found in [reference documentations](../../../../docs/references/guance_iac_import_grafana.md).
 
-![Preview](./grafana/node/preview.png)
+![Preview](config/preview.png)
 
 ## Import Dashboard
 
@@ -29,4 +29,4 @@ Then run the Guance CLI to import the downloaded JSON.
 
 You will get a Terraform module at `./out` folder. So you can apply it to create the real dashboard resources on Guance Cloud.
 
-You can also see [./examples/node](config/node/) folder for a complete code example.
+You can also see [./config](config/) folder for a complete code example.
