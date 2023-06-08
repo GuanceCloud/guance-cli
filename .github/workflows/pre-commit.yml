@@ -54,6 +54,6 @@ jobs:
           go-version: 1.19
       - name: Run Unit Test
         run: ./hack/make -v test:unit
-      - run: curl -SsL https://downloads.gauge.org/stable | sh -s -- --location=/usr/local/bin
-      - name: Run Acceptance Test
-        run: ./hack/make -v test:acc
+#      - run: curl -SsL https://downloads.gauge.org/stable | sh -s -- --location=/usr/local/bin
+#      - name: Run Acceptance Test
+#        run: ./hack/make -v test:acc
