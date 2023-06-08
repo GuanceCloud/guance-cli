@@ -1,0 +1,80 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "${DS_PROMETHEUS}"
+  },
+  "description": "System uptime",
+  "fieldConfig": {
+    "defaults": {
+      "color": {
+        "mode": "thresholds"
+      },
+      "decimals": 1,
+      "mappings": [
+        {
+          "options": {
+            "match": "null",
+            "result": {
+              "text": "N/A"
+            }
+          },
+          "type": "special"
+        }
+      ],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          },
+          {
+            "color": "red",
+            "value": 80
+          }
+        ]
+      },
+      "unit": "s"
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 2,
+    "w": 4,
+    "x": 20,
+    "y": 1
+  },
+  "hideTimeOverride": true,
+  "id": 15,
+  "links": [],
+  "maxDataPoints": 100,
+  "options": {
+    "colorMode": "none",
+    "graphMode": "none",
+    "justifyMode": "auto",
+    "orientation": "horizontal",
+    "reduceOptions": {
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": "",
+      "values": false
+    },
+    "textMode": "auto"
+  },
+  "pluginVersion": "9.4.3",
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "expr": "node_time_seconds{instance=\"$node\",job=\"$job\"} - node_boot_time_seconds{instance=\"$node\",job=\"$job\"}",
+      "intervalFactor": 1,
+      "refId": "A",
+      "step": 240
+    }
+  ],
+  "title": "Uptime",
+  "type": "stat"
+}

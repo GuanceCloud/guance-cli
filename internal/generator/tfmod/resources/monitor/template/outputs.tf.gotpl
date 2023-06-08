@@ -1,0 +1,8 @@
+output "monitor_ids" {
+  description = "The `guance_monitor`'s id."
+  value = [
+    {{- range $i, $_ := .Manifests }}
+    guance_monitor.main_{{ $i | printf "%02d" }}.id,
+    {{- end }}
+  ]
+}

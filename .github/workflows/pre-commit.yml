@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v4
         with:
-          go-version: 1.18
+          go-version: 1.19
       - uses: actions/checkout@v3
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
@@ -43,3 +43,17 @@ jobs:
 
           # Optional: if set to true then the action don't cache or restore ~/.cache/go-build.
           # skip-build-cache: true
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: 1.19
+      - name: Run Unit Test
+        run: ./hack/make -v test:unit
+#      - run: curl -SsL https://downloads.gauge.org/stable | sh -s -- --location=/usr/local/bin
+#      - name: Run Acceptance Test
+#        run: ./hack/make -v test:acc

@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - "9100:9100"
+    networks:
+      - app-network
+  datakit:
+    image: guancecloud/datakit:1.6.3-alpha
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    environment:
+      - ENV_DATAWAY=https://openway.guance.com?token=${GUANCE_WORKSPACE_TOKEN}
+    volumes:
+      - ./datakit.conf:/usr/local/datakit/conf.d/datakit.conf
+      - ./prom.conf:/usr/local/datakit/conf.d/prom/prom.conf
+
+networks:
+  app-network:

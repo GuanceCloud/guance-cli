@@ -1,0 +1,51 @@
+{
+  "datasource": "$datasource",
+  "description": "Total number of request in 24 hours for 200 response by nginx server",
+  "fieldConfig": {
+    "defaults": {
+      "custom": {},
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "yellow",
+            "value": null
+          }
+        ]
+      }
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 9,
+    "w": 7,
+    "x": 17,
+    "y": 17
+  },
+  "id": 39,
+  "options": {
+    "displayMode": "gradient",
+    "orientation": "horizontal",
+    "reduceOptions": {
+      "calcs": [
+        "mean"
+      ],
+      "values": false
+    },
+    "showUnfilled": true
+  },
+  "pluginVersion": "7.0.1",
+  "targets": [
+    {
+      "expr": "sum_over_time(nginxlog_resp_bytes{instance=~\"$instance*\", resp_code=~\"200\"}[24h])",
+      "interval": "",
+      "legendFormat": "{{request}}",
+      "refId": "A"
+    }
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Total Response 200 Req. [24h]",
+  "type": "bargauge"
+}

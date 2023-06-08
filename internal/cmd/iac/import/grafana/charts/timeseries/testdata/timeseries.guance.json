@@ -1,0 +1,108 @@
+{
+  "extend": {
+    "settings": {
+      "chartType": "areaLine",
+      "showFieldMapping": false,
+      "showTitle": true,
+      "timeInterval": "auto",
+      "titleDesc": "Basic CPU info"
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "CPU Basic",
+  "pos": {
+    "h": 7,
+    "w": 12,
+    "x": 0,
+    "y": 6
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "A",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"system\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "B",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"user\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "C",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"iowait\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "D",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=~\".*irq\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "E",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(\n      prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode!=\"idle\",mode!=\"iowait\",mode!=\"irq\",mode!=\"softirq\",mode!=\"system\",mode!=\"user\"}\n    )\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "F",
+        "funcList": [],
+        "q": "  sum by (instance) (\n    irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\",mode=\"idle\"})\n  )\n/ on (instance) group_left ()\n  sum by (instance) ((irate(prom:node_cpu_seconds_total{instance=\"#{node}\",job=\"#{job}\"})))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    }
+  ],
+  "type": "sequence"
+}

@@ -1,8 +1,0 @@
-output "monitor_ids" {
-  description = "The `guance_monitor`'s id."
-  value = [
-    {{- range $_, $index := . }}
-    guance_monitor.main_{{ . }}.id,
-    {{- end }}
-  ]
-}

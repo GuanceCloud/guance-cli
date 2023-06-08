@@ -1,0 +1,48 @@
+{
+  "extend": {
+    "settings": {
+      "bgColor": "",
+      "compareType": "",
+      "downsample": "last",
+      "fixedTime": "",
+      "fontColor": "",
+      "isTimeInterval": false,
+      "lineColor": "#3AB8FF",
+      "openCompare": false,
+      "precision": "2",
+      "showFieldMapping": false,
+      "showLine": false,
+      "showLineAxis": false,
+      "showTitle": true,
+      "timeInterval": "default",
+      "titleDesc": "System uptime"
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "Uptime",
+  "pos": {
+    "h": 5,
+    "w": 4,
+    "x": 20,
+    "y": 1
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "A",
+        "funcList": [],
+        "q": "  prom:node_time_seconds{instance=\"#{node}\",job=\"#{job}\"}\n-\n  prom:node_boot_time_seconds{instance=\"#{node}\",job=\"#{job}\"}",
+        "type": "promql"
+      },
+      "type": "stat"
+    }
+  ],
+  "type": "stat"
+}
