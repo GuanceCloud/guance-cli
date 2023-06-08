@@ -1,6 +1,6 @@
 # Test import Guance resources from console exported file
 
-The details of CLI usage can be found in [reference documentations](../../../../ docs/references/guance_iac_import_console.md).
+The details of CLI usage can be found in [reference documentations](../../../../docs/references/guance_iac_import_console.md).
 
 ## Import Dashboard
 
