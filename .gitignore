@@ -16,8 +16,9 @@ coverage.txt
 # vendor/
 
 # Output file
-# Docs
 .build/
+out/
+
 # VS Code extension
 *.vsix
 
@@ -42,4 +43,4 @@ internal/testing/specs/*.spec
 *.swp
 
 # Config with credentials
-specs/iac/import/grafana/node/datakit.conf
+datakit.conf

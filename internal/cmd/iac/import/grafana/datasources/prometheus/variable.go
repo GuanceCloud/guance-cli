@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"regexp"
 
-	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
+	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/spec"
 	"github.com/hashicorp/go-multierror"
 )
 

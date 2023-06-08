@@ -2,10 +2,10 @@ package table
 
 import (
 	"fmt"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
-	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/datasources/prometheus"
+	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/spec"
 	"github.com/GuanceCloud/guance-cli/internal/helpers/types"
 )
 
@@ -14,6 +14,8 @@ type ChartBuilder struct {
 }
 
 func (builder *ChartBuilder) Build(m map[string]any, opts chart.BuildOptions) (chart map[string]any, err error) {
+	delete(m, "datasource")
+
 	panel := grafanaspec.Panel{}
 	if err := types.Decode(m, &panel); err != nil {
 		return chart, fmt.Errorf("failed to decode panel: %w", err)

@@ -11,6 +11,11 @@ import (
 )
 
 var _ = gauge.Step(`Run <command>`, func(command string) {
+	gaugeRoot := os.Getenv("GAUGE_ROOT")
+	if err := os.Chdir(gaugeRoot); err != nil {
+		testsuit.T.Fail(fmt.Errorf("cannot change directory to the Gauge root: %s, %w", gaugeRoot, err))
+	}
+
 	// Build command
 	tokens := strings.Split(command, " ")
 	binary, err := exec.LookPath(tokens[0])

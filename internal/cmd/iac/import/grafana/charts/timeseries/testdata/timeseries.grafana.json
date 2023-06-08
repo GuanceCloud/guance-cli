@@ -1,14 +1,52 @@
 {
-  "datasource": "$datasource",
+  "datasource": {
+    "type": "prometheus",
+    "uid": "${DS_PROMETHEUS}"
+  },
+  "description": "Basic CPU info",
   "fieldConfig": {
     "defaults": {
-      "custom": {},
+      "color": {
+        "mode": "palette-classic"
+      },
+      "custom": {
+        "axisCenteredZero": false,
+        "axisColorMode": "text",
+        "axisLabel": "",
+        "axisPlacement": "auto",
+        "barAlignment": 0,
+        "drawStyle": "line",
+        "fillOpacity": 40,
+        "gradientMode": "none",
+        "hideFrom": {
+          "legend": false,
+          "tooltip": false,
+          "viz": false
+        },
+        "lineInterpolation": "smooth",
+        "lineWidth": 1,
+        "pointSize": 5,
+        "scaleDistribution": {
+          "type": "linear"
+        },
+        "showPoints": "never",
+        "spanNulls": false,
+        "stacking": {
+          "group": "A",
+          "mode": "percent"
+        },
+        "thresholdsStyle": {
+          "mode": "off"
+        }
+      },
+      "links": [],
       "mappings": [],
+      "min": 0,
       "thresholds": {
         "mode": "absolute",
         "steps": [
           {
-            "color": "semi-dark-orange",
+            "color": "green",
             "value": null
           },
           {
@@ -16,39 +54,227 @@
             "value": 80
           }
         ]
-      }
+      },
+      "unit": "percentunit"
     },
-    "overrides": []
+    "overrides": [
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Busy Iowait"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#890F02",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Idle"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#052B51",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Busy Iowait"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#890F02",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Idle"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#7EB26D",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Busy System"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#EAB839",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Busy User"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#0A437C",
+              "mode": "fixed"
+            }
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Busy Other"
+        },
+        "properties": [
+          {
+            "id": "color",
+            "value": {
+              "fixedColor": "#6D1F62",
+              "mode": "fixed"
+            }
+          }
+        ]
+      }
+    ]
   },
   "gridPos": {
     "h": 7,
-    "w": 5,
-    "x": 14,
-    "y": 1
+    "w": 12,
+    "x": 0,
+    "y": 6
   },
-  "id": 20,
+  "id": 77,
+  "links": [],
   "options": {
-    "orientation": "auto",
-    "reduceOptions": {
-      "calcs": [
-        "mean"
-      ],
-      "values": false
+    "legend": {
+      "calcs": [],
+      "displayMode": "list",
+      "placement": "bottom",
+      "showLegend": true,
+      "width": 250
     },
-    "showThresholdLabels": false,
-    "showThresholdMarkers": true
+    "tooltip": {
+      "mode": "multi",
+      "sort": "desc"
+    }
   },
-  "pluginVersion": "7.0.1",
+  "pluginVersion": "9.2.0",
   "targets": [
     {
-      "expr": "100 - (cpu_usage_idle{instance=~ \"$instance*\",cpu=\"cpu-total\"})",
-      "interval": "",
-      "legendFormat": "{{instance}}",
-      "refId": "A"
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"system\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "hide": false,
+      "intervalFactor": 1,
+      "legendFormat": "Busy System",
+      "range": true,
+      "refId": "A",
+      "step": 240
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"user\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "hide": false,
+      "intervalFactor": 1,
+      "legendFormat": "Busy User",
+      "range": true,
+      "refId": "B",
+      "step": 240
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"iowait\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "intervalFactor": 1,
+      "legendFormat": "Busy Iowait",
+      "range": true,
+      "refId": "C",
+      "step": 240
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=~\".*irq\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "intervalFactor": 1,
+      "legendFormat": "Busy IRQs",
+      "range": true,
+      "refId": "D",
+      "step": 240
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode!='idle',mode!='user',mode!='system',mode!='iowait',mode!='irq',mode!='softirq'}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "intervalFactor": 1,
+      "legendFormat": "Busy Other",
+      "range": true,
+      "refId": "E",
+      "step": 240
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "editorMode": "code",
+      "expr": "sum by(instance) (irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\", mode=\"idle\"}[$__rate_interval])) / on(instance) group_left sum by (instance)((irate(node_cpu_seconds_total{instance=\"$node\",job=\"$job\"}[$__rate_interval])))",
+      "format": "time_series",
+      "intervalFactor": 1,
+      "legendFormat": "Idle",
+      "range": true,
+      "refId": "F",
+      "step": 240
     }
   ],
-  "timeFrom": null,
-  "timeShift": null,
-  "title": "Current CPU Utilization %",
-  "type": "gauge"
+  "title": "CPU Basic",
+  "type": "timeseries"
 }

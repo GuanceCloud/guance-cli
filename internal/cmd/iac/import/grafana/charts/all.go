@@ -1,10 +1,9 @@
 package charts
 
 import (
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/bargauge"
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/gauge"
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/graph"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/stat"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/table"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/timeseries"
@@ -14,7 +13,6 @@ const (
 	ChartTypeTimeSeries = "timeseries"
 	ChartTypeBarGauge   = "bargauge"
 	ChartTypeGauge      = "gauge"
-	ChartTypeGraph      = "graph"
 	ChartTypeHeatmap    = "heatmap"
 	ChartTypeStat       = "stat"
 	ChartTypeTable      = "table"
@@ -36,7 +34,6 @@ func init() {
 	charts[ChartTypeTimeSeries] = &timeseries.ChartBuilder{Type: GuanceChartTypeSequence}
 	charts[ChartTypeBarGauge] = &bargauge.ChartBuilder{Type: GuanceChartTypeBar}
 	charts[ChartTypeGauge] = &gauge.ChartBuilder{Type: GuanceChartTypeGauge}
-	charts[ChartTypeGraph] = &graph.ChartBuilder{Type: GuanceChartTypeSequence}
 	charts[ChartTypeHeatmap] = &dummyChartBuilder{Type: GuanceChartTypeHeatmap}
 	charts[ChartTypeStat] = &stat.ChartBuilder{Type: GuanceChartTypeSingleStat}
 	charts[ChartTypeTable] = &table.ChartBuilder{Type: GuanceChartTypeTable}

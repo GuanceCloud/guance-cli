@@ -1,0 +1,223 @@
+{
+  "datasource": "$datasource",
+  "fieldConfig": {
+    "defaults": {
+      "custom": {
+        "align": "center",
+        "displayMode": "auto"
+      },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          {
+            "color": "green",
+            "value": null
+          }
+        ]
+      }
+    },
+    "overrides": [
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Time"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 144
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "agent"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 173
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "auth"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 84
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "client_ip"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 143
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "env"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "exported_env"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 122
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "ident"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 74
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "job"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 53
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "path"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 151
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "referrer"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 82
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "resp_code"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 94
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "verb"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 48
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "request"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 208
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "Value"
+        },
+        "properties": [
+          {
+            "id": "custom.width",
+            "value": 29
+          }
+        ]
+      }
+    ]
+  },
+  "gridPos": {
+    "h": 16,
+    "w": 24,
+    "x": 0,
+    "y": 58
+  },
+  "id": 34,
+  "options": {
+    "showHeader": true,
+    "sortBy": []
+  },
+  "pluginVersion": "7.0.1",
+  "repeat": null,
+  "repeatDirection": "h",
+  "targets": [
+    {
+      "expr": "nginxlog_resp_bytes{instance=~\"$instance*\"}",
+      "interval": "",
+      "legendFormat": "",
+      "refId": "A"
+    }
+  ],
+  "timeFrom": null,
+  "timeShift": null,
+  "title": "Each Request Detail",
+  "transformations": [
+    {
+      "id": "labelsToFields",
+      "options": {}
+    }
+  ],
+  "type": "table"
+}

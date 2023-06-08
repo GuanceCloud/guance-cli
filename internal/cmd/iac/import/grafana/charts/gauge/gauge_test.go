@@ -2,14 +2,13 @@ package gauge_test
 
 import (
 	"encoding/json"
-	"fmt"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/graph"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/gauge"
 )
 
 func TestChartBuilder_Build(t *testing.T) {
@@ -19,7 +18,7 @@ func TestChartBuilder_Build(t *testing.T) {
 		guance  string
 	}{
 		{
-			name:    "gauge",
+			name:    "ok",
 			grafana: "testdata/gauge.grafana.json",
 			guance:  "testdata/gauge.guance.json",
 		},
@@ -34,8 +33,8 @@ func TestChartBuilder_Build(t *testing.T) {
 				t.FailNow()
 			}
 
-			builder := graph.ChartBuilder{}
-			actual, err := builder.Build(input, chart.BuildOptions{})
+			builder := gauge.ChartBuilder{Type: "gauge"}
+			actual, err := builder.Build(input, chart.BuildOptions{Measurement: "prom"})
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
@@ -44,13 +43,13 @@ func TestChartBuilder_Build(t *testing.T) {
 				t.FailNow()
 			}
 
-			fmt.Println(string(actualJSON))
-
 			expectedJSON, err := os.ReadFile(tt.guance)
 			if !assert.NoError(t, err) {
 				t.FailNow()
 			}
-			assert.JSONEq(t, string(expectedJSON), string(actualJSON))
+			if !assert.JSONEq(t, string(expectedJSON), string(actualJSON)) {
+				t.Log(string(actualJSON))
+			}
 		})
 	}
 }

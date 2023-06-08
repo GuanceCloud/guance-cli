@@ -2,10 +2,10 @@ package timeseries
 
 import (
 	"fmt"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
-	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/datasources/prometheus"
+	grafanaspec "github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/spec"
 	"github.com/GuanceCloud/guance-cli/internal/helpers/types"
 )
 

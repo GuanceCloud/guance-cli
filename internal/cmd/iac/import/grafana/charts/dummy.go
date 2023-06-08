@@ -2,8 +2,7 @@ package charts
 
 import (
 	"fmt"
-
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/chart"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/chart"
 )
 
 type dummyChartBuilder struct {

@@ -24,18 +24,29 @@ func TestRewriter_Rewrite(t *testing.T) {
 		{
 			name: "basic query",
 			fields: fields{
-				Measurement: "cpu",
+				Measurement: "prom",
 			},
 			args: args{
 				query: "sum(rate(container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\"}[5m])) by (pod_name)",
 			},
-			want:    "sum by (pod_name) (rate(cpu:container_cpu_usage_seconds_total{image!=\"\", name=~\"^k8s_.*\"}[5m]))",
+			want:    "sum by (pod_name) (rate(prom:container_cpu_usage_seconds_total{image!=\"\", name=~\"^k8s_.*\"}[5m]))",
+			wantErr: false,
+		},
+		{
+			name: "no measurement",
+			fields: fields{
+				Measurement: "",
+			},
+			args: args{
+				query: "sum(rate(container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\"}[5m])) by (pod_name)",
+			},
+			want:    "sum by (pod_name) (rate(container:cpu_usage_seconds_total{image!=\"\", name=~\"^k8s_.*\"}[5m]))",
 			wantErr: false,
 		},
 		{
 			name: "invalid query",
 			fields: fields{
-				Measurement: "cpu",
+				Measurement: "prom",
 			},
 			args: args{
 				query: "invalid query",

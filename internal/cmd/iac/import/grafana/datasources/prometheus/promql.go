@@ -27,8 +27,26 @@ func (w *Rewriter) Rewrite(query string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to parse query %q: %w", query, err)
 	}
+	if err := parser.Walk(w, expr, nil); err != nil {
+		return "", fmt.Errorf("walk PromQL expression failed: %w", err)
+	}
+	return strings.ReplaceAll(parser.Prettify(expr), magicInterval, ""), nil
+}
 
-	return strings.ReplaceAll(parser.Prettify(w.rewriteVars(expr)), magicInterval, ""), nil
+func (w *Rewriter) Visit(node parser.Node, path []parser.Node) (v parser.Visitor, err error) {
+	if e, ok := node.(*parser.VectorSelector); ok {
+		e.Name = w.rewriteName(e.Name)
+		labelMatchers := make([]*labels.Matcher, 0)
+		for i := 0; i < len(e.LabelMatchers); i++ {
+			if e.LabelMatchers[i].Name == "__name__" {
+				continue
+			}
+			e.LabelMatchers[i].Value = w.rewriteVar(e.LabelMatchers[i].Value)
+			labelMatchers = append(labelMatchers, e.LabelMatchers[i])
+		}
+		e.LabelMatchers = labelMatchers
+	}
+	return w, nil
 }
 
 func (w *Rewriter) rewriteVars(expr parser.Expr) parser.Expr {
@@ -73,6 +91,12 @@ func (w *Rewriter) rewriteVar(name string) string {
 	})
 }
 
+const nameSep = "_"
+
 func (w *Rewriter) rewriteName(name string) string {
-	return fmt.Sprintf("%s:%s", w.Measurement, strings.TrimPrefix(name, fmt.Sprintf("%s_", w.Measurement)))
+	if w.Measurement != "" {
+		return fmt.Sprintf("%s:%s", w.Measurement, name)
+	}
+	tokens := strings.Split(name, nameSep)
+	return fmt.Sprintf("%s:%s", tokens[0], strings.Join(tokens[1:], nameSep))
 }

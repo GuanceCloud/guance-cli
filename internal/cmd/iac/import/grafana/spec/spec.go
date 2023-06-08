@@ -7,7 +7,7 @@
 //
 // Run 'make gen-cue' from repository root to regenerate.
 
-package dashboard
+package spec
 
 import (
 	"time"

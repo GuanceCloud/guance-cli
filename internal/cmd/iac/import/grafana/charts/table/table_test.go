@@ -1,4 +1,4 @@
-package bargauge_test
+package table_test
 
 import (
 	"encoding/json"
@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/bargauge"
+	"github.com/GuanceCloud/guance-cli/internal/cmd/iac/import/grafana/charts/table"
 )
 
 func TestChartBuilder_Build(t *testing.T) {
@@ -19,8 +19,8 @@ func TestChartBuilder_Build(t *testing.T) {
 	}{
 		{
 			name:    "ok",
-			grafana: "testdata/gauge.grafana.json",
-			guance:  "testdata/gauge.guance.json",
+			grafana: "testdata/table.grafana.json",
+			guance:  "testdata/table.guance.json",
 		},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
@@ -33,7 +33,7 @@ func TestChartBuilder_Build(t *testing.T) {
 				t.FailNow()
 			}
 
-			builder := bargauge.ChartBuilder{Type: "bar"}
+			builder := table.ChartBuilder{Type: "table"}
 			actual, err := builder.Build(input, chart.BuildOptions{Measurement: "prom"})
 			if !assert.NoError(t, err) {
 				t.FailNow()

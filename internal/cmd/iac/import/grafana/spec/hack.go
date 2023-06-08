@@ -1,4 +1,4 @@
-package dashboard
+package spec
 
 import (
 	"encoding/json"
