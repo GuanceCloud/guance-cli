@@ -43,4 +43,4 @@ internal/testing/specs/*.spec
 *.swp
 
 # Config with credentials
-datakit.conf
+#datakit.conf
