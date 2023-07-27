@@ -130,6 +130,6 @@ func (b *Builder) reset() {
 	b.mu.Lock()
 	defer b.mu.Unlock()
 
-	b.groups = nil
-	b.charts = nil
+	b.groups = make([]string, 0)
+	b.charts = make([]map[string]any, 0)
 }

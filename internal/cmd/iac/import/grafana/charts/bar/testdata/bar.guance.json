@@ -1,0 +1,49 @@
+{
+  "extend": {
+    "settings": {
+      "direction": "vertical",
+      "fixedTime": "",
+      "isTimeInterval": false,
+      "openCompare": false,
+      "openStack": false,
+      "showFieldMapping": false,
+      "showLine": false,
+      "showTitle": true,
+      "showTopSize": false,
+      "showTopWithMetric": "",
+      "stackContent": "group",
+      "stackType": "time",
+      "timeInterval": "default",
+      "titleDesc": "",
+      "topSize": 10,
+      "xAxisShowType": "groupBy"
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "BarChart",
+  "pos": {
+    "h": 8,
+    "w": 12,
+    "x": 12,
+    "y": 16
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "code": "A",
+        "funcList": [],
+        "q": "prom:grafanacloud_instance_queries_per_second",
+        "type": "promql"
+      },
+      "type": "bar"
+    }
+  ],
+  "type": "bar"
+}

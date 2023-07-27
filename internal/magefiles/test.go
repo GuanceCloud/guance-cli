@@ -21,6 +21,7 @@ const (
 	GaugeProjectDir = "internal/testing"
 )
 
+// Unit run all unit test and generate the coverage report
 func (ns Test) Unit() error {
 	if err := sh.RunV("go", "test", "-v", "-cover", "-coverprofile=cover.out", "./..."); err != nil {
 		return fmt.Errorf("run unit test failed: %w", err)
