@@ -23,6 +23,7 @@ func (builder *ChartBuilder) Build(m map[string]any, opts chart.BuildOptions) (c
 	queries, err := (&prometheus.Builder{
 		Measurement: opts.Measurement,
 		ChartType:   builder.Type,
+		Unit:        types.StringValue(panel.FieldConfig.Defaults.Unit),
 	}).BuildTargets(panel.Targets)
 	if err != nil {
 		return chart, fmt.Errorf("failed to build targets: %w", err)

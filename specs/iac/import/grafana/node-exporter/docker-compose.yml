@@ -16,7 +16,6 @@ services:
     environment:
       - ENV_DATAWAY=https://openway.guance.com?token=${GUANCE_WORKSPACE_TOKEN}
     volumes:
-      - ./datakit.conf:/usr/local/datakit/conf.d/datakit.conf
       - ./prom.conf:/usr/local/datakit/conf.d/prom/prom.conf
 
 networks:

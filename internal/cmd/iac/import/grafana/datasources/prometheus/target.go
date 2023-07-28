@@ -45,6 +45,7 @@ func (builder *Builder) BuildTargets(targets []grafanaspec.Target) ([]any, error
 			"datasource": "dataflux",
 			"color":      "",
 			"name":       "",
+			"unit":       builder.Unit,
 			"disabled":   target.Hide,
 		})
 	}

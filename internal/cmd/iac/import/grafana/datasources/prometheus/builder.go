@@ -4,4 +4,5 @@ package prometheus
 type Builder struct {
 	Measurement string
 	ChartType   string
+	Unit        string
 }

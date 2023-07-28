@@ -1,10 +1,8 @@
-# Test import Grafana Dashboard into Guance Cloud
+# Import Grafana Node Exporter Dashboard into Guance Cloud
 
-The details of CLI usage can be found in [reference documentations](../../../../docs/references/guance_iac_import_grafana.md).
+![Preview](preview.png)
 
-![Preview](node-exporter/preview.png)
-
-## Import Databoard with node-exporter metrics
+## Import by file
 
 You can use Prometheus exporter and DataKit agent to collect and upload the metrics to Guance Cloud.
 
@@ -24,11 +22,12 @@ For example, the DataKit config is:
 Then download the [Node Exporter Dashboard on Grafana](https://grafana.com/grafana/dashboards/1860-node-exporter-full/).
 
 Then run the Guance CLI to import the downloaded JSON.
-
-* Run "guance iac import grafana -f ./iac/import/grafana/input.json -t terraform-module -o ./out"
+ 
+* Run "docker compose up -d"
+* Run "guance iac import grafana -f ./input.json -t terraform-module -o ./out"
 
 You will get a Terraform module at `./out` folder. So you can apply it to create the real dashboard resources on Guance Cloud.
 
-You can also see [./config](config/) folder for a complete code example.
+---
 
-## Import Dashboard with basic chart types
+* Run "docker compose down"
