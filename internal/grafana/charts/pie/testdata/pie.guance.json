@@ -1,0 +1,43 @@
+{
+  "extend": {
+    "settings": {
+      "chartCombineDefaultColor": "#F56610",
+      "chartType": "pie",
+      "fixedTime": "",
+      "isTimeInterval": false,
+      "legendPostion": "bottom",
+      "onlyShowGroupName": false,
+      "otherColor": "#F56610",
+      "showFieldMapping": false,
+      "showTitle": true,
+      "timeInterval": "default",
+      "titleDesc": ""
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "Pie",
+  "pos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "funcList": [],
+        "q": "prom:grafanacloud_instance_queries_per_second",
+        "type": "promql"
+      },
+      "type": "pie"
+    }
+  ],
+  "type": "pie"
+}
