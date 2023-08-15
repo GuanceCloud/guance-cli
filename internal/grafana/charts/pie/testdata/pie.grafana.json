@@ -1,0 +1,63 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "grafanacloud-usage"
+  },
+  "fieldConfig": {
+    "defaults": {
+      "color": {
+        "mode": "palette-classic"
+      },
+      "custom": {
+        "hideFrom": {
+          "legend": false,
+          "tooltip": false,
+          "viz": false
+        }
+      },
+      "mappings": []
+    },
+    "overrides": []
+  },
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+  },
+  "id": 8,
+  "options": {
+    "legend": {
+      "displayMode": "list",
+      "placement": "bottom",
+      "showLegend": true
+    },
+    "pieType": "pie",
+    "reduceOptions": {
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": "",
+      "values": false
+    },
+    "tooltip": {
+      "mode": "single",
+      "sort": "none"
+    }
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "grafanacloud-usage"
+      },
+      "editorMode": "builder",
+      "expr": "grafanacloud_instance_queries_per_second",
+      "instant": false,
+      "range": true,
+      "refId": "A"
+    }
+  ],
+  "title": "Pie",
+  "type": "piechart"
+}

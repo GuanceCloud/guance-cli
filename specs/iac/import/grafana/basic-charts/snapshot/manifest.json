@@ -1,0 +1,376 @@
+{
+  "dashboardBindSet": [],
+  "dashboardExtend": {},
+  "dashboardMapping": [],
+  "dashboardOwnerType": "node",
+  "dashboardType": "CUSTOM",
+  "iconSet": {},
+  "main": {
+    "charts": [
+      {
+        "extend": {
+          "settings": {
+            "bgColor": "",
+            "compareType": "",
+            "downsample": "last",
+            "fixedTime": "",
+            "fontColor": "",
+            "isTimeInterval": false,
+            "lineColor": "#3AB8FF",
+            "openCompare": false,
+            "precision": "2",
+            "showFieldMapping": false,
+            "showLine": false,
+            "showLineAxis": false,
+            "showTitle": true,
+            "timeInterval": "default",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "Stat",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "singlestat"
+          }
+        ],
+        "type": "singlestat"
+      },
+      {
+        "extend": {
+          "settings": {
+            "levels": [
+              {
+                "lineColor": "green",
+                "operation": "\u003c=",
+                "value": [
+                  80
+                ]
+              },
+              {
+                "lineColor": "red",
+                "operation": "\u003c=",
+                "value": [
+                  100
+                ]
+              }
+            ],
+            "showFieldMapping": false,
+            "showTitle": true,
+            "timeInterval": "auto",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "Gauge",
+        "pos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "gauge"
+          }
+        ],
+        "type": "gauge"
+      },
+      {
+        "extend": {
+          "settings": {
+            "chartCombineDefaultColor": "#F56610",
+            "chartType": "pie",
+            "fixedTime": "",
+            "isTimeInterval": false,
+            "legendPostion": "bottom",
+            "onlyShowGroupName": false,
+            "otherColor": "#F56610",
+            "showFieldMapping": false,
+            "showTitle": true,
+            "timeInterval": "default",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "Pie",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "pie"
+          }
+        ],
+        "type": "pie"
+      },
+      {
+        "extend": {
+          "settings": {
+            "chartType": "areaLine",
+            "showFieldMapping": false,
+            "showTitle": true,
+            "timeInterval": "auto",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "TimeSeries",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "sequence"
+          }
+        ],
+        "type": "sequence"
+      },
+      {
+        "extend": {
+          "settings": {
+            "direction": "vertical",
+            "fixedTime": "",
+            "isTimeInterval": false,
+            "openCompare": false,
+            "openStack": false,
+            "showFieldMapping": false,
+            "showLine": false,
+            "showTitle": true,
+            "showTopSize": false,
+            "showTopWithMetric": "",
+            "stackContent": "group",
+            "stackType": "time",
+            "timeInterval": "default",
+            "titleDesc": "",
+            "topSize": 10,
+            "xAxisShowType": "groupBy"
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "BarGauge",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 16
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "bar"
+          }
+        ],
+        "type": "bar"
+      },
+      {
+        "extend": {
+          "settings": {
+            "direction": "vertical",
+            "fixedTime": "",
+            "isTimeInterval": false,
+            "openCompare": false,
+            "openStack": false,
+            "showFieldMapping": false,
+            "showLine": false,
+            "showTitle": true,
+            "showTopSize": false,
+            "showTopWithMetric": "",
+            "stackContent": "group",
+            "stackType": "time",
+            "timeInterval": "default",
+            "titleDesc": "",
+            "topSize": 10,
+            "xAxisShowType": "groupBy"
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "BarChart",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 16
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "bar"
+          }
+        ],
+        "type": "bar"
+      },
+      {
+        "extend": {
+          "settings": {
+            "fixedTime": "",
+            "isTimeInterval": false,
+            "mainMeasurementLimit": 20,
+            "mainMeasurementQueryCode": "A",
+            "mainMeasurementSort": "top",
+            "pageSize": 0,
+            "queryMode": "toGroupColumn",
+            "showFieldMapping": false,
+            "showTitle": true,
+            "timeInterval": "default",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "Table",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 24
+        },
+        "queries": [
+          {
+            "color": "",
+            "datasource": "dataflux",
+            "disabled": false,
+            "name": "",
+            "qtype": "promql",
+            "query": {
+              "code": "A",
+              "funcList": [],
+              "q": "prom:grafanacloud_instance_queries_per_second",
+              "type": "promql"
+            },
+            "type": "table"
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "extend": {
+          "settings": {
+            "fixedTime": "",
+            "isTimeInterval": false,
+            "showFieldMapping": false,
+            "showTitle": true,
+            "timeInterval": "default",
+            "titleDesc": ""
+          }
+        },
+        "group": {
+          "name": ""
+        },
+        "name": "Text",
+        "pos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 24
+        },
+        "queries": [
+          {
+            "name": "",
+            "query": {
+              "content": "# Title\n\nFor markdown syntax help: [commonmark.org/help](https://commonmark.org/help/)"
+            }
+          }
+        ],
+        "type": "text"
+      }
+    ],
+    "groups": [],
+    "type": "template",
+    "vars": []
+  },
+  "summary": "",
+  "tagInfo": [],
+  "tags": [],
+  "thumbnail": "",
+  "title": "Demo"
+}

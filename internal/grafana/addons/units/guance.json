@@ -1,0 +1,1001 @@
+[
+  {
+    "name": "angle",
+    "formats": [
+      {
+        "id": "rad",
+        "ref": "radian"
+      },
+      {
+        "id": "deg",
+        "ref": "degree"
+      },
+      {
+        "id": "grad",
+        "ref": "grad"
+      },
+      {
+        "id": "arcmin",
+        "ref": "arcmin"
+      },
+      {
+        "id": "arcsec",
+        "ref": "arcsec"
+      }
+    ]
+  },
+  {
+    "name": "apparentPower",
+    "formats": [
+      {
+        "id": "VA",
+        "ref": "voltamp"
+      },
+      {
+        "id": "mVA",
+        "ref": ""
+      },
+      {
+        "id": "kVA",
+        "ref": "kvoltamp"
+      },
+      {
+        "id": "MVA",
+        "ref": ""
+      },
+      {
+        "id": "GVA",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "area",
+    "formats": [
+      {
+        "id": "mm2",
+        "ref": ""
+      },
+      {
+        "id": "cm2",
+        "ref": ""
+      },
+      {
+        "id": "m2",
+        "ref": "areaM2"
+      },
+      {
+        "id": "ha",
+        "ref": "hectares"
+      },
+      {
+        "id": "km2",
+        "ref": ""
+      },
+      {
+        "id": "in2",
+        "ref": ""
+      },
+      {
+        "id": "yd2",
+        "ref": ""
+      },
+      {
+        "id": "ft2",
+        "ref": "areaF2"
+      },
+      {
+        "id": "ac",
+        "ref": "acres"
+      },
+      {
+        "id": "mi2",
+        "ref": "areaMI2"
+      }
+    ]
+  },
+  {
+    "name": "current",
+    "formats": [
+      {
+        "id": "A",
+        "ref": "amp"
+      },
+      {
+        "id": "mA",
+        "ref": "mamp"
+      },
+      {
+        "id": "kA",
+        "ref": "kamp"
+      }
+    ]
+  },
+  {
+    "name": "digital",
+    "formats": [
+      {
+        "id": "b",
+        "ref": "bits"
+      },
+      {
+        "id": "Kb",
+        "ref": ""
+      },
+      {
+        "id": "Mb",
+        "ref": ""
+      },
+      {
+        "id": "Gb",
+        "ref": ""
+      },
+      {
+        "id": "Tb",
+        "ref": ""
+      },
+      {
+        "id": "Pb",
+        "ref": ""
+      },
+      {
+        "id": "Eb",
+        "ref": ""
+      },
+      {
+        "id": "Zb",
+        "ref": ""
+      },
+      {
+        "id": "Yb",
+        "ref": ""
+      },
+      {
+        "id": "B",
+        "ref": "bytes"
+      },
+      {
+        "id": "KB",
+        "ref": "kbytes"
+      },
+      {
+        "id": "MB",
+        "ref": "mbytes"
+      },
+      {
+        "id": "GB",
+        "ref": "gbytes"
+      },
+      {
+        "id": "TB",
+        "ref": "tbytes"
+      },
+      {
+        "id": "PB",
+        "ref": "pbytes"
+      },
+      {
+        "id": "EB",
+        "ref": ""
+      },
+      {
+        "id": "ZB",
+        "ref": ""
+      },
+      {
+        "id": "YB",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "diitalUnit",
+    "formats": [
+      {
+        "id": "bps",
+        "ref": "binbps"
+      },
+      {
+        "id": "Kbps",
+        "ref": "Kibits"
+      },
+      {
+        "id": "Mbps",
+        "ref": "Mibits"
+      },
+      {
+        "id": "Gbps",
+        "ref": "Gibits"
+      },
+      {
+        "id": "Tbps",
+        "ref": "Tibits"
+      },
+      {
+        "id": "B/S",
+        "ref": "binBps"
+      },
+      {
+        "id": "KB/S",
+        "ref": "KiBs"
+      },
+      {
+        "id": "MB/S",
+        "ref": "MiBs"
+      },
+      {
+        "id": "GB/S",
+        "ref": "GiBs"
+      },
+      {
+        "id": "TB/S",
+        "ref": "TiBs"
+      }
+    ]
+  },
+  {
+    "name": "each",
+    "formats": [
+      {
+        "id": "ea",
+        "ref": ""
+      },
+      {
+        "id": "dz",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "energy",
+    "formats": [
+      {
+        "id": "Wh",
+        "ref": "watth"
+      },
+      {
+        "id": "mWh",
+        "ref": ""
+      },
+      {
+        "id": "kWh",
+        "ref": "kwatth"
+      },
+      {
+        "id": "MWh",
+        "ref": "mwatth"
+      },
+      {
+        "id": "GWh",
+        "ref": ""
+      },
+      {
+        "id": "J",
+        "ref": "joule"
+      },
+      {
+        "id": "kJ",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "frequency",
+    "formats": [
+      {
+        "id": "mHz",
+        "ref": ""
+      },
+      {
+        "id": "Hz",
+        "ref": "rothz"
+      },
+      {
+        "id": "kHz",
+        "ref": "rotkhz"
+      },
+      {
+        "id": "MHz",
+        "ref": "rotmhz"
+      },
+      {
+        "id": "GHz",
+        "ref": "rotghz"
+      },
+      {
+        "id": "THz",
+        "ref": ""
+      },
+      {
+        "id": "rpm",
+        "ref": ""
+      },
+      {
+        "id": "deg/s",
+        "ref": "rotdegs"
+      },
+      {
+        "id": "rad/s",
+        "ref": "rotrads"
+      }
+    ]
+  },
+  {
+    "name": "illuminance",
+    "formats": [
+      {
+        "id": "lx",
+        "ref": "lux"
+      },
+      {
+        "id": "ft-cd",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "length",
+    "formats": [
+      {
+        "id": "mm",
+        "ref": "lengthmm"
+      },
+      {
+        "id": "cm",
+        "ref": ""
+      },
+      {
+        "id": "m",
+        "ref": "lengthm"
+      },
+      {
+        "id": "km",
+        "ref": "lengthkm"
+      },
+      {
+        "id": "in",
+        "ref": "lengthin"
+      },
+      {
+        "id": "yd",
+        "ref": ""
+      },
+      {
+        "id": "ft-us",
+        "ref": ""
+      },
+      {
+        "id": "ft",
+        "ref": "lengthft"
+      },
+      {
+        "id": "mi",
+        "ref": "lengthmi"
+      }
+    ]
+  },
+  {
+    "name": "mass",
+    "formats": [
+      {
+        "id": "mcg",
+        "ref": ""
+      },
+      {
+        "id": "mg",
+        "ref": "massmg"
+      },
+      {
+        "id": "g",
+        "ref": "massg"
+      },
+      {
+        "id": "kg",
+        "ref": "masskg"
+      },
+      {
+        "id": "mt",
+        "ref": ""
+      },
+      {
+        "id": "oz",
+        "ref": ""
+      },
+      {
+        "id": "lb",
+        "ref": "masslb"
+      },
+      {
+        "id": "t",
+        "ref": "masst"
+      }
+    ]
+  },
+  {
+    "name": "pace",
+    "formats": [
+      {
+        "id": "min/km",
+        "ref": ""
+      },
+      {
+        "id": "s/m",
+        "ref": ""
+      },
+      {
+        "id": "min/mi",
+        "ref": ""
+      },
+      {
+        "id": "s/ft",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "partsPer",
+    "formats": [
+      {
+        "id": "ppm",
+        "ref": "ppm"
+      },
+      {
+        "id": "ppb",
+        "ref": "conppb"
+      },
+      {
+        "id": "ppt",
+        "ref": ""
+      },
+      {
+        "id": "ppq",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "percent",
+    "formats": [
+      {
+        "id": "percent",
+        "ref": "percent"
+      },
+      {
+        "id": "percent_decimal",
+        "ref": "percentunit"
+      }
+    ]
+  },
+  {
+    "name": "power",
+    "formats": [
+      {
+        "id": "W",
+        "ref": "watt"
+      },
+      {
+        "id": "mW",
+        "ref": "mwatt"
+      },
+      {
+        "id": "kW",
+        "ref": "kwatt"
+      },
+      {
+        "id": "MW",
+        "ref": "megwatt"
+      },
+      {
+        "id": "GW",
+        "ref": "gwatt"
+      }
+    ]
+  },
+  {
+    "name": "pressure",
+    "formats": [
+      {
+        "id": "Pa",
+        "ref": "pressurepa"
+      },
+      {
+        "id": "kPa",
+        "ref": "pressurekpa"
+      },
+      {
+        "id": "MPa",
+        "ref": ""
+      },
+      {
+        "id": "hPa",
+        "ref": "pressurehpa"
+      },
+      {
+        "id": "bar",
+        "ref": "pressurebar"
+      },
+      {
+        "id": "torr",
+        "ref": ""
+      },
+      {
+        "id": "psi",
+        "ref": "pressurepsi"
+      },
+      {
+        "id": "ksi",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "reactiveEnergy",
+    "formats": [
+      {
+        "id": "VARh",
+        "ref": ""
+      },
+      {
+        "id": "mVARh",
+        "ref": ""
+      },
+      {
+        "id": "kVARh",
+        "ref": ""
+      },
+      {
+        "id": "MVARh",
+        "ref": ""
+      },
+      {
+        "id": "GVARh",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "reactivePower",
+    "formats": [
+      {
+        "id": "VAR",
+        "ref": "voltampreact"
+      },
+      {
+        "id": "mVAR",
+        "ref": ""
+      },
+      {
+        "id": "kVAR",
+        "ref": "kvoltampreact"
+      },
+      {
+        "id": "MVAR",
+        "ref": ""
+      },
+      {
+        "id": "GVAR",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "rmb",
+    "formats": [
+      {
+        "id": "yuan",
+        "ref": "currencyJPY"
+      },
+      {
+        "id": "wan_yuan",
+        "ref": ""
+      },
+      {
+        "id": "yi_yuan",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "speed",
+    "formats": [
+      {
+        "id": "m/s",
+        "ref": "velocityms"
+      },
+      {
+        "id": "km/h",
+        "ref": "velocitykmh"
+      },
+      {
+        "id": "m/h",
+        "ref": "velocitymph"
+      },
+      {
+        "id": "knot",
+        "ref": "velocityknot"
+      },
+      {
+        "id": "ft/s",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "temperature",
+    "formats": [
+      {
+        "id": "C",
+        "ref": "celsius"
+      },
+      {
+        "id": "K",
+        "ref": "kelvin"
+      },
+      {
+        "id": "F",
+        "ref": "fahrenheit"
+      },
+      {
+        "id": "R",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "throughput",
+    "formats": [
+      {
+        "id": "ops",
+        "ref": "ops"
+      },
+      {
+        "id": "reqps",
+        "ref": "reqps"
+      },
+      {
+        "id": "readps",
+        "ref": "rps"
+      },
+      {
+        "id": "wps",
+        "ref": "wps"
+      },
+      {
+        "id": "iops",
+        "ref": "iops"
+      },
+      {
+        "id": "opm",
+        "ref": "opm"
+      },
+      {
+        "id": "readpm",
+        "ref": "rpm"
+      },
+      {
+        "id": "wpm",
+        "ref": "wpm"
+      }
+    ]
+  },
+  {
+    "name": "time",
+    "formats": [
+      {
+        "id": "ns",
+        "ref": "ns"
+      },
+      {
+        "id": "μs",
+        "ref": "µs"
+      },
+      {
+        "id": "ms",
+        "ref": "ms"
+      },
+      {
+        "id": "s",
+        "ref": "s"
+      },
+      {
+        "id": "min",
+        "ref": "m"
+      },
+      {
+        "id": "h",
+        "ref": "h"
+      },
+      {
+        "id": "d",
+        "ref": "d"
+      },
+      {
+        "id": "week",
+        "ref": ""
+      },
+      {
+        "id": "month",
+        "ref": ""
+      },
+      {
+        "id": "year",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "voltage",
+    "formats": [
+      {
+        "id": "V",
+        "ref": "volt"
+      },
+      {
+        "id": "mV",
+        "ref": "mvolt"
+      },
+      {
+        "id": "kV",
+        "ref": "kvolt"
+      }
+    ]
+  },
+  {
+    "name": "volume",
+    "formats": [
+      {
+        "id": "mm3",
+        "ref": ""
+      },
+      {
+        "id": "cm3",
+        "ref": ""
+      },
+      {
+        "id": "ml",
+        "ref": "mlitre"
+      },
+      {
+        "id": "cl",
+        "ref": ""
+      },
+      {
+        "id": "dl",
+        "ref": ""
+      },
+      {
+        "id": "l",
+        "ref": "litre"
+      },
+      {
+        "id": "kl",
+        "ref": ""
+      },
+      {
+        "id": "m3",
+        "ref": "m3"
+      },
+      {
+        "id": "km3",
+        "ref": ""
+      },
+      {
+        "id": "krm",
+        "ref": ""
+      },
+      {
+        "id": "tsk",
+        "ref": ""
+      },
+      {
+        "id": "msk",
+        "ref": ""
+      },
+      {
+        "id": "kkp",
+        "ref": ""
+      },
+      {
+        "id": "glas",
+        "ref": ""
+      },
+      {
+        "id": "kanna",
+        "ref": ""
+      },
+      {
+        "id": "tsp",
+        "ref": ""
+      },
+      {
+        "id": "Tbs",
+        "ref": ""
+      },
+      {
+        "id": "in3",
+        "ref": ""
+      },
+      {
+        "id": "fl-oz",
+        "ref": ""
+      },
+      {
+        "id": "cup",
+        "ref": ""
+      },
+      {
+        "id": "pnt",
+        "ref": ""
+      },
+      {
+        "id": "qt",
+        "ref": ""
+      },
+      {
+        "id": "gal",
+        "ref": "gallons"
+      },
+      {
+        "id": "ft3",
+        "ref": ""
+      },
+      {
+        "id": "yd3",
+        "ref": ""
+      }
+    ]
+  },
+  {
+    "name": "volumeFlowRate",
+    "formats": [
+      {
+        "id": "mm3/s",
+        "ref": ""
+      },
+      {
+        "id": "cm3/s",
+        "ref": ""
+      },
+      {
+        "id": "ml/s",
+        "ref": ""
+      },
+      {
+        "id": "cl/s",
+        "ref": ""
+      },
+      {
+        "id": "dl/s",
+        "ref": ""
+      },
+      {
+        "id": "l/s",
+        "ref": ""
+      },
+      {
+        "id": "l/min",
+        "ref": "flowlpm"
+      },
+      {
+        "id": "l/h",
+        "ref": "litreh"
+      },
+      {
+        "id": "kl/s",
+        "ref": ""
+      },
+      {
+        "id": "kl/min",
+        "ref": ""
+      },
+      {
+        "id": "kl/h",
+        "ref": ""
+      },
+      {
+        "id": "m3/s",
+        "ref": "flowcms"
+      },
+      {
+        "id": "m3/min",
+        "ref": ""
+      },
+      {
+        "id": "m3/h",
+        "ref": ""
+      },
+      {
+        "id": "km3/s",
+        "ref": ""
+      },
+      {
+        "id": "tsp/s",
+        "ref": ""
+      },
+      {
+        "id": "Tbs/s",
+        "ref": ""
+      },
+      {
+        "id": "in3/s",
+        "ref": ""
+      },
+      {
+        "id": "in3/min",
+        "ref": ""
+      },
+      {
+        "id": "in3/h",
+        "ref": ""
+      },
+      {
+        "id": "fl-oz/s",
+        "ref": ""
+      },
+      {
+        "id": "fl-oz/min",
+        "ref": ""
+      },
+      {
+        "id": "fl-oz/h",
+        "ref": ""
+      },
+      {
+        "id": "cup/s",
+        "ref": ""
+      },
+      {
+        "id": "pnt/s",
+        "ref": ""
+      },
+      {
+        "id": "pnt/min",
+        "ref": ""
+      },
+      {
+        "id": "pnt/h",
+        "ref": ""
+      },
+      {
+        "id": "qt/s",
+        "ref": ""
+      },
+      {
+        "id": "gal/s",
+        "ref": ""
+      },
+      {
+        "id": "gal/min",
+        "ref": "flowgpm"
+      },
+      {
+        "id": "gal/h",
+        "ref": ""
+      },
+      {
+        "id": "ft3/s",
+        "ref": "flowcfs"
+      },
+      {
+        "id": "ft3/min",
+        "ref": "flowcfm"
+      },
+      {
+        "id": "ft3/h",
+        "ref": ""
+      },
+      {
+        "id": "yd3/s",
+        "ref": ""
+      },
+      {
+        "id": "yd3/min",
+        "ref": ""
+      },
+      {
+        "id": "yd3/h",
+        "ref": ""
+      }
+    ]
+  }
+]

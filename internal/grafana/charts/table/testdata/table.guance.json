@@ -1,0 +1,43 @@
+{
+  "extend": {
+    "settings": {
+      "fixedTime": "",
+      "isTimeInterval": false,
+      "mainMeasurementLimit": 20,
+      "mainMeasurementQueryCode": "A",
+      "mainMeasurementSort": "top",
+      "pageSize": 0,
+      "queryMode": "toGroupColumn",
+      "showFieldMapping": false,
+      "showTitle": true,
+      "timeInterval": "default",
+      "titleDesc": ""
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "Each Request Detail",
+  "pos": {
+    "h": 16,
+    "w": 24,
+    "x": 0,
+    "y": 58
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "funcList": [],
+        "q": "prom:nginxlog_resp_bytes{instance=~\"#{instance}*\"}",
+        "type": "promql"
+      },
+      "type": "table"
+    }
+  ],
+  "type": "table"
+}

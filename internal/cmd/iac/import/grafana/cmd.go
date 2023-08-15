@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 
 	dashboardtfmod "github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
+	"github.com/GuanceCloud/guance-cli/internal/grafana"
 )
 
 type importOptions struct {
@@ -29,12 +30,12 @@ func NewCmd() *cobra.Command {
 				return fmt.Errorf("read file error: %w", err)
 			}
 
-			grafanaDashboard, err := ParseGrafana(content)
+			grafanaDashboard, err := grafana.ParseGrafana(content)
 			if err != nil {
 				return fmt.Errorf("parse grafana dashboard error: %w", err)
 			}
 
-			builder := NewBuilder()
+			builder := grafana.NewBuilder()
 			builder.Measurement = opts.Measurement
 			adt, err := builder.Build(grafanaDashboard)
 			if err != nil {

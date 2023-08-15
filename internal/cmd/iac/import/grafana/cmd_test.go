@@ -13,7 +13,7 @@ func TestGrafana(t *testing.T) {
 	t.Skip()
 
 	cmd := NewCmd()
-	cmd.SetArgs([]string{"-f", "testdata/node.json", "-t", "terraform-module", "-o", "testdata/output"})
+	cmd.SetArgs([]string{"-f", "testdata/input.json", "-t", "terraform-module", "-o", "testdata/out"})
 	if err := cmd.Execute(); err != nil {
 		assert.NoError(t, err)
 	}

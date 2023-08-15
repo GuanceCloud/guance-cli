@@ -3,6 +3,7 @@ module github.com/GuanceCloud/guance-cli
 go 1.19
 
 require (
+	github.com/google/uuid v1.3.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/magefile/mage v1.15.0
 	github.com/mitchellh/mapstructure v1.5.0

@@ -42,14 +42,14 @@ All features of Grafana importer are listed here:
 
 | Grafana Panel Type | Guance Chart Type | Implemented? | All Features Supported? |
 | ------------------ | ----------------- | ------------ | ----------------------- |
-| bar gauge          | bar               | YES          | [Partial](#bargauge)    |
-| gauge              | gauge             | YES          | [Partial](#gauge)       |
-| stat               | singlestat        | YES          | [Partial](#stat)        |
-| time series        | sequence          | YES          | [Partial](#timeseries)  |
-| table              | table             | YES          | [Partial](#table)       |
-| pie                | pie               | NO           |                         |
-| barchart           | bar               | NO           |                         |
-| text               | text              | NO           |                         |
+| bar gauge          | bar               | YES          | Partial    |
+| gauge              | gauge             | YES          | Partial       |
+| stat               | singlestat        | YES          | Partial        |
+| time series        | sequence          | YES          | Partial  |
+| table              | table             | YES          | Partial       |
+| pie                | pie               | YES          | Partial         |
+| barchart           | bar               | YES          | Partial         |
+| text               | text              | YES          | Partial        |
 | candlestick        | -                 | -            |                         |
 | flame graph        | -                 | -            |                         |
 | geomap             | -                 | -            |                         |
@@ -63,29 +63,9 @@ All features of Grafana importer are listed here:
 The `-` token means the panel couldn't convert to Guance Cloud directly,
 such as it not based on prometheus data-source, don't have related chart type in Guance and so on.
 
-#### BarGauge
-
-Working in progress.
-
-#### Gauge
-
-Working in progress.
-
-#### Stat
-
-Working in progress.
-
-#### TimeSeries
-
-Working in progress.
-
-#### Table
-
-Working in progress.
-
 ### Re-write PromQL for Guance
 
-According to [Guance Cloud PromQL] documentation (in chinese), Guance has a specific prefix about measurement on PromQL.
+According to [Guance Cloud PromQL](https://docs.guance.com/dql/promql/) documentation (in chinese), Guance has a specific prefix about measurement on PromQL.
 
 For example:
 
