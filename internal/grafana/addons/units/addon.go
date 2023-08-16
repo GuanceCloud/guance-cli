@@ -16,7 +16,12 @@ type Addon struct {
 }
 
 func (addon *Addon) PatchChart(panel *grafanaspec.Panel, chart map[string]any) (map[string]any, error) {
-	units := convertUnit(types.StringValue(panel.FieldConfig.Defaults.Unit))
+	grafanaUnit := types.StringValue(panel.FieldConfig.Defaults.Unit)
+	if grafanaUnit == "" {
+		grafanaUnit = types.StringValue(panel.Format)
+	}
+
+	units := convertUnit(grafanaUnit)
 	if units == nil {
 		return chart, nil
 	}

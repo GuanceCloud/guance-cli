@@ -492,6 +492,9 @@ type Panel struct {
 
 	// The panel plugin type id. May not be empty.
 	Type string `json:"type"`
+
+	// hack
+	Format *string `json:"format"`
 }
 
 // Direction to repeat in if 'repeat' is set.

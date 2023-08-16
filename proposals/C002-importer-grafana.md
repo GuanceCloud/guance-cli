@@ -42,14 +42,14 @@ All features of Grafana importer are listed here:
 
 | Grafana Panel Type | Guance Chart Type | Implemented? | All Features Supported? |
 | ------------------ | ----------------- | ------------ | ----------------------- |
-| bar gauge          | bar               | YES          | Partial    |
-| gauge              | gauge             | YES          | Partial       |
-| stat               | singlestat        | YES          | Partial        |
-| time series        | sequence          | YES          | Partial  |
-| table              | table             | YES          | Partial       |
-| pie                | pie               | YES          | Partial         |
-| barchart           | bar               | YES          | Partial         |
-| text               | text              | YES          | Partial        |
+| bar gauge          | bar               | YES          | Partial                 |
+| gauge              | gauge             | YES          | Partial                 |
+| stat               | singlestat        | YES          | Partial                 |
+| time series        | sequence          | YES          | Partial                 |
+| table              | table             | YES          | Partial                 |
+| pie                | pie               | YES          | Partial                 |
+| barchart           | bar               | YES          | Partial                 |
+| text               | text              | YES          | Partial                 |
 | candlestick        | -                 | -            |                         |
 | flame graph        | -                 | -            |                         |
 | geomap             | -                 | -            |                         |

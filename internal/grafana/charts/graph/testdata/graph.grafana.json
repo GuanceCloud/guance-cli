@@ -1,0 +1,99 @@
+{
+  "aliasColors": {},
+  "bars": false,
+  "dashLength": 10,
+  "dashes": false,
+  "datasource": "${DS_PROMETHEUS}",
+  "description": "Virtual and Resident memory size in bytes, averages over 5 min interval",
+  "fill": 1,
+  "fillGradient": 0,
+  "gridPos": {
+    "h": 7,
+    "w": 8,
+    "x": 8,
+    "y": 3
+  },
+  "id": 24,
+  "legend": {
+    "alignAsTable": true,
+    "avg": true,
+    "current": true,
+    "max": true,
+    "min": true,
+    "show": true,
+    "total": false,
+    "values": true
+  },
+  "lines": true,
+  "linewidth": 1,
+  "links": [],
+  "nullPointMode": "null",
+  "options": {
+    "dataLinks": []
+  },
+  "percentage": false,
+  "pointradius": 5,
+  "points": false,
+  "renderer": "flot",
+  "seriesOverrides": [],
+  "spaceLength": 10,
+  "stack": false,
+  "steppedLine": false,
+  "targets": [
+    {
+      "expr": "avg(rate(process_resident_memory_bytes{release=\"$release\", instance=\"$instance\"}[5m]))",
+      "format": "time_series",
+      "intervalFactor": 2,
+      "legendFormat": "Resident Mem",
+      "refId": "A"
+    },
+    {
+      "expr": "avg(rate(process_virtual_memory_bytes{release=\"$release\", instance=\"$instance\"}[5m]))",
+      "format": "time_series",
+      "intervalFactor": 2,
+      "legendFormat": "Virtual Mem",
+      "refId": "B"
+    }
+  ],
+  "thresholds": [],
+  "timeFrom": null,
+  "timeRegions": [],
+  "timeShift": null,
+  "title": "Average Memory Usage",
+  "tooltip": {
+    "shared": true,
+    "sort": 0,
+    "value_type": "individual"
+  },
+  "type": "graph",
+  "xaxis": {
+    "buckets": null,
+    "mode": "time",
+    "name": null,
+    "show": true,
+    "values": []
+  },
+  "yaxes": [
+    {
+      "decimals": null,
+      "format": "decbytes",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    },
+    {
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+  ],
+  "yaxis": {
+    "align": false,
+    "alignLevel": null
+  }
+}

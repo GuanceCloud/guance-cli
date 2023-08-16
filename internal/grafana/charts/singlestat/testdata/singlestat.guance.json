@@ -1,0 +1,47 @@
+{
+  "extend": {
+    "settings": {
+      "bgColor": "",
+      "compareType": "",
+      "downsample": "last",
+      "fixedTime": "",
+      "fontColor": "",
+      "isTimeInterval": false,
+      "lineColor": "#3AB8FF",
+      "openCompare": false,
+      "precision": "2",
+      "showFieldMapping": false,
+      "showLine": false,
+      "showLineAxis": false,
+      "showTitle": true,
+      "timeInterval": "default",
+      "titleDesc": ""
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "Version",
+  "pos": {
+    "h": 5,
+    "w": 4,
+    "x": 0,
+    "y": 1
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "funcList": [],
+        "q": "prom:pg_static{instance=\"#{instance}\",release=\"#{release}\"}",
+        "type": "promql"
+      },
+      "type": "singlestat"
+    }
+  ],
+  "type": "singlestat"
+}
