@@ -1,0 +1,50 @@
+{
+  "extend": {
+    "settings": {
+      "chartType": "areaLine",
+      "showFieldMapping": false,
+      "showTitle": true,
+      "timeInterval": "auto",
+      "titleDesc": "Virtual and Resident memory size in bytes, averages over 5 min interval"
+    }
+  },
+  "group": {
+    "name": ""
+  },
+  "name": "Average Memory Usage",
+  "pos": {
+    "h": 7,
+    "w": 8,
+    "x": 8,
+    "y": 3
+  },
+  "queries": [
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "funcList": [],
+        "q": "avg(rate(prom:process_resident_memory_bytes{instance=\"#{instance}\",release=\"#{release}\"}[5m]))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    },
+    {
+      "color": "",
+      "datasource": "dataflux",
+      "disabled": false,
+      "name": "",
+      "qtype": "promql",
+      "query": {
+        "funcList": [],
+        "q": "avg(rate(prom:process_virtual_memory_bytes{instance=\"#{instance}\",release=\"#{release}\"}[5m]))",
+        "type": "promql"
+      },
+      "type": "sequence"
+    }
+  ],
+  "type": "sequence"
+}

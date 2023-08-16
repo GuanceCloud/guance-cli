@@ -8,7 +8,9 @@ import (
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/bargauge"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/base"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/gauge"
+	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/graph"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/pie"
+	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/singlestat"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/stat"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/table"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts/text"
@@ -80,6 +82,10 @@ func NewChartBuilder(opts ...ChartOption) (charts.Builder, error) {
 		chartBuilder = &bar.Builder{Builder: baseBuilder}
 	case text.ChartTypeText:
 		chartBuilder = &text.Builder{Builder: baseBuilder}
+	case singlestat.ChartTypeSingleStat:
+		chartBuilder = &singlestat.Builder{Builder: baseBuilder}
+	case graph.ChartTypeGraph:
+		chartBuilder = &graph.Builder{Builder: baseBuilder}
 	default:
 		return nil, fmt.Errorf("unknown chart type: %s", options.Type)
 	}

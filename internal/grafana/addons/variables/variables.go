@@ -3,6 +3,7 @@ package variables
 import (
 	"fmt"
 	"regexp"
+	"strings"
 
 	"github.com/hashicorp/go-multierror"
 
@@ -18,7 +19,7 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 			continue
 		}
 
-		label, err := getLabelFromVariable(variable)
+		dqlQuery, err := addon.toDQL(variable)
 		if err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to get label from variable: %w", err))
 			continue
@@ -36,7 +37,7 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 				"metric": "",
 				"object": "",
 				"tag":    "",
-				"value":  fmt.Sprintf("SHOW_TAG_VALUE(from=['%s'], keyin=['%s'])", addon.Measurement, label),
+				"value":  dqlQuery,
 			},
 			"hide":             0,
 			"isHiddenAsterisk": 0,
@@ -52,23 +53,43 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 	return vars, nil
 }
 
-var labelFuncPattern = regexp.MustCompile(`label_values\((.+),\s*(.+)\)`)
+var labelFuncPattern = regexp.MustCompile(`label_values\((.+),?\s*(.*)\)`)
 
-func getLabelFromVariable(variable grafanaspec.VariableModel) (string, error) {
+func (addon *Addon) toDQL(variable grafanaspec.VariableModel) (string, error) {
+	queryString, err := getPromExpr(variable)
+	if err != nil {
+		return "", fmt.Errorf("failed to get prometheus expression: %w", err)
+	}
+
+	switch {
+	case strings.HasPrefix(queryString, "label_values("):
+		match := labelFuncPattern.FindStringSubmatch(queryString)
+		if len(match) != 3 {
+			return "", fmt.Errorf("failed to get label from variable: %s", variable.Name)
+		}
+		return fmt.Sprintf("SHOW_TAG_VALUE(from=['%s'], keyin=['%s'])", addon.Measurement, match[2]), nil
+	case strings.HasPrefix(queryString, "query_result("):
+		return "", nil
+	default:
+		return "", fmt.Errorf("failed to get label from variable: %s", variable.Name)
+	}
+}
+
+func getPromExpr(variable grafanaspec.VariableModel) (string, error) {
 	if variable.Query == nil {
 		return "", fmt.Errorf("query %s is empty", variable.Name)
 	}
-	m, ok := (*variable.Query).(map[string]any)
-	if !ok {
-		return "", fmt.Errorf("failed to decode query %s map", variable.Name)
-	}
-	queryString, ok := m["query"].(string)
-	if !ok {
+
+	switch t := (*variable.Query).(type) {
+	case string:
+		return t, nil
+	case map[string]any:
+		queryString, ok := t["query"].(string)
+		if !ok {
+			return "", fmt.Errorf("failed to get query string from variable: %s", variable.Name)
+		}
+		return queryString, nil
+	default:
 		return "", fmt.Errorf("failed to get query string from variable: %s", variable.Name)
 	}
-	match := labelFuncPattern.FindStringSubmatch(queryString)
-	if len(match) != 3 {
-		return "", fmt.Errorf("failed to get label from variable: %s", variable.Name)
-	}
-	return match[2], nil
 }
