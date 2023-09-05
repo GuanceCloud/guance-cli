@@ -22,6 +22,9 @@ func (w *Rewriter) Rewrite(query string) (string, error) {
 	// See also: https://docs.guance.com/dql/metricsql/
 	query = strings.ReplaceAll(query, "[$__interval]", magicInterval)
 	query = strings.ReplaceAll(query, "[$__rate_interval]", magicInterval)
+	// Compatible for old-style grafana dashboard
+	query = strings.ReplaceAll(query, "[$interval]", magicInterval)
+	query = strings.ReplaceAll(query, "[$rate_interval]", magicInterval)
 
 	expr, err := parser.ParseExpr(query)
 	if err != nil {
