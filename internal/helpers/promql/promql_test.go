@@ -65,6 +65,17 @@ func TestRewriter_Rewrite(t *testing.T) {
 			want:    "irate(prom:node_forks_total{instance=\"#{node}\",job=\"#{job}\"})",
 			wantErr: false,
 		},
+		{
+			name: "escape measurement name",
+			fields: fields{
+				Measurement: "node-xxx",
+			},
+			args: args{
+				query: "irate(node_forks_total{instance=\"#{node}\",job=\"#{job}\"}[$__rate_interval])",
+			},
+			want:    "irate(node\\-xxx:node_forks_total{instance=\"#{node}\",job=\"#{job}\"})",
+			wantErr: false,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
