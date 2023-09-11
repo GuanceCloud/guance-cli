@@ -63,9 +63,14 @@ func (w *Rewriter) rewriteVar(name string) string {
 const nameSep = "_"
 
 func (w *Rewriter) rewriteName(name string) string {
-	if w.Measurement != "" {
-		return fmt.Sprintf("%s:%s", w.Measurement, name)
+	measurement := w.Measurement
+	if measurement == "" {
+		tokens := strings.Split(name, nameSep)
+		measurement = tokens[0]
+		name = strings.Join(tokens[1:], nameSep)
+		return fmt.Sprintf("%s:%s", measurement, name)
 	}
-	tokens := strings.Split(name, nameSep)
-	return fmt.Sprintf("%s:%s", tokens[0], strings.Join(tokens[1:], nameSep))
+	// Escape `-` in measurement name
+	measurement = strings.ReplaceAll(measurement, "-", "\\-")
+	return fmt.Sprintf("%s:%s", measurement, name)
 }
