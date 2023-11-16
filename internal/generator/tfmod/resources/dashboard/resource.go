@@ -11,10 +11,8 @@ import (
 	"github.com/GuanceCloud/guance-cli/internal/helpers/prettier"
 )
 
-var (
-	//go:embed template/main.tf.gotpl
-	moduleTemplateMain string
-)
+//go:embed template/main.tf.gotpl
+var moduleTemplateMain string
 
 type Manifest struct {
 	Name    string

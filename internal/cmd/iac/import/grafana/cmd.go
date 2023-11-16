@@ -4,8 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/tidwall/gjson"
 	"os"
+
+	"github.com/tidwall/gjson"
 
 	"github.com/grafana-tools/sdk"
 	"github.com/hashicorp/go-multierror"
@@ -116,8 +117,8 @@ func readDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.
 
 func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
 	c, err := sdk.NewClient(
-		os.Getenv("GRAFANA_AUTH"),
 		os.Getenv("GRAFANA_URL"),
+		os.Getenv("GRAFANA_AUTH"),
 		sdk.DefaultHTTPClient)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create a client: %s", err)
@@ -152,6 +153,7 @@ func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmo
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to get dashboard %s: %s", link.UID, err))
 			continue
 		}
+		fmt.Printf("Downloaded %q\n", link.Title)
 		result = append(result, dashboardtfmod.Manifest{
 			Name:    meta.Slug,
 			Content: rawBoard,

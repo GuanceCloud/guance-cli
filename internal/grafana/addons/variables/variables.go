@@ -2,7 +2,6 @@ package variables
 
 import (
 	"fmt"
-	"github.com/GuanceCloud/guance-cli/internal/helpers/promql"
 
 	"github.com/hashicorp/go-multierror"
 
@@ -20,15 +19,9 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 			continue
 		}
 
-		promExpr, err := getPromExpr(variable)
+		q, err := getPromExpr(variable)
 		if err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to get prometheus expression from variable: %w", err))
-			continue
-		}
-
-		q, err := (&promql.Rewriter{Measurement: addon.Measurement}).Rewrite(promExpr)
-		if err != nil {
-			mErr = multierror.Append(mErr, fmt.Errorf("failed to rewrite promql: %w", err))
 			continue
 		}
 
