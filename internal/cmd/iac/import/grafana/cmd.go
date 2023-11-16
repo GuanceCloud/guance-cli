@@ -1,10 +1,14 @@
 package grafana
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/tidwall/gjson"
 	"os"
 
+	"github.com/grafana-tools/sdk"
+	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 
 	dashboardtfmod "github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
@@ -12,11 +16,15 @@ import (
 )
 
 type importOptions struct {
-	Resource    string
-	Target      string
-	File        string
-	Out         string
-	Measurement string
+	Target         string
+	Out            string
+	Measurement    string
+	Files          []string
+	Search         bool
+	SearchId       int
+	SearchFolderId int
+	SearchQuery    string
+	SearchTag      string
 }
 
 func NewCmd() *cobra.Command {
@@ -25,41 +33,130 @@ func NewCmd() *cobra.Command {
 		Use:   "grafana",
 		Short: "(Alpha) Import Grafana Dashboard resources",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			content, err := os.ReadFile(opts.File)
+			var err error
+			var dashboards []dashboardtfmod.Manifest
+
+			if opts.Search {
+				dashboards, err = searchDashboards(context.Background(), &opts)
+			} else if len(opts.Files) != 0 {
+				dashboards, err = readDashboards(context.Background(), &opts)
+			} else {
+				return fmt.Errorf("file or search must be specified")
+			}
 			if err != nil {
-				return fmt.Errorf("read file error: %w", err)
+				return fmt.Errorf("discovery dashboards error: %w", err)
 			}
 
-			grafanaDashboard, err := grafana.ParseGrafana(content)
-			if err != nil {
-				return fmt.Errorf("parse grafana dashboard error: %w", err)
+			var result []dashboardtfmod.Manifest
+			for _, d := range dashboards {
+				grafanaDashboard, err := grafana.ParseGrafana(d.Content)
+				if err != nil {
+					return fmt.Errorf("parse grafana dashboard error: %w", err)
+				}
+
+				builder := grafana.NewBuilder()
+				builder.Measurement = opts.Measurement
+				adt, err := builder.Build(grafanaDashboard)
+				if err != nil {
+					return fmt.Errorf("generate dashboard error: %w", err)
+				}
+
+				manifest, err := json.Marshal(adt)
+				if err != nil {
+					return fmt.Errorf("marshal dashboard error: %w", err)
+				}
+				result = append(result, dashboardtfmod.Manifest{
+					Name:    d.Name,
+					Title:   d.Title,
+					Content: manifest,
+				})
 			}
 
-			builder := grafana.NewBuilder()
-			builder.Measurement = opts.Measurement
-			adt, err := builder.Build(grafanaDashboard)
-			if err != nil {
-				return fmt.Errorf("generate dashboard error: %w", err)
-			}
-
-			manifest, err := json.Marshal(adt)
-			if err != nil {
-				return fmt.Errorf("marshal dashboard error: %w", err)
-			}
-
-			files, err := dashboardtfmod.Generate(dashboardtfmod.Options{Manifest: manifest})
+			files, err := dashboardtfmod.Generate(dashboardtfmod.Options{Manifests: result})
 			if err != nil {
 				return fmt.Errorf("generate dashboard error: %w", err)
 			}
 			return files.Save(opts.Out)
 		},
 	}
-	cmd.Flags().StringVarP(&opts.File, "file", "f", "", "File path to import.")
+
+	cmd.Flags().StringSliceVarP(&opts.Files, "file", "f", nil, "File path to import.")
+	cmd.Flags().IntVar(&opts.SearchId, "search-id", 0, "Dashboard id to import.")
+	cmd.Flags().IntVar(&opts.SearchFolderId, "search-folder-id", 0, "Folder id to import.")
+	cmd.Flags().StringVar(&opts.SearchQuery, "search-query", "", "Query to search dashboard.")
+	cmd.Flags().StringVar(&opts.SearchTag, "search-tag", "", "Tag to search dashboard.")
+	cmd.Flags().BoolVar(&opts.Search, "search", false, "Search dashboard.")
 	cmd.Flags().StringVarP(&opts.Target, "target", "t", "", "Target type, supports terraform-module now.")
 	cmd.Flags().StringVarP(&opts.Out, "out", "o", "", "Output file path.")
 	cmd.Flags().StringVarP(&opts.Measurement, "measurement", "m", "prom", "Measurement (default is prom).")
 	_ = cmd.MarkFlagRequired("target")
 	_ = cmd.MarkFlagRequired("out")
-	cmd.MarkFlagsRequiredTogether("file")
+	cmd.MarkFlagsMutuallyExclusive("file", "search")
 	return cmd
+}
+
+func readDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
+	var mErr error
+	var result []dashboardtfmod.Manifest
+	for i, filePath := range opts.Files {
+		content, err := os.ReadFile(filePath)
+		if err != nil {
+			mErr = multierror.Append(mErr, fmt.Errorf("read file %s error: %w", filePath, err))
+			continue
+		}
+
+		result = append(result, dashboardtfmod.Manifest{
+			Name:    fmt.Sprint(i),
+			Title:   gjson.GetBytes(content, "title").String(),
+			Content: content,
+		})
+	}
+	return result, nil
+}
+
+func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
+	c, err := sdk.NewClient(
+		os.Getenv("GRAFANA_AUTH"),
+		os.Getenv("GRAFANA_URL"),
+		sdk.DefaultHTTPClient)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create a client: %s", err)
+	}
+
+	params := []sdk.SearchParam{
+		sdk.SearchType(sdk.SearchTypeDashboard),
+	}
+	if opts.SearchId != 0 {
+		params = append(params, sdk.SearchDashboardID(opts.SearchId))
+	}
+	if opts.SearchFolderId != 0 {
+		params = append(params, sdk.SearchFolderID(opts.SearchFolderId))
+	}
+	if opts.SearchQuery != "" {
+		params = append(params, sdk.SearchQuery(opts.SearchQuery))
+	}
+	if opts.SearchTag != "" {
+		params = append(params, sdk.SearchTag(opts.SearchTag))
+	}
+
+	boardLinks, err := c.Search(ctx, params...)
+	if err != nil {
+		return nil, err
+	}
+
+	var mErr error
+	var result []dashboardtfmod.Manifest
+	for _, link := range boardLinks {
+		rawBoard, meta, err := c.GetRawDashboardByUID(ctx, link.UID)
+		if err != nil {
+			mErr = multierror.Append(mErr, fmt.Errorf("failed to get dashboard %s: %s", link.UID, err))
+			continue
+		}
+		result = append(result, dashboardtfmod.Manifest{
+			Name:    meta.Slug,
+			Content: rawBoard,
+			Title:   link.Title,
+		})
+	}
+	return result, nil
 }

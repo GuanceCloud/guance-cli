@@ -2,6 +2,7 @@ package variables
 
 import (
 	"fmt"
+	"github.com/GuanceCloud/guance-cli/internal/helpers/promql"
 
 	"github.com/hashicorp/go-multierror"
 
@@ -25,9 +26,9 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 			continue
 		}
 
-		dqlQuery, err := toDQL(promExpr)
+		q, err := (&promql.Rewriter{Measurement: addon.Measurement}).Rewrite(promExpr)
 		if err != nil {
-			mErr = multierror.Append(mErr, fmt.Errorf("failed to get label from variable: %w", err))
+			mErr = multierror.Append(mErr, fmt.Errorf("failed to rewrite promql: %w", err))
 			continue
 		}
 
@@ -48,13 +49,13 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 				"metric": "",
 				"object": "",
 				"tag":    "",
-				"value":  dqlQuery,
+				"value":  q,
 			},
 			"hide":             0,
 			"isHiddenAsterisk": 0,
 			"name":             name,
 			"seq":              2,
-			"type":             "QUERY",
+			"type":             "PROMQL_QUERY",
 			"valueSort":        "asc",
 		})
 	}
