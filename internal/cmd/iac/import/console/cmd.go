@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
-	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/monitor"
-
-	"github.com/GuanceCloud/guance-cli/internal/helpers/osfs"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
+
+	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
+	"github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/monitor"
+	"github.com/GuanceCloud/guance-cli/internal/helpers/osfs"
 )
 
 const (
@@ -65,7 +65,13 @@ func generateTerraformModule(opts importOptions) error {
 	var files osfs.Files
 	switch opts.Resource {
 	case ResourceTypeDashboard:
-		files, err = dashboard.Generate(dashboard.Options{Manifest: content})
+		files, err = dashboard.Generate(dashboard.Options{Manifests: []dashboard.Manifest{
+			{
+				Name:    "main",
+				Title:   gjson.GetBytes(content, "title").String(),
+				Content: content,
+			},
+		}})
 	case ResourceTypeMonitor:
 		var monitors []json.RawMessage
 		for _, value := range gjson.GetBytes(content, "checkers").Array() {

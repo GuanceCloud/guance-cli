@@ -1,0 +1,25 @@
+terraform {
+  required_version = ">= 1.0"
+
+  required_providers {
+    guance = {
+      source = "GuanceCloud/guance"
+    }
+  }
+}
+
+{{ range $i, $d := . }}
+resource "guance_dashboard" "{{ .Name }}" {
+  name     = "{{ .Title }}"
+  manifest = file("${path.module}/dashboards/{{ .Name }}.json")
+}
+{{ end }}
+
+output "dashboard_ids" {
+  description = "The `guance_dashboard`'s id."
+  value = [
+{{ range $i, $d := . }}
+    guance_dashboard.{{ .Name }}.id,
+{{ end }}
+  ]
+}

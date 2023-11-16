@@ -3,6 +3,7 @@ module github.com/GuanceCloud/guance-cli
 go 1.19
 
 require (
+	github.com/grafana-tools/sdk v0.0.0-20220919052116-6562121319fc
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/magefile/mage v1.15.0
 	github.com/mitchellh/mapstructure v1.5.0
@@ -23,6 +24,7 @@ require (
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/gosimple/slug v1.1.1 // indirect
 	github.com/grafana/regexp v0.0.0-20221122212121-6b5c0a4cb7fd // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -34,6 +36,7 @@ require (
 	github.com/prometheus/client_model v0.4.0 // indirect
 	github.com/prometheus/common v0.44.0 // indirect
 	github.com/prometheus/procfs v0.11.0 // indirect
+	github.com/rainycape/unidecode v0.0.0-20150907023854-cb7f23ec59be // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
