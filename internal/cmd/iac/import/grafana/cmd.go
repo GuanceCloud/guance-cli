@@ -22,8 +22,8 @@ type importOptions struct {
 	Measurement    string
 	Files          []string
 	Search         bool
-	SearchId       int
-	SearchFolderId int
+	SearchID       int
+	SearchFolderID int
 	SearchQuery    string
 	SearchTag      string
 }
@@ -82,8 +82,8 @@ func NewCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringSliceVarP(&opts.Files, "file", "f", nil, "File path to import.")
-	cmd.Flags().IntVar(&opts.SearchId, "search-id", 0, "Dashboard id to import.")
-	cmd.Flags().IntVar(&opts.SearchFolderId, "search-folder-id", 0, "Folder id to import.")
+	cmd.Flags().IntVar(&opts.SearchID, "search-id", 0, "Dashboard id to import.")
+	cmd.Flags().IntVar(&opts.SearchFolderID, "search-folder-id", 0, "Folder id to import.")
 	cmd.Flags().StringVar(&opts.SearchQuery, "search-query", "", "Query to search dashboard.")
 	cmd.Flags().StringVar(&opts.SearchTag, "search-tag", "", "Tag to search dashboard.")
 	cmd.Flags().BoolVar(&opts.Search, "search", false, "Search dashboard.")
@@ -98,7 +98,7 @@ func NewCmd() *cobra.Command {
 
 func readDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
 	var mErr error
-	var result []dashboardtfmod.Manifest
+	result := make([]dashboardtfmod.Manifest, 0, len(opts.Files))
 	for i, filePath := range opts.Files {
 		content, err := os.ReadFile(filePath)
 		if err != nil {
@@ -127,11 +127,11 @@ func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmo
 	params := []sdk.SearchParam{
 		sdk.SearchType(sdk.SearchTypeDashboard),
 	}
-	if opts.SearchId != 0 {
-		params = append(params, sdk.SearchDashboardID(opts.SearchId))
+	if opts.SearchID != 0 {
+		params = append(params, sdk.SearchDashboardID(opts.SearchID))
 	}
-	if opts.SearchFolderId != 0 {
-		params = append(params, sdk.SearchFolderID(opts.SearchFolderId))
+	if opts.SearchFolderID != 0 {
+		params = append(params, sdk.SearchFolderID(opts.SearchFolderID))
 	}
 	if opts.SearchQuery != "" {
 		params = append(params, sdk.SearchQuery(opts.SearchQuery))
@@ -146,19 +146,19 @@ func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmo
 	}
 
 	var mErr error
-	var result []dashboardtfmod.Manifest
+	result := make([]dashboardtfmod.Manifest, 0, len(boardLinks))
 	for _, link := range boardLinks {
 		rawBoard, meta, err := c.GetRawDashboardByUID(ctx, link.UID)
 		if err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to get dashboard %s: %s", link.UID, err))
 			continue
 		}
-		fmt.Printf("Downloaded %q\n", link.Title)
 		result = append(result, dashboardtfmod.Manifest{
 			Name:    meta.Slug,
 			Content: rawBoard,
 			Title:   link.Title,
 		})
+		fmt.Printf("Downloaded %q\n", link.Title)
 	}
 	return result, nil
 }
