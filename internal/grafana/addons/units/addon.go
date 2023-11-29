@@ -34,7 +34,7 @@ func (addon *Addon) PatchChart(panel *grafanaspec.Panel, chart map[string]any) (
 	var mErr error
 	result := make([]map[string]any, 0, len(targets))
 	for _, target := range targets {
-		q, err := (&promql.Rewriter{Measurement: addon.Measurement}).Rewrite(target.Expr)
+		q, err := promql.NewRewriter(addon.Measurement).Rewrite(target.Expr)
 		if err != nil {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to rewrite promql: %w", err))
 			continue

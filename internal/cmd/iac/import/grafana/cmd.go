@@ -9,7 +9,6 @@ import (
 	"os"
 
 	"github.com/grafana-tools/sdk"
-	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
 
@@ -94,7 +93,7 @@ func NewCmd() *cobra.Command {
 	cmd.Flags().BoolVar(&opts.Search, "search", false, "Search dashboard.")
 	cmd.Flags().StringVarP(&opts.Target, "target", "t", "", "Target type, supports terraform-module now.")
 	cmd.Flags().StringVarP(&opts.Out, "out", "o", "", "Output file path.")
-	cmd.Flags().StringVarP(&opts.Measurement, "measurement", "m", "prom", "Measurement (default is prom).")
+	cmd.Flags().StringVarP(&opts.Measurement, "measurement", "m", "", "Measurement (default is prom).")
 	_ = cmd.MarkFlagRequired("target")
 	_ = cmd.MarkFlagRequired("out")
 	cmd.MarkFlagsMutuallyExclusive("file", "search")
