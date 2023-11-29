@@ -1,8 +1,9 @@
 package variables
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestParseGrafanaVariable(t *testing.T) {

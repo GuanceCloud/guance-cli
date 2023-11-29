@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/grafana-tools/sdk"
+	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
 	"github.com/tidwall/gjson"
 
