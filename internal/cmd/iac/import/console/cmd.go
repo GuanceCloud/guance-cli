@@ -67,7 +67,7 @@ func generateTerraformModule(opts importOptions) error {
 	case ResourceTypeDashboard:
 		files, err = dashboard.Generate(dashboard.Options{Manifests: []dashboard.Manifest{
 			{
-				Name:    "main",
+				Name:    "manifest",
 				Title:   gjson.GetBytes(content, "title").String(),
 				Content: content,
 			},
