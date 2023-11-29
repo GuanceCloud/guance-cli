@@ -4,13 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 	"os"
-
-	"github.com/tidwall/gjson"
 
 	"github.com/grafana-tools/sdk"
 	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"
+	"github.com/tidwall/gjson"
 
 	dashboardtfmod "github.com/GuanceCloud/guance-cli/internal/generator/tfmod/resources/dashboard"
 	"github.com/GuanceCloud/guance-cli/internal/grafana"
@@ -21,6 +22,7 @@ type importOptions struct {
 	Out            string
 	Measurement    string
 	Files          []string
+	TemplateID     string
 	Search         bool
 	SearchID       int
 	SearchFolderID int
@@ -41,8 +43,10 @@ func NewCmd() *cobra.Command {
 				dashboards, err = searchDashboards(context.Background(), &opts)
 			} else if len(opts.Files) != 0 {
 				dashboards, err = readDashboards(context.Background(), &opts)
+			} else if opts.TemplateID != "" {
+				dashboards, err = importDashboardTemplate(context.Background(), &opts)
 			} else {
-				return fmt.Errorf("file or search must be specified")
+				return fmt.Errorf("file, template or search must be specified")
 			}
 			if err != nil {
 				return fmt.Errorf("discovery dashboards error: %w", err)
@@ -82,6 +86,7 @@ func NewCmd() *cobra.Command {
 	}
 
 	cmd.Flags().StringSliceVarP(&opts.Files, "file", "f", nil, "File path to import.")
+	cmd.Flags().StringVar(&opts.TemplateID, "template-id", "", "Template ID to import.")
 	cmd.Flags().IntVar(&opts.SearchID, "search-id", 0, "Dashboard id to import.")
 	cmd.Flags().IntVar(&opts.SearchFolderID, "search-folder-id", 0, "Folder id to import.")
 	cmd.Flags().StringVar(&opts.SearchQuery, "search-query", "", "Query to search dashboard.")
@@ -113,6 +118,27 @@ func readDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.
 		})
 	}
 	return result, nil
+}
+
+func importDashboardTemplate(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
+	resp, err := http.Get(fmt.Sprintf("https://grafana.com/api/dashboards/%s/revisions/latest/download", opts.TemplateID))
+	if err != nil {
+		return nil, fmt.Errorf("download template %s failed: %w", opts.TemplateID, err)
+	}
+	fmt.Printf("Downloaded Grafana Template %s", opts.TemplateID)
+	defer func() { _ = resp.Body.Close() }()
+
+	content, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, fmt.Errorf("read stream of template %s failed", opts.TemplateID)
+	}
+	return []dashboardtfmod.Manifest{
+		{
+			Name:    opts.TemplateID,
+			Title:   gjson.GetBytes(content, "title").String(),
+			Content: content,
+		},
+	}, nil
 }
 
 func searchDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.Manifest, error) {
