@@ -14,6 +14,11 @@ type Rewriter struct {
 	Measurement string
 }
 
+// NewRewriter will create new Rewriter
+func NewRewriter(measurement string) *Rewriter {
+	return &Rewriter{Measurement: measurement}
+}
+
 const magicInterval = "[999d]"
 
 // Rewrite will rewrite a query from Grafana-specific PromQL to MetricsQL on Guance Cloud

@@ -15,12 +15,6 @@ func (builder Builder) Build(panel grafanaspec.Panel) (map[string]any, error) {
 	return map[string]any{
 		"type": builder.Meta().GuanceType,
 		"name": types.StringValue(panel.Title),
-		"pos": map[string]any{
-			"h": panel.GridPos.H,
-			"w": panel.GridPos.W,
-			"x": panel.GridPos.X,
-			"y": panel.GridPos.Y,
-		},
 		"group": map[string]any{
 			"name": types.String(builder.Group),
 		},

@@ -2,6 +2,7 @@ package variables
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/hashicorp/go-multierror"
 
@@ -10,6 +11,7 @@ import (
 )
 
 // BuildVariables builds variables for Guance Cloud
+// All the function is described in https://github.com/grafana/grafana/blob/72d32eed27c058467aba8e02077b5b2e97c61c8d/public/app/plugins/datasource/prometheus/migrations/variableMigration.ts#L5
 func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any, error) {
 	var mErr error
 
@@ -21,8 +23,19 @@ func (addon *Addon) BuildVariables(variables []grafanaspec.VariableModel) ([]any
 
 		q, err := getPromExpr(variable)
 		if err != nil {
-			mErr = multierror.Append(mErr, fmt.Errorf("failed to get prometheus expression from variable: %w", err))
+			mErr = multierror.Append(mErr, fmt.Errorf("failed to get PromQL expression from variable: %w", err))
 			continue
+		}
+
+		v := &GrafanaVariable{
+			Expr:        q,
+			Measurement: addon.Measurement,
+		}
+		f, err := v.Func()
+		if err != nil {
+			log.Println(err)
+		} else {
+			q = f.ToGuance()
 		}
 
 		name := types.StringValue(variable.Label)
