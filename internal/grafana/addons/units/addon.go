@@ -60,5 +60,5 @@ func (addon *Addon) PatchChart(panel *grafanaspec.Panel, chart map[string]any) (
 				"units": result,
 			},
 		},
-	}), nil
+	}, false), nil
 }

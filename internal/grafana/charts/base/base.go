@@ -2,6 +2,7 @@ package base
 
 import (
 	"github.com/GuanceCloud/guance-cli/internal/grafana/addons"
+	"github.com/GuanceCloud/guance-cli/internal/grafana/addons/gridpos"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/addons/queries"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/addons/units"
 	"github.com/GuanceCloud/guance-cli/internal/grafana/charts"
@@ -17,6 +18,7 @@ func (builder Builder) Addons() []addons.ChartAddon {
 	return []addons.ChartAddon{
 		&queries.Addon{Measurement: builder.Measurement},
 		&units.Addon{Measurement: builder.Measurement},
+		&gridpos.Addon{Measurement: builder.Measurement},
 	}
 }
 

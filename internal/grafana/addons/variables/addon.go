@@ -11,6 +11,9 @@ type Addon struct {
 }
 
 func (addon *Addon) PatchDashboard(spec *grafanaspec.Spec, dashboard map[string]any) (map[string]any, error) {
+	if spec.Templating == nil {
+		return dashboard, nil
+	}
 	variables, err := addon.BuildVariables(spec.Templating.List)
 	if err != nil {
 		return nil, fmt.Errorf("failed to build targets: %w", err)

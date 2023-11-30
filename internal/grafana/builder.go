@@ -119,7 +119,7 @@ func (b *Builder) acceptPanel(v any) error {
 
 		chart, err := builder.Build(panel)
 		if err != nil {
-			return fmt.Errorf("failed to build chart: %w", err)
+			return fmt.Errorf("failed to build panel(%d): %w", types.IntValue(panel.Id), err)
 		}
 
 		var mErr error
@@ -130,7 +130,7 @@ func (b *Builder) acceptPanel(v any) error {
 			}
 		}
 		if mErr != nil {
-			return fmt.Errorf("failed to patch chart: %w", mErr)
+			return fmt.Errorf("failed to patch chart for panel(%d): %w", panel.Id, mErr)
 		}
 
 		b.charts = append(b.charts, chart)
