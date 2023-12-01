@@ -5,68 +5,15 @@
 [![Downloads](https://img.shields.io/github/downloads/GuanceCloud/guance-cli/total.svg)](https://github.com/GuanceCloud/guance-cli/releases)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GuanceCloud_guance-cli&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GuanceCloud_guance-cli)
 
-A command-line tool to help users interact with Guance Cloud.
+Your toolkit for Guance Cloud control-plane
 
 ![cover](./artwork/cover.png)
 
-## Features
+## Quickstart
 
-| Topic                                   | Feature           | Proposals                                                                         | Spec                                                     | State  | Related Projects                                                                                                                                                                                                                                                                                                                                                                              |
-| --------------------------------------- | ----------------- | --------------------------------------------------------------------------------- | -------------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🔧 _Command-line Interface_             | **Core**          | [A001](docs/pages/docs/proposals/arch/A001-guance-cli-overview.md)                | [View](specs/guance.spec.md)                             | Stable | -                                                                                                                                                                                                                                                                                                                                                                                             |
-| 🚅 _Resource Exporter_                  | **Console**       | -                                                                                 | [View](specs/iac/import/console/console.spec.md)         | Beta   | [![terraform-guance-dashboard](https://img.shields.io/badge/guance-terraform--guance--dashboard-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/terraform-guance-dashboard)<br/>[![terraform-guance-monitor](https://img.shields.io/badge/guance-terraform--guance--monitor-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/terraform-guance-monitor) |
-|                                         | **Grafana**       | [C002](docs/pages/docs/proposals/component/C002-importer-grafana.md)              | [View](specs/iac/import/grafana/node-exporter/README.md) | Alpha  | [![json-model](https://img.shields.io/badge/guance-json--model-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/json-model)                                                                                                                                                                                                                                                |
-| 🚀 _Continuation Integration / Testing_ | **JMeter**        | [C001](docs/pages/docs/proposals/component/C001-continuous-integration-jmeter.md) | WIP                                                      | WIP    | [![jmeter](https://img.shields.io/badge/apache-jmeter-blue?style=flat-square&logo=github)](https://github.com/apache/jmeter)                                                                                                                                                                                                                                                                  |
-|                                         | **JUnit**         | WIP                                                                               | WIP                                                      | WIP    | [![junit](https://img.shields.io/badge/junit--team-junit5-blue?style=flat-square&logo=github)](https://github.com/junit-team/junit5)                                                                                                                                                                                                                                                          |
-| 📦 _Components Installer_               | **DataKit**       | WIP                                                                               | WIP                                                      | WIP    | [![DataKit](https://img.shields.io/badge/guance-DataKit-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/DataKit)                                                                                                                                                                                                                                                          |
-|                                         | **SCheck**        | WIP                                                                               | WIP                                                      | WIP    | [![SCheck](https://img.shields.io/badge/guance-SCheck-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/SCheck)                                                                                                                                                                                                                                                             |
-| 🔭 _Ecosystem Integration_              | **GitHub Action** | -                                                                                 | WIP                                                      | WIP    | [![setup-guance](https://img.shields.io/badge/guance-setup--guance-blue?style=flat-square&logo=github)](https://github.com/GuanceCloud/setup-guance)                                                                                                                                                                                                                                          |
-|                                         | **DevContainer**  | -                                                                                 | WIP                                                      | WIP    | WIP                                                                                                                                                                                                                                                                                                                                                                                           |
-
-References:
-
-1. For more details about the proposal governance mechanism, see [Guance CLI Proposals](docs/pages/docs/proposals/README.md).
-2. For more details about user specification, see [Guance CLI User Specification](./specs/README.md).
-
-## Installation
-
-### Mac OSX
-
-```shell
-brew tap GuanceCloud/homebrew-tap
-brew install GuanceCloud/tap/guance
-```
-
-### Ubuntu or Debian
-
-```shell
-echo "deb [trusted=yes] https://releases.guance.io/apt/ /" | sudo tee /etc/apt/sources.list.d/guance.list
-sudo apt update
-sudo apt install guance
-```
-
-### CentOS or RHEL
-
-```shell
-cat <<EOF | sudo tee /etc/yum.repos.d/guance.repo
-[guance]
-name=Guance Cloud Repo
-baseurl=https://releases.guance.io/yum/
-enabled=1
-gpgcheck=0
-EOF
-sudo yum install -y guance
-```
-
-### Binary
-
-See the [release page](https://github.com/GuanceCloud/guance-cli/releases) to download the latest release.
-
-### Verify Installation
-
-```shell
-guance version
-```
+* [Documentation](https://cli.guance.io)
+* [Features & Roadmap](https://cli.guance.io/features)
+* [Online Trainings](https://cli.guance.io/trainings)
 
 ## Feedback
 
