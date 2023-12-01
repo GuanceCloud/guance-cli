@@ -39,7 +39,7 @@ export default function Example() {
                                     >
                                         View all features
                                     </a>
-                                    <a href="https://github.com/GuanceCloud/guance-cli" className="text-sm font-semibold leading-6 text-gray-900" target='_blank'>
+                                    <a href="/docs/tutorials/quickstart" className="text-sm font-semibold leading-6 text-gray-900">
                                         Read documentation <span aria-hidden="true">→</span>
                                     </a>
                                 </div>
