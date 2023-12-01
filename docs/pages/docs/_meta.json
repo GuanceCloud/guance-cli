@@ -1,0 +1,14 @@
+{
+  "tutorials": {
+    "title": "Tutorials"
+  },
+  "how-to-guides": {
+    "title": "How-To Guides"
+  },
+  "proposals": {
+    "title": "Explanations"
+  },
+  "references": {
+    "title": "References"
+  }
+}

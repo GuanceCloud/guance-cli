@@ -1,0 +1,32 @@
+{
+  "index": {
+    "type": "page",
+    "title": "Guance CLI",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw"
+    }
+  },
+  "docs": {
+    "type": "page",
+    "title": "Documentation"
+  },
+  "features": {
+    "title": "Features",
+    "type": "page",
+    "theme": {
+      "layout": "full"
+    }
+  },
+  "lessons": {
+    "type": "page",
+    "title": "Trainings"
+  },
+  "404": {
+    "type": "page",
+    "theme": {
+      "timestamp": false,
+      "typesetting": "article"
+    }
+  }
+}

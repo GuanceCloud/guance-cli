@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	DocsRootDir = "docs/references"
+	DocsRootDir = "docs/pages/docs/references/commands"
 )
 
 // Gen generate code from RMS definitions

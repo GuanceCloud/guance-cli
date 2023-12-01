@@ -1,13 +1,44 @@
+terraform {
+    required_version = ">= 1.0"
+
+    required_providers {
+        guance = {
+            source = "GuanceCloud/guance"
+        }
+    }
+}
+
+variable "alert_policy_id" {
+    type        = string
+    default     = null
+    description = "(Optional) The Alert Policy ID for taking effect when the alert is triggered."
+}
+
+variable "dashboard_id" {
+    type        = string
+    default     = null
+    description = "(Optional) The Dashboard ID for linking to the report of monitoring."
+}
+
 {{- range $i, $_ := .Manifests }}
 resource "guance_monitor" "main_{{ $i | printf "%02d" }}" {
-  manifest = file("${path.module}/manifest-{{ $i | printf "%02d" }}.json")
+    manifest = file("${path.module}/monitors/{{ $i | printf "%02d" }}.json")
 
-  alert_policy = var.alert_policy_id == null ? null : {
-    id = var.alert_policy_id
-  }
+    alert_policy = var.alert_policy_id == null ? null : {
+        id = var.alert_policy_id
+    }
 
-  dashboard = var.dashboard_id == null ? null : {
-    id =  var.dashboard_id
-  }
+    dashboard = var.dashboard_id == null ? null : {
+        id =  var.dashboard_id
+    }
 }
 {{ end }}
+
+output "monitor_ids" {
+    description = "The `guance_monitor`'s id."
+    value = [
+    {{- range $i, $_ := .Manifests }}
+        guance_monitor.main_{{ $i | printf "%02d" }}.id,
+    {{- end }}
+    ]
+}

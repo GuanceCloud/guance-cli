@@ -1,0 +1,60 @@
+# Terraform Importer
+
+Guance CLI supports importing existing resources into your Terraform state. This allows you to take resources you've created by some other means and bring it under Terraform management.
+
+## Training
+
+import Button from '../../../components/button'
+
+<Button
+    type="primary"
+    title="Open in KillerCoda"
+    href="https://killercoda.com/guance-cloud/course/official/terraform-introduction"
+/>
+
+## Import
+
+### Search and import from Guance cloud
+
+import { Callout } from 'nextra/components'
+
+<Callout type="info" emoji="ℹ️">
+  WORKING IN PROGRESS. See [Iacker](https://github.com/GuanceCloud/iacker).
+</Callout>
+
+```bash
+guance iac import console --search --import-state
+```
+
+### Import from JSON files
+
+```bash
+guance iac import console -r dashboard -f input.json
+```
+
+```bash
+guance iac import console -r monitor -f input.json
+```
+
+## Review
+
+The imported dashboard will be saved in the `out` folder.
+
+import { FileTree } from 'nextra/components'
+
+<FileTree>
+  <FileTree.Folder name="out" defaultOpen>
+    <FileTree.Folder name="dashboards" defaultOpen>
+      <FileTree.File name="01.json" />
+    </FileTree.Folder>
+        <FileTree.Folder name="monitors" defaultOpen>
+          <FileTree.File name="01.json" />
+          <FileTree.File name="02.json" />
+        </FileTree.Folder>
+    <FileTree.File name="main.tf" />
+  </FileTree.Folder>
+</FileTree>
+
+## Apply
+
+Coming soon.

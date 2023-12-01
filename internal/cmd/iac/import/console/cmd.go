@@ -49,10 +49,8 @@ func NewCmd() *cobra.Command {
 	}
 	cmd.Flags().StringVarP(&opts.Resource, "resource", "r", "", "Source type, supports dashboard, monitor now.")
 	cmd.Flags().StringVarP(&opts.File, "file", "f", "", "File path to import.")
-	cmd.Flags().StringVarP(&opts.Target, "target", "t", "", "Target type, supports terraform-module now.")
-	cmd.Flags().StringVarP(&opts.Out, "out", "o", "", "Output file path.")
-	_ = cmd.MarkFlagRequired("target")
-	_ = cmd.MarkFlagRequired("out")
+	cmd.Flags().StringVarP(&opts.Target, "target", "t", "terraform-module", "Target type, supports terraform-module now.")
+	cmd.Flags().StringVarP(&opts.Out, "out", "o", "out", "Output file path.")
 	cmd.MarkFlagsRequiredTogether("resource", "file")
 	return cmd
 }
