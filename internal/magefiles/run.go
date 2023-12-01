@@ -20,7 +20,7 @@ func (ns Run) Install() error {
 func (ns Run) Lint() error {
 	argList := [][]string{
 		{"golangci-lint", "run", "./..."},
-		{"markdownlint", "-i", "docs/references", "-f", "."},
+		{"markdownlint", "-i", "docs/pages/docs/references", "-f", "."},
 		{"gofumpt", "-l", "-e", "."},
 	}
 	return batchRunV(argList)

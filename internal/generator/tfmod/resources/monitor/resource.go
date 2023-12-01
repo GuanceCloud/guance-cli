@@ -14,19 +14,8 @@ import (
 	"github.com/GuanceCloud/guance-cli/internal/helpers/osfs"
 )
 
-var (
-	//go:embed template/main.tf.gotpl
-	moduleTemplateMain []byte
-
-	//go:embed template/outputs.tf.gotpl
-	moduleTemplateOutput []byte
-
-	//go:embed template/variables.tf
-	moduleTemplateVar []byte
-
-	//go:embed template/versions.tf
-	moduleTemplateVersion []byte
-)
+//go:embed template/main.tf.gotpl
+var moduleTemplateMain []byte
 
 type Options struct {
 	Manifests []json.RawMessage
@@ -35,22 +24,10 @@ type Options struct {
 func Generate(opts Options) (osfs.Files, error) {
 	var files osfs.Files
 
-	// copy template
-	for name, content := range map[string]json.RawMessage{
-		"versions.tf":  moduleTemplateVersion,
-		"variables.tf": moduleTemplateVar,
-	} {
-		files = append(files, osfs.File{
-			Path:    name,
-			Content: content,
-		})
-	}
-
 	// render template
 	var mErr error
 	for name, content := range map[string]json.RawMessage{
-		"main.tf":    moduleTemplateMain,
-		"outputs.tf": moduleTemplateOutput,
+		"main.tf": moduleTemplateMain,
 	} {
 		got, err := osfs.RenderTemplate(content, opts)
 		if err != nil {
@@ -76,14 +53,14 @@ func Generate(opts Options) (osfs.Files, error) {
 			mErr = multierror.Append(mErr, fmt.Errorf("failed to format manifest: %w", err))
 		}
 		files = append(files, osfs.File{
-			Path:    fmt.Sprintf("manifest-%03d.json", i+1),
+			Path:    fmt.Sprintf("monitors/%02d.json", i+1),
 			Content: fixed,
 		})
 	}
 	if mErr != nil {
 		return nil, fmt.Errorf("failed to fix data zero-value: %w", mErr)
 	}
-	return nil, nil
+	return files, nil
 }
 
 func fixNoData(src []byte) ([]byte, error) {

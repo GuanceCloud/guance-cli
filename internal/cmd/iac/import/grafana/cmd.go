@@ -34,7 +34,7 @@ func NewCmd() *cobra.Command {
 	opts := importOptions{}
 	cmd := &cobra.Command{
 		Use:   "grafana",
-		Short: "(Alpha) Import Grafana Dashboard resources",
+		Short: "Import Grafana Dashboard resources",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var err error
 			var dashboards []dashboardtfmod.Manifest
@@ -92,11 +92,9 @@ func NewCmd() *cobra.Command {
 	cmd.Flags().StringVar(&opts.SearchQuery, "search-query", "", "Query to search dashboard.")
 	cmd.Flags().StringVar(&opts.SearchTag, "search-tag", "", "Tag to search dashboard.")
 	cmd.Flags().BoolVar(&opts.Search, "search", false, "Search dashboard.")
-	cmd.Flags().StringVarP(&opts.Target, "target", "t", "", "Target type, supports terraform-module now.")
-	cmd.Flags().StringVarP(&opts.Out, "out", "o", "", "Output file path.")
+	cmd.Flags().StringVarP(&opts.Target, "target", "t", "terraform-module", "Target type, supports terraform-module now.")
+	cmd.Flags().StringVarP(&opts.Out, "out", "o", "out", "Output file path.")
 	cmd.Flags().StringVarP(&opts.Measurement, "measurement", "m", "", "Measurement (default is prom).")
-	_ = cmd.MarkFlagRequired("target")
-	_ = cmd.MarkFlagRequired("out")
 	cmd.MarkFlagsMutuallyExclusive("file", "search")
 	return cmd
 }

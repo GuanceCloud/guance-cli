@@ -1,0 +1,88 @@
+# Grafana Importer
+
+This guide will show you how to import Grafana dashboards to Guance Cloud.
+
+## Training
+
+import Button from '../../../components/button'
+
+<Button
+    type="primary"
+    title="Open in KillerCoda"
+    href="https://killercoda.com/guance-cloud/course/official/grafana-importer"
+/>
+
+## Import
+
+### Search and import from Grafana instance
+
+When you have a Grafana instance running, you can search and import dashboards from it.
+
+First, configure the Grafana instance URL and API key in environment variables.
+
+```bash
+export GRAFANA_URL=http://localhost:3000
+export GRAFANA_AUTH=xxxxxxxxxxx
+```
+
+The variable `GRAFANA_AUTH` is a service account token of Grafana Instance. To create a Grafana service account token,
+click on Administration in the left-side menu, and then Service Accounts.
+For more information on how to use service account tokens,
+refer to the [Service Accounts](https://grafana.com/docs/grafana/latest/administration/service-accounts/) documentation.
+
+Then run the following command to search and import dashboards.
+
+```bash
+guance iac import grafana --search --search-tag kubernetes
+```
+
+### Import from Grafana Template
+
+When you want to import a specific dashboard, you can use the Grafana Template ID.
+
+No auth is required to import from Grafana Template.
+
+```bash
+guance iac import grafana --template-id 1860
+```
+
+It will download the dashboard from [Grafana Dashboard Templates](https://grafana.com/grafana/dashboards/) and import it.
+
+### Import from file
+
+You can also copy and save the [Dashboard JSON Model](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/view-dashboard-json-model/) into local file.
+
+Then run the following command to import from file directly.
+
+```bash
+guance iac import grafana -f ./input.json
+```
+
+## Review
+
+The imported dashboard will be saved in the `out` folder.
+
+import { FileTree } from 'nextra/components'
+
+<FileTree>
+  <FileTree.Folder name="out" defaultOpen>
+    <FileTree.Folder name="dashboards" defaultOpen>
+      <FileTree.File name="1860.json" />
+    </FileTree.Folder>
+    <FileTree.File name="main.tf" />
+  </FileTree.Folder>
+</FileTree>
+
+## Apply
+
+### Observability as Code (Recommended)
+
+We recommend you to use [Terraform](https://registry.terraform.io/providers/GuanceCloud/guance/latest/docs) to manage your dashboards. So you can synchronous the dashboard changes from Grafana to Guance Cloud programmatically
+
+You can following our [Online Training](https://killercoda.com/guance-cloud/course/official/grafana-importer) to learn how to use this way to archive that.
+
+### Upload directly
+
+If you want to test or debug your dashboard, you can also upload it directly.
+
+Click on the `Create > Import template` button in the Guance dashboard page, and select the dashboard file.

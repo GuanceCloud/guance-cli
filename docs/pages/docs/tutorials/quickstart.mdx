@@ -1,0 +1,82 @@
+# Quickstart
+
+## Install
+
+### Choice your install method
+
+import { Tabs } from 'nextra/components'
+
+<Tabs items={['Homebrew', 'Apt', 'Yum', 'Binary', 'GitHub Actions']}>
+  <Tabs.Tab>
+  ```shell
+  brew tap GuanceCloud/homebrew-tap
+  brew install iacker
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```shell
+    echo "deb [trusted=yes] https://releases.guance.io/apt/ /" | sudo tee /etc/apt/sources.list.d/guance.list
+    sudo apt update
+    sudo apt install guance
+    ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+  ```shell
+    cat <<EOF | sudo tee /etc/yum.repos.d/guance.repo
+    [guance]
+    name=Guance Cloud Repo
+    baseurl=https://releases.guance.io/yum/
+    enabled=1
+    gpgcheck=0
+    EOF
+    sudo yum install -y guance
+  ```
+  </Tabs.Tab>
+  <Tabs.Tab>
+    See the [release](https://github.com/GuanceCloud/guance-cli/releases) page to download the latest release.
+  </Tabs.Tab>
+  <Tabs.Tab>
+    ```yaml
+    name: 'Setup Guance'
+
+    on:
+      push:
+        branches:
+        - main
+      pull_request:
+
+    defaults:
+      run:
+        shell: bash
+
+    jobs:
+      run-setup-guance-cli:
+        name: 'Guance CLI Run'
+        steps:
+        - name: Checkout
+          uses: actions/checkout@v4.1.0
+
+        - name: Setup Guance
+          uses: GuanceCloud/setup-guance@v1
+
+        - name: Print Guance Version
+          shell: bash
+          run: guance version
+    ```
+  </Tabs.Tab>
+</Tabs>
+
+### Check installation is successful
+
+Run this command to check version.
+
+```bash
+guance version
+```
+
+## Next Steps
+
+1. Read the **How-to Guides** to learn how to use Guance CLI.
+1. Play the [Online Training](../training/README) to interact with Guance CLI command.
+1. Read the [Design Guide](../proposals/README) to understand the technical details.
+1. Read the [References](../reference/README) to learn more about Guance CLI command.

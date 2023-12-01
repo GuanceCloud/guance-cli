@@ -1,0 +1,11 @@
+{
+  "README": {
+    "title": "Design Guide"
+  },
+  "arch": {
+    "title": "Architecture"
+  },
+  "component": {
+    "title": "Components"
+  }
+}
