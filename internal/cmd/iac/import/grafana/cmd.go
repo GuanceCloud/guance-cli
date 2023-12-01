@@ -110,7 +110,7 @@ func readDashboards(ctx context.Context, opts *importOptions) ([]dashboardtfmod.
 		}
 
 		result = append(result, dashboardtfmod.Manifest{
-			Name:    fmt.Sprint(i),
+			Name:    fmt.Sprintf("dashboard_%d", i),
 			Title:   gjson.GetBytes(content, "title").String(),
 			Content: content,
 		})
@@ -123,7 +123,7 @@ func importDashboardTemplate(ctx context.Context, opts *importOptions) ([]dashbo
 	if err != nil {
 		return nil, fmt.Errorf("download template %s failed: %w", opts.TemplateID, err)
 	}
-	fmt.Printf("Downloaded Grafana Template %s", opts.TemplateID)
+	fmt.Println("Downloaded Grafana Template", opts.TemplateID)
 	defer func() { _ = resp.Body.Close() }()
 
 	content, err := io.ReadAll(resp.Body)
@@ -132,7 +132,7 @@ func importDashboardTemplate(ctx context.Context, opts *importOptions) ([]dashbo
 	}
 	return []dashboardtfmod.Manifest{
 		{
-			Name:    opts.TemplateID,
+			Name:    fmt.Sprintf("template_%s", opts.TemplateID),
 			Title:   gjson.GetBytes(content, "title").String(),
 			Content: content,
 		},
